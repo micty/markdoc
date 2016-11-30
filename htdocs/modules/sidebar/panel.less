@@ -1,0 +1,51 @@
+
+
+.panel-sidebar {
+    box-sizing: border-box;
+    overflow: hidden;
+    
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    position: fixed;
+    height: 100%;
+
+    .groups {
+        border: 1px solid #d8d8d8;
+        text-align: left;
+        font-size: 14px;
+        background-color: #fff;
+        margin: 10px 0px 10px 10px;
+
+
+        .title {
+            font-weight: bold;
+            padding: 5px 0px 2px 0px;
+            font-size: 1.15em;
+        }
+
+        ul {
+            margin-left: 10px;
+
+            .item {
+                cursor: pointer;
+                text-shadow: 0 1px 0 #fff;
+                /*border-bottom: 1px solid #eee;*/
+                height: 26px;
+                box-sizing: border-box;
+                -webkit-box-align: center;
+                display: -webkit-box;
+                color: #4183c4;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+
+                &.on {
+                    color: #FF5722;
+                    border-right: solid 6px #6CE26C;
+                }
+            }
+        }
+    }
+}
