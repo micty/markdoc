@@ -6,12 +6,18 @@ define('/Main/Content/Helper', function (require, module, exports) {
     var $ = require('$');
     var MiniQuery = require('MiniQuery');
     var marked = require('marked');
-    var Highlight = require('Highlight');
     var JSON = require('JSON');
 
+    var Highlight = module.require('Highlight');
     var Lines = module.require('Lines');
     var Url = module.require('Url');
 
+
+    var current = {
+        'html': '',
+        'code': null,   //代码区
+        'ul': null,     //行号列表
+    };
 
     return {
 
@@ -83,6 +89,51 @@ define('/Main/Content/Helper', function (require, module, exports) {
             });
 
 
+            current.code = container.find('pre>code');
+            current.html = current.code.html();
+            current.ul = container.find('ul');
+
+        },
+
+        /**
+        * 隐藏或显示空行。
+        */
+        'empty': function (checked) {
+
+            var code = current.code;
+            var ul = current.ul;
+
+            //显示空行。
+            if (checked) {
+                //重新计算高度。
+                var height = Lines.getHeight(code.html());
+                code.parent().height(height);
+
+                ul.find('li').show();
+                code.html(current.html);
+                return;
+            }
+
+            //隐藏空行。
+            var html = code.html();
+            var lines = html.split(/\r\n|\n|\r/);
+
+            lines = $.Array.map(lines, function (line) {
+                return line.length > 0 ? line : null;
+            });
+
+            html = lines.join('\r\n');
+            code.html(html);
+
+
+            //重新计算高度。
+            var height = Lines.getHeight(code.html());
+            code.parent().height(height);
+
+            //隐藏多余的行号
+            var maxIndex = lines.length - 1;
+            ul.find('li').show();
+            ul.find('li:gt(' + maxIndex + ')').hide();
         },
     };
 

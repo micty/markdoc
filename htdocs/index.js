@@ -22,7 +22,6 @@ KISP.launch(function (require, module) {
     });
 
 
-   
 
     FixedMenus.on({
         'outline': function () {

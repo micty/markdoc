@@ -14,12 +14,16 @@ KISP 框架
 
 
 - [微销售后台文档](?config=data/index.json&item=0.0)
-
+- [ES6 教程](?config=data/es6.json&item=0.0)
 
 ###专题介绍
 - [JavaScript 开发规范](?file=./specification/js/index.md)
+
+
 - [JSON 源文件](?file=./index.json)
-- [JS 源文件](?file=index.js)
+- [JS 源文件](?file=lib/ParallelTasks.js)
+- [KISP.js 源文件](?file=f/kisp/kisp.debug.js)
+- [KISP.css 源文件](?file=f/kisp/kisp.debug.css)
 - [CSS 源文件](?file=style/css/modules.main.panel.css)
 - [ES6 教程](?file=./es6/readme.md)
 - [ES6 教程全部](?file=./es6/docs/array.md,./es6/docs/arraybuffer.md,./es6/docs/async.md)

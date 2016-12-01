@@ -6,9 +6,32 @@
     margin-top: 10px;
     margin-bottom: 10px;
 
+
     &.source {
         width: 100%;
         margin: 0;
+
+        .source-code {
+            > span {
+                display: none;
+            }
+        }
+    }
+
+    &.no-comment {
+        .hljs-comment {
+            display: none;
+        }
+    }
+    /**Òþ²ØÐÐºÅºó*/
+    &.no-numbers {
+        .line-numbers {
+            display: none;
+        }
+
+        pre {
+            margin-left: 5px !important;
+        }
     }
 
     .header {
@@ -27,11 +50,31 @@
             color: #4078c0;
             font-weight: bold;
         }
+
+        div {
+            right: 0px;
+            position: absolute;
+            top: 10px;
+            font-size: 14px;
+
+            input {
+                margin: 0px;
+                position: relative;
+                top: 2px;
+                right: -2px;
+                cursor: pointer;
+            }
+
+            label {
+                cursor: pointer;
+                margin-right: 10px;
+            }
+        }
     }
 
     .content {
         margin-top: 40px;
-      
+
 
         .title {
             cursor: pointer;
@@ -48,7 +91,7 @@
         background: none;
 
         > span {
-            display: none;
+            /*display: none;*/
         }
 
         > ul {
@@ -75,6 +118,6 @@
         pointer-events: none;
         border-radius: 3px;
         box-sizing: border-box;
-        /*background: rgba(0, 0, 0, 0.0666667);*/
+        /*background: rgba(0, 0, 0, 0.05);*/
     }
 }

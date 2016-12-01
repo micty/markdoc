@@ -16,8 +16,17 @@ define('/Main', function (require, module, exports) {
     panel.on('init', function () {
 
         Header.on({
-            'click': function () {
-                Mark.hide();
+            'numbers': function (checked) {
+                panel.$.toggleClass('no-numbers', !checked);
+            },
+            'comment': function (checked) {
+                panel.$.toggleClass('no-comment', !checked);
+            },
+            'empty': function (checked) {
+                Content.empty(checked);
+            },
+            'mark': function (checked) {
+                Mark.render(checked);
             },
         });
 
@@ -27,7 +36,7 @@ define('/Main', function (require, module, exports) {
             },
 
             'line': function (y) {
-                Mark.set(y);
+                Mark.render(y);
             },
         });
 
@@ -36,18 +45,13 @@ define('/Main', function (require, module, exports) {
 
     panel.on('render', function (url) {
 
-        if (typeof url == 'object') {
-            var file = url.file;
-            var dir = url.dir;
-        }
+        var data = current = Url.parse(url);
+        panel.$.toggleClass('source', data.isCode);
 
-
-        var info = current = Url.parse(url);
-        panel.$.toggleClass('source', info.isCode);
-
-        Header.render(info);
+        Header.render(data);
         Content.render(url);
-        Mark.hide();
+        Mark.render(data);
+
       
     });
 

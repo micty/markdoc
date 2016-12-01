@@ -10,13 +10,14 @@ define('/Main/Content', function (require, module, exports) {
     var CurrentLine = module.require('CurrentLine');
 
     var panel = KISP.create('Panel', '#div-main-content');
-    var visible = true;
+    var visible = false;
     var titles = 'h1,h2,h3,h4,h5,h6,hr';
 
 
     panel.on('init', function () {
 
         panel.$.on('click', 'code', function (event) {
+            console.log(event.offsetY);
             panel.fire('line', [event.offsetY]);
         });
 
@@ -32,6 +33,8 @@ define('/Main/Content', function (require, module, exports) {
     panel.on('render', function (url) {
 
         Loader.load(url, function (content) {
+
+            visible = true;  //每次填充都要重置。
 
             Helper.fill({
                 'container': panel.$,
@@ -71,6 +74,8 @@ define('/Main/Content', function (require, module, exports) {
             visible = !visible;
             
         },
+
+        'empty': Helper.empty,
     });
 
 });

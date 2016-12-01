@@ -1,10 +1,10 @@
 
 /**
 */
-define('Highlight', function (require, module, exports) {
+define('/Main/Content/Helper/Highlight', function (require, module, exports) {
 
     var $ = require('$');
-    var HLJS = window.hljs;
+    var hljs = require('hljs');
     var JSON = require('JSON');
 
 
@@ -25,7 +25,7 @@ define('Highlight', function (require, module, exports) {
         code = $.String.replaceAll(code, '&gt;', '>');
 
         try {
-            var obj = HLJS.highlight(type, code);
+            var obj = hljs.highlight(type, code);
             return obj.value;
         }
         catch (ex) { //不支持某种语法高亮时，直接原样返回

@@ -17,7 +17,7 @@ define('/Main/Content/Helper/Lines', function (require, module, exports) {
                 return '<li>' + (index + 1) + '</li>';
             });
 
-            var html = '<ul>' + lines.join('') + '</ul>';
+            var html = '<ul class="line-numbers">' + lines.join('') + '</ul>';
 
             return html;
         },
