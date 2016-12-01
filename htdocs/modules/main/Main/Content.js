@@ -12,7 +12,8 @@ define('/Main/Content', function (require, module, exports) {
     var panel = KISP.create('Panel', '#div-main-content');
     var visible = false;
     var titles = 'h1,h2,h3,h4,h5,h6,hr';
-
+    var container = $('#div-main-content-container');
+    var loading = null;
 
     panel.on('init', function () {
 
@@ -32,12 +33,23 @@ define('/Main/Content', function (require, module, exports) {
 
     panel.on('render', function (url) {
 
+        panel.$.addClass('loading');
+        //loading = loading || KISP.create('Loading', {
+        //    background: 'none',
+        //    color: 'black',
+        //    text: '加载中...',
+        //});
+
+        //loading.show();
+        //return;
         Loader.load(url, function (content) {
 
+            //loading.hide();
             visible = true;  //每次填充都要重置。
+            panel.$.removeClass('loading');
 
             Helper.fill({
-                'container': panel.$,
+                'container': container,
                 'content': content,
                 'baseUrl': url,
             });
@@ -63,7 +75,7 @@ define('/Main/Content', function (require, module, exports) {
 
         //显示大纲
         'outline': function () {
-            var $ = panel.$.find('>*:not(' + titles + ')');
+            var $ = container.find('>*:not(' + titles + ')');
             var value = visible ? 'hide' : 'show';
 
             $.animate({

@@ -5,11 +5,12 @@ define('/Main/Content/Loader', function (require, module, exports) {
 
     var $ = require('$');
     var MiniQuery = require('MiniQuery');
+    var KISP = require('KISP');
     var Url = MiniQuery.require('Url');
     var ParallelTasks = require('ParallelTasks');
 
     var url$md = {}; //缓存读取到的 md 内容
-
+    var loading = null;
 
 
     //根据后缀名加上相应的语言类型。
@@ -71,6 +72,9 @@ define('/Main/Content/Loader', function (require, module, exports) {
 
         'load': function (url, fn) {
 
+            //loading = loading || KISP.create('Loading');
+            //loading.show();
+
             var urls = url.split(',');
             console.dir(urls);
 
@@ -88,6 +92,7 @@ define('/Main/Content/Loader', function (require, module, exports) {
 
             //子任务并行处理完成。
             tasks.on('all', function () {
+                //loading.hide();
                 fn && fn(values.join(''));
             });
 
