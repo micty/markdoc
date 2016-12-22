@@ -6,41 +6,9 @@ define('JSON', function (require, module, exports) {
 
     var $ = require('$');
     var MiniQuery = require('MiniQuery');
-    var Url = MiniQuery.require('Url');
-
-
-    var url$json = {};
-
-
-
-    function load(url, fn) {
-
-
-
-        var json = url$json[url];
-        if (json) {
-            fn && fn(json);
-            return;
-        }
-
-
-        //加上随机查询字符串，以确保拿到最新版本。
-        var rurl = Url.randomQueryString(url);
-
-        $.getJSON(rurl, function (json) {
-
-            url$json[url] = json;
-
-            fn && fn(json);
-
-        });
-    }
-
 
 
     module.exports = exports = /**@lends JSON*/ {
-
-        load: load,
 
         /**
         * 把一个 JSON 字符串数据解析成对象。
@@ -54,7 +22,7 @@ define('JSON', function (require, module, exports) {
             }
 
             try {
-                data = data.replace(/^(\r\n)+/g, '');
+                data = data.replace(/^(\r\n)+/g, ' ');
                 return (new Function('return ' + data))();
             }
             catch (ex) {

@@ -4,7 +4,17 @@
 
 body {
     overflow-y: scroll;
-    overflow-x: hidden;
+    overflow-x: auto;
+    min-width: 1024px;
+    box-sizing: border-box;
+
+    .wrapper {
+        display: flex;
+        margin-top: 68px;
+    }
+
+    .w {
+    }
 }
 
 
@@ -54,8 +64,8 @@ body,
 input,
 select,
 textarea {
-	color: #000;
-	font-family: Arial, Geneva, sans-serif;
+    color: #000;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, 'Microsoft YaHei', sans-serif;
 }
 
 
@@ -101,9 +111,9 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
+    a:hover {
+        text-decoration: underline;
+    }
 
 sup {
     vertical-align: text-top;
@@ -133,3 +143,6 @@ textarea {
 
 
 
+.KISP.Loading-iOS.SameLine .Main {
+    margin-left: -45px;
+}

@@ -5,6 +5,8 @@ define('/Main', function (require, module, exports) {
     var MiniQuery = require('MiniQuery');
     var KISP = require('KISP');
 
+    var NotFound = module.require('NotFound');
+    var Loading = module.require('Loading');
     var Header = module.require('Header');
     var Content = module.require('Content');
     var Mark = module.require('Mark');
@@ -31,13 +33,27 @@ define('/Main', function (require, module, exports) {
         });
 
         Content.on({
+            //这个事件会给delay 100ms 触发。
+            'loading': function () {
+                Loading.show();
+            },
+
             'render': function () {
+                Loading.hide();
                 panel.fire('render', [current]);
             },
 
             'line': function (y) {
                 Mark.render(y);
             },
+
+            'hash': function (hash) {
+                panel.fire('hash', [hash]);
+            },
+        });
+
+        panel.$.on('click', function () {
+            panel.fire('click');
         });
 
     });
@@ -51,11 +67,10 @@ define('/Main', function (require, module, exports) {
         Header.render(data);
         Content.render(url);
         Mark.render(data);
+        NotFound.hide();
 
       
     });
-
-
 
 
 
@@ -63,6 +78,28 @@ define('/Main', function (require, module, exports) {
 
         //显示大纲
         'outline': Content.outline,
+
+        'loading': function () {
+            panel.$.removeClass('source');
+            Content.hide();
+            NotFound.hide();
+            Loading.show();
+        },
+
+        'notfound': function (file) {
+            panel.$.removeClass('source');
+            Header.hide();
+            Content.hide();
+            Loading.hide();
+            
+
+            //避免跟 Content.loading 事件竞争。
+            setTimeout(function () {
+                Loading.hide();
+                NotFound.render(file);
+            }, 100);
+        },
+
     });
 
 });

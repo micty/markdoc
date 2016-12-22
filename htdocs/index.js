@@ -1,26 +1,54 @@
 ﻿
 KISP.launch(function (require, module) {
 
-    var $ = require('$');
-
-    var Config = module.require('Config');
+    var Router = module.require('Router');
     var Sidebar = module.require('Sidebar');
+    var Header = module.require('Header');
     var Main = module.require('Main');
-    var Hash = module.require('Hash');
+    var Footer = module.require('Footer');
+    var Scroller = module.require('Scroller');
     var FixedMenus = module.require('FixedMenus');
 
 
+    Header.on({
+        'search': function (value) {
+            console.log('search:', value);
+        },
+        'menu': function (url) {
+            Router.auto(url);
+        },
+    });
 
     Sidebar.on({
         'item': function (id) {
-            Hash.set('item', id);
+            Router.add('item', id);
         },
-        'active': function (group, item) {
-            var url = Config.getUrl(group, item);
+        'active': function (url) {
             Main.render(url);
         },
     });
 
+    Scroller.on({
+        'leave': function () {
+            Header.addClass('leave');
+            Sidebar.addClass('leave');
+        },
+        'top': function () {
+            Header.removeClass('leave fixed');
+        },
+        'return': function () {
+            Sidebar.removeClass('leave');
+        },
+        'up': function () {
+            Header.addClass('fixed');
+        },
+        'down': function () {
+            Header.removeClass('fixed');
+        },
+        'reset': function () {
+            Header.removeClass('fixed');
+        },
+    });
 
 
     FixedMenus.on({
@@ -32,35 +60,56 @@ KISP.launch(function (require, module) {
     Main.on({
         'render': function (data) {
             FixedMenus.render(data);
+            Scroller.render();
+        },
+        'click': function () {
+            Scroller.reset();
+        },
+        'hash': function (hash) {
+            Router.set(hash);
+        },
+    });
+
+    Footer.on({
+        'file': function (url) {
+            Router.auto(url);
         },
     });
 
 
-    Config.on('ready', function (json) {
-        Sidebar.render(json.sidebar);
-    });
-
-    Hash.on({
-        'none': function () {
-            Sidebar.hide();
-            Main.render('data/readme.md');
+    Router.on({
+        'change': function () {
+            Header.removeClass('leave fixed');
         },
-
-        'config': function (url) {
-            Config.load(url);
+        'config': {
+            'loading': function () {
+                Main.loading();
+            },
+            'success': function (data) {
+                Header.render(data.header);
+                Sidebar.logo(data.header.logo);
+                Footer.render(data.footer);
+            },
         },
-
+        'sidebar': function (url, item) {
+            Main.loading();
+            Sidebar.render(url, item);
+        },
         'item': function (id) {
             Sidebar.active(id);
         },
-
         'file': function (url) {
             Sidebar.hide();
             Main.render(url);
         },
+        404: function (url) {
+            Main.notfound(url);
+        },
     });
 
-    Hash.render();
+    Router.render();
+
+
 });
 
 

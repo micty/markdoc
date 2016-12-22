@@ -1,0 +1,93 @@
+
+
+.UI-nofound {
+    position: relative;
+    font-size: 30px;
+    margin: 100px 0 0 0;
+
+
+    .animal {
+        position: relative;
+        background-size: 100%;
+        background-repeat: no-repeat;
+        height: 200px;
+        padding-bottom:90px;
+
+        .mouse {
+            border-bottom: 0.1em solid #000;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 30%;
+            transform: translate(-50%, -40%);
+
+            &::before {
+                background: #000;
+                border-radius: 50%;
+                content: "";
+                position: absolute;
+                width: 3em;
+                height: 3em;
+                left: -1em;
+                top: -1.2em;
+                transform: skewX(-4deg);
+                animation: blink 6s infinite;
+            }
+
+            &::after {
+                background: #000;
+                border-radius: 50%;
+                content: "";
+                position: absolute;
+                width: 3em;
+                height: 3em;
+                right: -1em;
+                top: -1.2em;
+                transform: skewX(4deg);
+                animation: blink 6s 0.1s infinite;
+            }
+
+            &::before {
+                background: linear-gradient(to bottom, #efefef, #efefef 50%, #000 50%, #000);
+                background-position: 0 -100%;
+                background-size: 200%;
+            }
+
+            &::after {
+                background: linear-gradient(to bottom, #efefef, #efefef 50%, #000 50%, #000);
+                background-position: 0 -100%;
+                background-size: 200%;
+            }
+        }
+    }
+
+    .text {
+        text-align: center;
+
+        .info {
+            padding: 10px 0;
+            font-style: italic;
+        }
+
+        .detail {
+            font-size: 14px;
+            color: #999;
+        }
+    }
+}
+
+
+
+@keyframes blink {
+    0% {
+        background-position: 0 100%;
+    }
+
+    75% {
+        background-position: 0 30%;
+    }
+
+    100% {
+        background-position: 0 100%;
+    }
+}

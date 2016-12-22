@@ -1,51 +1,168 @@
 
 
 .panel-sidebar {
-    box-sizing: border-box;
-    overflow: hidden;
-    
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    position: fixed;
-    height: 100%;
+    position: relative;
+    width: 200px;
+    min-width: 200px;
+    padding-left: 60px;
+    height: e("calc(100vh - 90px)");
+
+    &.fixed {
+
+        &.leave {
+            .head {
+                opacity: 1;
+                overflow: visible;
+            }
+        }
+
+        .head {
+            position: fixed;
+            top: 0px;
+            left: 70px;
+            height: 67px;
+            padding: 16px 0;
+            width: 182px;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.3s linear;
+
+            img {
+                width: 100%;
+                height: 35px;
+            }
+        }
+
+        .groups {
+            position: fixed;
+            top: 70px;
+            width: 190px;
+        }
+    }
 
     .groups {
-        border: 1px solid #d8d8d8;
+        position: absolute;
+        top: 0px;
+        left: 60px;
+        right: 0;
+        bottom: 0;
         text-align: left;
         font-size: 14px;
         background-color: #fff;
         margin: 10px 0px 10px 10px;
-
+        overflow-x: hidden;
+        overflow-y: scroll;
 
         .title {
-            font-weight: bold;
-            padding: 5px 0px 2px 0px;
-            font-size: 1.15em;
+            height: 20px;
+            line-height: 20px;
+            font-weight: 500;
+            color: #4b4b4b;
+            /*color: #868d93;*/
+            padding: 5px 0px 5px 0px;
+            font-size: 15px;
+            cursor: pointer;
+
+            i {
+                float: right;
+                margin-right: 5px;
+                color: rgb(228, 228, 228);
+                visibility:hidden;
+                opacity:0;
+                transition:0.3s all linear;
+
+                &.fa-angle-double-up {
+                    color: #999;
+                }
+
+                &.fa-angle-double-down {
+                    color: #999;
+                }
+            }
+
+
+
+            &:hover {
+                /*background: #eee;*/
+                color: #c7254e;
+
+                i {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
         }
 
         ul {
-            margin-left: 10px;
 
             .item {
+                font-size: 13px;
                 cursor: pointer;
                 text-shadow: 0 1px 0 #fff;
-                /*border-bottom: 1px solid #eee;*/
-                height: 26px;
+                height: 20px;
+                margin: 6px 0;
+                padding-left: 10px;
                 box-sizing: border-box;
                 -webkit-box-align: center;
                 display: -webkit-box;
-                color: #4183c4;
+                color: #999;
+                /*color: #61676c;*/
+                font-weight: 500;
+                padding-bottom: 20px;
+                margin-right: 5px;
+                transition: all 0.3s linear;
 
-                &:hover {
-                    text-decoration: underline;
+                a {
+                    text-decoration: none;
+                    position: relative;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        width: 100%;
+                        height: 1px;
+                        bottom: -2px;
+                        left: 0;
+                        background-color: rgba(107, 179, 221, 0.81);
+                        visibility: hidden;
+                        transform: scaleX(0);
+                        transition-duration: 0.2s;
+                        transition-timing-function: ease-in-out;
+                    }
+
+                    &:hover {
+                        color: rgba(107, 179, 221, 0.81);
+
+                        &::before {
+                            visibility: visible;
+                            transform: scaleX(1);
+                        }
+                    }
                 }
 
                 &.on {
-                    color: #FF5722;
-                    border-right: solid 6px #6CE26C;
+                    color: #6bb3dd;
+                    font-weight: 700;
+                    border-right: 2px solid #6bb3dd;
                 }
             }
+        }
+
+        &::-webkit-scrollbar {
+            width: 2px;
+        }
+        /*&:hover::-webkit-scrollbar-track {
+            border-radius: 0px;
+            background:#fff;
+        }*/
+        &::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            /*background: #fff;*/
+            transition: all 1s linear;
+        }
+
+        &:hover::-webkit-scrollbar-thumb {
+            background: rgba(240, 240, 240, 0.8);
         }
     }
 }

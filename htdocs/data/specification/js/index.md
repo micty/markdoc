@@ -4,6 +4,7 @@
 
 [阅读全文](?dir=./chapters/&file=1,2,3,4,5)
 
+[baidu](http://www.baidu.com/)
 
 ###1.绪论
 

@@ -1,16 +1,29 @@
 ﻿
 
 
+<!--添加fixed固定，leave类 sidebar头部显示-->
+<div id="div-panel-sidebar" class="panel-sidebar fixed" style="display: none;">
 
-<div id="div-panel-sidebar" class="panel-sidebar" style="display: none;">
+
+
+    <div id="div-sidebar-logo" class="head">
+        <!--
+        <a href="#">
+            <img src="{src}" />
+        </a>
+        -->
+    </div>
+
 
     <ul id="ul-sidebar-groups" class="groups">
         <!--
         <li>
-            <div class="title" data-type="item">{name}</div>
-            <ul>
+            <div class="title" data-no="{no}" data-type="group">{name}<i class="fa fa-angle-double-up"></i></div>
+            <ul data-no="{no}">
                 #--item.begin--#
-                <li data-index="{index}" data-no="{no}" data-type="item" class="item">{name}</li>
+                <li data-index="{index}" data-no="{no}" data-type="item" class="item">
+                    <a>{name}</a>
+                </li>
                 #--item.end--#
             </ul>
         </li>
