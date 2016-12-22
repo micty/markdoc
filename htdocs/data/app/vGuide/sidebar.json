@@ -6,6 +6,7 @@
             "name": "商品（基础资料）",
             "base": "./base/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "客户列表", "file": "customer" }, 
                 { "name": "类目列表", "file": "type" }, 
@@ -24,6 +25,7 @@
             "name": "收货地址",
             "base": "./address/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "收货地址(订单)", "file": "address2" }, 
                 { "name": "收货地址(出库单)", "file": "address1" }, 
@@ -36,6 +38,7 @@
             "name": "订单",
             "base": "./order/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "运费", "file": "freight" }, 
                 { "name": "提交订单", "file": "submit" }, 
@@ -55,6 +58,7 @@
             "name": "销售出库",
             "base": "./delivery/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "提交出库单", "file": "submit" }, 
                 { "name": "获取出库单详情", "file": "GetDeliveryDetail" }, 
@@ -66,6 +70,7 @@
             "name": "列表",
             "base": "./other/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "获取列表(订单和出库单)", "file": "list" }
             ]
@@ -74,6 +79,7 @@
             "name": "收款",
             "base": "./receipt/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "提交收款单", "file": "SubmitReceipt" }, 
                 { "name": "获取收款单的结算方式", "file": "GetReceiptSettlement" }, 
@@ -84,6 +90,7 @@
             "name": "其他",
             "base": "./other/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 { "name": "获取用户信息", "file": "GetUserInfo1" }, 
                 { "name": "获取微商城地址", "file": "GetWDHUrl" }
