@@ -95,11 +95,21 @@ define('/Sidebar/Groups', function (require, module, exports) {
             panel.$.find('li.on').removeClass('on');
 
             li.addClass('on');
-            li.get(0).scrollIntoViewIfNeeded();
+
+            li = li.get(0);
+            li.scrollIntoViewIfNeeded();
+
+            //展开相应的组。
+            var ul = li.parentNode;
+
+            $(ul).slideDown('fast', function () {
+                panel.$.find('i[data-no="' + no + '"]')
+                    .removeClass('fa-angle-double-down')
+                    .addClass('fa-angle-double-up');
+            });
+
 
             panel.fire('active', [group, item]);
-
-
          
         },
 
