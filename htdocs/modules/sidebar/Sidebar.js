@@ -34,7 +34,7 @@ define('/Sidebar', function (require, module, exports) {
                 var logo = data.logo || current.logo;
                 Logo.render(logo);
 
-                Groups.render(data.groups);
+                Groups.render(data);
             },
         });
 
@@ -79,7 +79,6 @@ define('/Sidebar', function (require, module, exports) {
 
     return panel.wrap({
         'active': function (item) {
-            //debugger
 
             if (!item) {
                 var data = current.data;

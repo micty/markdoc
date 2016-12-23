@@ -91,7 +91,7 @@ define('/Main', function (require, module, exports) {
             Header.hide();
             Content.hide();
             Loading.hide();
-            
+            Mark.hide();
 
             //避免跟 Content.loading 事件竞争。
             setTimeout(function () {

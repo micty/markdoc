@@ -8,6 +8,73 @@ define('/Sidebar/Groups', function (require, module, exports) {
 
     var panel = KISP.create('Panel', '#ul-sidebar-groups');
     var list = [];
+    var mutex = false;
+
+    //展开或折叠指定的组。
+    //根据 mutex 字段控制是否使用互斥效果。
+    function fold(no, needOpen) {
+
+        if (typeof no == 'object') {
+            no = +no.getAttribute('data-no');
+        }
+
+
+        var up = 'fa-angle-double-up';
+        var down = 'fa-angle-double-down';
+        var selector = '[data-no="' + no + '"]';
+
+        var div = panel.$.find('div' + selector);
+        var i = $(div).find('i');
+
+        //没有指定 needOpen，则自动判断。
+        if (needOpen === undefined) {
+            needOpen = i.hasClass(down);
+        }
+
+        fold(no, needOpen);
+
+        if (!mutex) {
+            return;
+        }
+
+
+        //实现互斥效果
+        list.forEach(function (group, index) {
+            if (index == no) { //当前组已处理过。
+                return;
+            }
+
+            //只有当前组是需要打开时才处理其它组。 
+            //即，如果当前组是由打开到关闭的，则不处理其它组。
+            if (needOpen) { 
+                fold(index, !needOpen);
+            }
+        });
+
+
+        //内部方法。
+        function fold(no, open) {
+            var selector = '[data-no="' + no + '"]';
+            var div = 'div' + selector;
+            var ul = panel.$.find('ul' + selector);
+            var i = $(div).find('i');
+
+            if (open) {
+                ul.slideDown('fast', function () {
+                    i.removeClass(down);
+                    i.addClass(up);
+                });
+            }
+            else {
+                ul.slideUp('fast', function () {
+                    i.removeClass(up);
+                    i.addClass(down);
+                });
+            }
+        }
+
+    }
+
 
 
     panel.on('init', function () {
@@ -38,18 +105,9 @@ define('/Sidebar/Groups', function (require, module, exports) {
         });
 
         panel.$.on('click', '[data-type="group"]', function () {
-        
-            var div = this;
-            var no = +div.getAttribute('data-no');
-            var ul = 'ul[data-no="' + no + '"]';
-
-            panel.$.find(ul).slideToggle('fast', function () {
-                $(div).find('i').toggleClass('fa-angle-double-down fa-angle-double-up');
-            });
-
-
-
+            fold(this);
         });
+
 
         panel.$.on('click', '[data-type="item"]', function () {
             var li = this;
@@ -63,9 +121,12 @@ define('/Sidebar/Groups', function (require, module, exports) {
 
     });
 
+
     panel.on('render', function (data) {
-        list = data;
-        panel.fill(data);
+        list = data.groups;
+        mutex = data.mutex;
+
+        panel.fill(list);
         panel.fire('render');
     });
 
@@ -83,8 +144,8 @@ define('/Sidebar/Groups', function (require, module, exports) {
 
 
             var args = id.split('/');
-            var no = args[0];
-            var index = args[1];
+            var no = +args[0];
+            var index = +args[1];
 
             var group = list[no];
             var item = group.items[index];
@@ -100,14 +161,7 @@ define('/Sidebar/Groups', function (require, module, exports) {
             li.scrollIntoViewIfNeeded();
 
             //展开相应的组。
-            var ul = li.parentNode;
-
-            $(ul).slideDown('fast', function () {
-                panel.$.find('i[data-no="' + no + '"]')
-                    .removeClass('fa-angle-double-down')
-                    .addClass('fa-angle-double-up');
-            });
-
+            fold(no, true);
 
             panel.fire('active', [group, item]);
          
