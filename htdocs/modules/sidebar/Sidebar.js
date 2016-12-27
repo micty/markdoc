@@ -27,9 +27,13 @@ define('/Sidebar', function (require, module, exports) {
 
         API.on({
             'success': function (data) {
-                panel.show();
+               
 
                 current.data = data;
+                panel.show();
+
+                var fixed = data.fixed !== false;       //配置是否明确禁用 fixed
+                panel.$.toggleClass('fixed', fixed);
 
                 var logo = data.logo || current.logo;
                 Logo.render(logo);
@@ -104,12 +108,8 @@ define('/Sidebar', function (require, module, exports) {
            
         },
 
-        'addClass': function (name) {
-            panel.$.addClass(name);
-        },
-
-        'removeClass': function (name) {
-            panel.$.removeClass(name);
+        'leave': function (sw) {
+            panel.$.toggleClass('leave', sw);
         },
 
         //设置备用 logo

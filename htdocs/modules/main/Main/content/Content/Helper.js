@@ -90,7 +90,7 @@ define('/Main/Content/Helper', function (require, module, exports) {
             });
 
 
-            container.find('h2,h3,h4,h5,h6').each(function () {
+            container.find('h1,h2,h3,h4,h5,h6').each(function () {
                 $(this).wrapInner('<span></span>');
             });
 

@@ -13,7 +13,7 @@ define('/Header', function (require, module, exports) {
     var Search = module.require('Search');
 
     var panel = KISP.create('Panel', '#div-panel-header');
-
+    var current = null;
 
 
     panel.on('init', function () {
@@ -47,7 +47,8 @@ define('/Header', function (require, module, exports) {
 
 
     panel.on('render', function (data) {
-        Search.render();
+        current = data;
+        Search.render(data.search);
         Groups.render(data.menus);
         Logo.render(data.logo);
     });
@@ -57,15 +58,26 @@ define('/Header', function (require, module, exports) {
 
 
     return panel.wrap({
-        
-        'addClass': function (name) {
-            panel.$.addClass(name);
+
+        fixed: function (sw) {
+            if (!sw) {
+                panel.$.removeClass('fixed');
+                return;
+            }
+
+            var fixed = current.fixed !== false;    //配置是否明确禁用 fixed
+            if (fixed) {
+                panel.$.addClass('fixed');
+            }
         },
 
-        'removeClass': function (name) {
-            panel.$.removeClass(name);
+        leave: function (sw) {
+            panel.$.toggleClass('leave', sw);
         },
 
+        reset: function () {
+            panel.$.removeClass('leave fixed');
+        },
         
 
     });

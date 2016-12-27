@@ -7,6 +7,7 @@ KISP.launch(function (require, module) {
     var Main = module.require('Main');
     var Footer = module.require('Footer');
     var Scroller = module.require('Scroller');
+    var Title = module.require('Title');
     var FixedMenus = module.require('FixedMenus');
 
 
@@ -30,23 +31,23 @@ KISP.launch(function (require, module) {
 
     Scroller.on({
         'leave': function () {
-            Header.addClass('leave');
-            Sidebar.addClass('leave');
+            Header.leave(true);
+            Sidebar.leave(true);
         },
         'top': function () {
-            Header.removeClass('leave fixed');
+            Header.reset();
         },
         'return': function () {
-            Sidebar.removeClass('leave');
+            Sidebar.leave(false);
         },
         'up': function () {
-            Header.addClass('fixed');
+            Header.fixed(true);
         },
         'down': function () {
-            Header.removeClass('fixed');
+            Header.fixed(false);
         },
         'reset': function () {
-            Header.removeClass('fixed');
+            Header.fixed(false);
         },
     });
 
@@ -58,8 +59,9 @@ KISP.launch(function (require, module) {
     });
 
     Main.on({
-        'render': function (data) {
-            FixedMenus.render(data);
+        'render': function (isCode, title) {
+            Title.render(title);
+            FixedMenus.render(isCode);
             Scroller.render();
         },
         'click': function () {
@@ -79,7 +81,7 @@ KISP.launch(function (require, module) {
 
     Router.on({
         'change': function () {
-            Header.removeClass('leave fixed');
+            Header.reset();
         },
         'config': {
             'loading': function () {
@@ -104,6 +106,7 @@ KISP.launch(function (require, module) {
         },
         404: function (url) {
             Main.notfound(url);
+            Title.render(404);
         },
     });
 

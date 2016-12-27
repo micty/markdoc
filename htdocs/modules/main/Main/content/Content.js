@@ -14,7 +14,7 @@ define('/Main/Content', function (require, module, exports) {
     });
 
     var visible = false;
-    var titles = 'h1,h2,h3,h4,h5,h6,hr';
+    var titles = 'h1,h2,h3,h4,h5,h6';
     var container = $('#div-main-content-container');
 
     panel.on('init', function () {
@@ -51,6 +51,7 @@ define('/Main/Content', function (require, module, exports) {
         //如果 100ms 内能完成请求，则不显示 loading。
         //否则就显示 loading 至少 800ms，以避免内容太快回来而闪一下。
         var loading = false;
+        var title = '';         //要在浏览器中显示的标题
         container.hide();
 
         var tid = setTimeout(function () {
@@ -62,21 +63,13 @@ define('/Main/Content', function (require, module, exports) {
             loading = false;
             clearTimeout(tid);
             container.show();
-            panel.fire('render');
+            panel.fire('render', [title]);
         }
 
 
         Loader.load(url, function (content) {
            
             visible = true;  //每次填充都要重置。
-
-            if (loading) {
-                setTimeout(show, 800);
-            }
-            else {
-                show();
-            }
-
 
             Helper.fill({
                 'container': container,
@@ -85,9 +78,25 @@ define('/Main/Content', function (require, module, exports) {
             });
 
             panel.$.find(titles).each(function () {
-                var els = $(this).nextUntil(titles);
+
+                var $this = $(this);
+
+                if (!title) {
+                    title = $this.text();
+                }
+
+                var els = $this.nextUntil(titles);
                 $(this).toggleClass('title', els.length > 0);
             });
+
+
+            if (loading) {
+                setTimeout(show, 800);
+            }
+            else {
+                show();
+            }
+
           
      
         });

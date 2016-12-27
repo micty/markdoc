@@ -1,11 +1,11 @@
 ﻿
 {
-    
     "!file": "./readme.md",
     "file": "./es6/sidebar.json",
-
     "header": {
         "logo": "style/img/logo.png",
+        "search": { },
+        "fixed": true,
         "menus": [
             {
                 "name": "ES6 教程",
@@ -99,7 +99,7 @@
     },
 
     "footer": {
-        "copyright": "© 2014 - 2016 KISP. All rights reserved.",
+        "copyright": "© 2014 - 2016 KISP. All rights reserved. <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备16104043号</a>",
         "menus": [
             {
                 "name": "关于KISP",

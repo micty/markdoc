@@ -1,6 +1,7 @@
 ﻿{
     "file": "./readme.md",
     "logo": "",
+    "fixed": true,
     "groups": [
         {
             "name": "ECMAScript 6入门",

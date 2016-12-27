@@ -16,7 +16,9 @@ define('API', function (require, module, exports) {
     var mapper = new Mapper();
     var $emitter = new Emitter();   //针对静态的。
     var url$data = {};
+    var defaults = KISP.data(module.id);
 
+    console.log(defaults);
 
     function API(url) {
 
@@ -29,7 +31,6 @@ define('API', function (require, module, exports) {
         };
 
         mapper.set(this, meta);
-
     }
 
 
@@ -63,7 +64,7 @@ define('API', function (require, module, exports) {
             
             $.ajax({
                 'url': url,
-                'cache': false,     //不缓存，以确保拿到最新版本。
+                'cache': defaults.cache,      //缓存。
                 'dataType': 'text', //这里作为纯文本去获取，获取到后再解析，这样可以对 json 格式没那么严格。     
 
                 'success': function (data) {

@@ -38,9 +38,15 @@ define('/Main', function (require, module, exports) {
                 Loading.show();
             },
 
-            'render': function () {
+            'render': function (title) {
                 Loading.hide();
-                panel.fire('render', [current]);
+
+                var isCode = current.isCode;
+                if (isCode) {
+                    title = current.name + ' 源代码';
+                }
+
+                panel.fire('render', [isCode, title]);
             },
 
             'line': function (y) {

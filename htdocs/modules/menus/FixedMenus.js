@@ -35,8 +35,8 @@ define('/FixedMenus', function (require, module, exports) {
     });
 
 
-    panel.on('render', function (data) {
-        panel.$.find('[data-cmd="outline"]').toggle(!data.isCode);
+    panel.on('render', function (isCode) {
+        panel.$.find('[data-cmd="outline"]').toggle(!isCode);
     });
 
 

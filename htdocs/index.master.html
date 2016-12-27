@@ -19,6 +19,16 @@
     </script>
     <!--weber.css.end-->
 
+    <style>
+        /*在 less 编译压缩后会给计算错误的样式放在这里*/
+        .panel-sidebar{
+             height: calc(100vh - 90px);
+        }
+        .panel-main{
+            min-height: calc(100vh - 68px);
+        }
+    </style>
+
 </head>
 <body>
     <link rel="html" href="modules/header/panel.html" />
