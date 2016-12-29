@@ -132,7 +132,7 @@ define('/Sidebar/Groups', function (require, module, exports) {
 
 
 
-    return panel.wrap({
+    return exports = panel.wrap({
 
         'active': function (id) {
 
@@ -149,12 +149,14 @@ define('/Sidebar/Groups', function (require, module, exports) {
 
             var group = list[no];
             if (!group) {
+                exports.active(false);
                 panel.fire('404', 'group', [no]);
                 return;
             }
 
             var item = group.items[index];
             if (!item) {
+                exports.active(false);
                 panel.fire('404', 'item', [no, index]);
                 return;
             }
