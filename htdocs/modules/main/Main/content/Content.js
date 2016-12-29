@@ -37,7 +37,7 @@ define('/Main/Content', function (require, module, exports) {
         panel.$.on('click', 'a[href^="#"]', function (event) {
             var a = this;
             var href = a.getAttribute('href');
-            console.log(href);
+      
             event.preventDefault();
 
             panel.fire('hash', [href]);

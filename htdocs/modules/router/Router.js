@@ -8,6 +8,7 @@ define('/Router', function (require, module, exports) {
     var KISP = require('KISP');
     var $ = require('$');
     var MiniQuery = require('MiniQuery');
+    var $Url = MiniQuery.require('Url');
     var Url = require('Url');
     var API = require('API');
 
@@ -16,6 +17,7 @@ define('/Router', function (require, module, exports) {
 
     var panel = KISP.create('Panel');
     var config = null;
+    var baseDir = '';       // config.json 文件所在的目录，以此为基准目录。
 
 
     panel.on('init', function () {
@@ -65,6 +67,10 @@ define('/Router', function (require, module, exports) {
             },
 
             'sidebar': function (url, item) {
+                if (url.startsWith('/')) {
+                    url = baseDir + url.slice(1);
+                }
+
                 panel.fire('sidebar', [url, item]);
             },
 
@@ -77,6 +83,18 @@ define('/Router', function (require, module, exports) {
             },
 
             'file': function (url) {
+                var files = url.split(',');
+
+                files = files.map(function (file) {
+                    if (file.startsWith('/')) {
+                        file = baseDir + file.slice(1);
+                    }
+
+                    return file;
+                });
+
+                url = files.join(',');
+
                 panel.fire('file', [url]);
             },
         });
@@ -85,10 +103,14 @@ define('/Router', function (require, module, exports) {
     });
 
 
+    var configUrl = null;
+
     panel.on('render', function () {
-        var Url = MiniQuery.require('Url');
-        var qs = Url.getQueryString(window) || {};
-        var url = qs.config || 'data/config.json';
+     
+        var qs = $Url.getQueryString(window) || {};
+        var url = configUrl = qs.config || 'data/config.json';
+
+        baseDir = Url.dir(url); //以 '/' 结尾。
 
         panel.fire('config', 'loading');
         Config.get(url);
@@ -101,20 +123,31 @@ define('/Router', function (require, module, exports) {
     return panel.wrap({
 
         'auto': function (file) {
+
+            //文件在基准目录里，删掉基准目录前缀，并且以 '/' 开头。
+            if (file.startsWith(baseDir)) {
+                file = file.slice(baseDir.length - 1);
+            }
+
             var ext = Url.extname(file);
-            
             if (ext == 'json') {
                 Hash.set('sidebar', file);
                 return;
             }
 
             Hash.set('file', file);
-
-
         },
 
-        'set': Hash.set,
+
+        'set': function (hash) {
+            Hash.setRelative(hash, baseDir);
+        },
+
         'add': Hash.add,
+
+        'notfound': function (url, data) {
+            panel.fire('404', [url, data]);
+        },
     });
 
 });

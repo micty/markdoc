@@ -148,7 +148,16 @@ define('/Sidebar/Groups', function (require, module, exports) {
             var index = +args[1];
 
             var group = list[no];
+            if (!group) {
+                panel.fire('404', 'group', [no]);
+                return;
+            }
+
             var item = group.items[index];
+            if (!item) {
+                panel.fire('404', 'item', [no, index]);
+                return;
+            }
 
             var selector = $.String.format('li[data-index="{0}"][data-no="{1}"]', index, no);
             var li = panel.$.find(selector);

@@ -40,6 +40,15 @@ define('Url', function (require, module) {
             var args = [].slice.call(arguments);
             return resolveUrl.apply(resolveUrl, args);
         },
+
+
+        dir: function (url) {
+            url = url.split('#')[0];
+            url = url.split('?')[0];
+
+            var dir = url.split('/').slice(0, -1).join('/') + '/';  //提取出目录
+            return dir;
+        },
         
     };
 

@@ -12,6 +12,7 @@ define('/Router/Hash', function (require, module, exports) {
     var Url = require('Url');
 
     var panel = KISP.create('Panel');
+    var seperater = ':';
 
 
     //把 hash 字符串按字段优先级解析成一个对象。
@@ -29,7 +30,7 @@ define('/Router/Hash', function (require, module, exports) {
             return $.Object.parseQueryString(hash);
         }
 
-        var list = hash.split('!');
+        var list = hash.split(seperater);
         var url = list[0];
         if (!url) {
             return {};
@@ -77,7 +78,7 @@ define('/Router/Hash', function (require, module, exports) {
         var file = data['file'];
 
         if (dir) {
-            return dir + '!' + file;
+            return dir + seperater + file;
         }
 
         if (file) {
@@ -89,7 +90,7 @@ define('/Router/Hash', function (require, module, exports) {
         var item = data['item'];
 
         if (sidebar && item) {
-            return sidebar + '!' + item;
+            return sidebar + seperater + item;
         }
 
         return sidebar || item || '';
@@ -213,7 +214,7 @@ define('/Router/Hash', function (require, module, exports) {
 
             //set(hash) 字符串形式。
             if (arguments.length == 1) {
-                key = key.slice(1); //去掉 `#`
+                key = key.slice(1); //去掉开头的 `#`
                 key = decodeURIComponent(key);
                 hash = parse(key);
             }
@@ -223,6 +224,30 @@ define('/Router/Hash', function (require, module, exports) {
 
             hash = stringify(hash);
             location.hash = hash;
+        },
+
+        'setRelative': function (hash, baseDir) {
+            hash = hash.slice(1); //去掉开头的 `#`
+            hash = decodeURIComponent(hash);
+            hash = parse(hash);
+
+           
+
+            ['sidebar', 'file', 'dir'].forEach(function (key) {
+                var file = hash[key];
+                if (!file) {
+                    return;
+                }
+
+                //文件在基准目录里，删掉基准目录前缀，并且以 '/' 开头。
+                if (file.startsWith(baseDir)) {
+                    hash[key] = file.slice(baseDir.length - 1);
+                }
+            });
+
+            hash = stringify(hash);
+            location.hash = hash;
+
         },
     });
 

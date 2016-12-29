@@ -15,9 +15,18 @@ define('/Main/NotFound', function (require, module, exports) {
     });
 
 
-    panel.on('render', function (data) {
+    panel.on('render', function (file, data) {
+
+        var isItem = 'index' in data;
+        var isGroup = 'no' in data;
+
         panel.fill({
-            'file': data,
+            'file': file,
+            'no': data.no,
+            'index': data.index,
+
+            'group-display': (isItem || !isGroup) ? 'display: none;' : '',
+            'item-display': isItem ? '' : 'display: none;',
         });
 
     });

@@ -13,9 +13,38 @@ define('/Main', function (require, module, exports) {
     var Url = module.require('Url');
 
     var panel = KISP.create('Panel', '#div-panel-main');
-    var current = null;
+
+    var current = {
+        'url': null,
+        'visible': false,   //记录 sidebar 是否可见。
+    };
+
+
+    function setPadding(visible) {
+
+        if (!visible) { //sidebar 是否可见。
+            panel.$.css('padding-right', '');
+            return;
+        }
+
+        var w = document.documentElement.clientWidth;
+        var max = 260 + 52 + 1024;
+        var p = w - max;
+
+        p = Math.min(p, 260 + 52);
+        p = Math.max(p, 52);
+
+        panel.$.css('padding-right', p + 'px');
+    }
+    
 
     panel.on('init', function () {
+
+        $(window).on('resize', function () {
+            if (current.visible) {
+                setPadding(true);
+            }
+        });
 
         Header.on({
             'numbers': function (checked) {
@@ -41,9 +70,9 @@ define('/Main', function (require, module, exports) {
             'render': function (title) {
                 Loading.hide();
 
-                var isCode = current.isCode;
+                var isCode = current.url.isCode;
                 if (isCode) {
-                    title = current.name + ' 源代码';
+                    title = current.url.name + ' 源代码';
                 }
 
                 panel.fire('render', [isCode, title]);
@@ -65,9 +94,9 @@ define('/Main', function (require, module, exports) {
     });
 
 
-    panel.on('render', function (url) {
+    panel.on('render', function (url, isSidebarVisible) {
 
-        var data = current = Url.parse(url);
+        var data = current.url = Url.parse(url);
         panel.$.toggleClass('source', data.isCode);
 
         Header.render(data);
@@ -75,12 +104,13 @@ define('/Main', function (require, module, exports) {
         Mark.render(data);
         NotFound.hide();
 
-      
+        current.visible = isSidebarVisible;
+        setPadding(isSidebarVisible);
     });
 
 
 
-    return panel.wrap({
+    return exports = panel.wrap({
 
         //显示大纲
         'outline': Content.outline,
@@ -92,7 +122,9 @@ define('/Main', function (require, module, exports) {
             Loading.show();
         },
 
-        'notfound': function (file) {
+        'notfound': function (file, data) {
+            data = data || {};
+
             panel.$.removeClass('source');
             Header.hide();
             Content.hide();
@@ -102,10 +134,14 @@ define('/Main', function (require, module, exports) {
             //避免跟 Content.loading 事件竞争。
             setTimeout(function () {
                 Loading.hide();
-                NotFound.render(file);
+                NotFound.render(file, data);
             }, 100);
+
+   
+            setPadding(data.visible);
         },
 
+       
     });
 
 });

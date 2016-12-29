@@ -21,6 +21,7 @@ define('/Sidebar', function (require, module, exports) {
         item: null,
         logo: '',
         ready: false,
+        url: '',
     };
 
     panel.on('init', function () {
@@ -52,17 +53,37 @@ define('/Sidebar', function (require, module, exports) {
                 panel.fire('active', [item.file]);
             },
             'render': function () {
+          
                 current.ready = true;
 
                 var item = current.item;
-                var url = current.data.file;
-
                 if (item) {
                     Groups.active(item);
+                    return;
                 }
-                else if (url) {
+
+                var url = current.data.file;
+                if (url) {
                     panel.fire('active', [url]);
+                    return;
                 }
+
+                Groups.active('0/0');
+            },
+            404: {
+                'group': function (no) {
+                    panel.fire('404', 'group', [current.url, {
+                        'no': no,
+                        'visible': true,
+                    }]);
+                },
+                'item': function (no, index) {
+                    panel.fire('404', 'item', [current.url, {
+                        'no': no,
+                        'index': index,
+                        'visible': true,
+                    }]);
+                },
             },
         });
       
@@ -74,11 +95,11 @@ define('/Sidebar', function (require, module, exports) {
         
         panel.hide();
         current.item = item;
+        current.url = url;
+
         API.get(url);
       
     });
-
-
 
 
     return panel.wrap({

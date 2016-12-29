@@ -25,7 +25,15 @@ KISP.launch(function (require, module) {
             Router.add('item', id);
         },
         'active': function (url) {
-            Main.render(url);
+            Main.render(url, true);
+        },
+        404: {
+            'group': function (url, data) {
+                Router.notfound(url, data);
+            },
+            'item': function (url, data) {
+                Router.notfound(url, data);
+            },
         },
     });
 
@@ -68,6 +76,7 @@ KISP.launch(function (require, module) {
             Scroller.reset();
         },
         'hash': function (hash) {
+            console.log(hash)
             Router.set(hash);
         },
     });
@@ -102,10 +111,10 @@ KISP.launch(function (require, module) {
         },
         'file': function (url) {
             Sidebar.hide();
-            Main.render(url);
+            Main.render(url, false);
         },
-        404: function (url) {
-            Main.notfound(url);
+        404: function (url, data) {
+            Main.notfound(url, data);
             Title.render(404);
         },
     });
