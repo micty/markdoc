@@ -53,6 +53,7 @@ define('/Main/Content', function (require, module, exports) {
         var loading = false;
         var title = '';         //要在浏览器中显示的标题
         container.hide();
+        panel.$.removeClass('show');
 
         var tid = setTimeout(function () {
             loading = true;
@@ -63,6 +64,7 @@ define('/Main/Content', function (require, module, exports) {
             loading = false;
             clearTimeout(tid);
             container.show();
+            panel.$.addClass('show');
             panel.fire('render', [title]);
         }
 
@@ -96,8 +98,6 @@ define('/Main/Content', function (require, module, exports) {
             else {
                 show();
             }
-
-          
      
         });
 

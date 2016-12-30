@@ -2,6 +2,16 @@
 
 .panel-main .content {
     margin-bottom: 70px;
+    opacity: 0.2;
+    /*visibility: hidden;*/
+    /*padding-top: 0px;*/
+
+    &.show {
+        opacity: 1;
+        /*visibility: visible;*/
+        transition: 0.25s all linear;
+        padding-top: 12px;
+    }
 
     &.loading {
         text-align: center;
