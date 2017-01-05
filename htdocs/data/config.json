@@ -2,7 +2,9 @@
 {
     "!file": "./readme.md",
     "file": "./es6/sidebar.json",
+    "fadeIn": true,
     "header": {
+        "!disabled": true,
         "logo": "style/img/logo.png",
         "search": { },
         "fixed": true,

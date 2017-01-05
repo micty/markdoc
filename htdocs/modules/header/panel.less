@@ -1,7 +1,7 @@
 
 
 .panel-header {
-    min-width: 1024px;
+    min-width: 1114px;
     box-sizing: border-box;
     position: absolute;
     top: 0;
@@ -21,6 +21,7 @@
 
     &.leave {
         position: absolute;
+        top: -67px;
         opacity: 0;
         visibility: hidden;
         transition: all 0.5s ease-in-out;
@@ -28,11 +29,21 @@
 
     &.fixed {
         position: fixed;
+        top: 0px;
         opacity: 1;
         visibility: visible;
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
         transition: all 0.5s ease-in-out;
+
+        &.slide-up {
+            top: -67px;
+            transition-duration: 0.2s;
+            box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
+        }
     }
+
+
+
 
     .logo {
         display: inline-block;
@@ -101,10 +112,10 @@
             }
         }
 
-        >ul {
+        > ul {
             position: relative;
             z-index: 9;
-            min-width:100px;
+            min-width: 100px;
             display: inline-block;
             vertical-align: top;
             opacity: 1;
@@ -121,7 +132,7 @@
                 cursor: pointer;
                 box-sizing: border-box;
                 font-size: 0px;
-
+                /*z-index: 3;*/ /*解决源代码视图时有时会给 header 工具栏覆盖的问题*/
                 span {
                     font-size: 14px;
                 }

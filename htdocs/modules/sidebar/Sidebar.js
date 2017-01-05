@@ -72,13 +72,13 @@ define('/Sidebar', function (require, module, exports) {
             },
             404: {
                 'group': function (no) {
-                    panel.fire('404', 'group', [current.url, {
+                    panel.fire('404', [current.url, {
                         'no': no,
                         'visible': true,
                     }]);
                 },
                 'item': function (no, index) {
-                    panel.fire('404', 'item', [current.url, {
+                    panel.fire('404', [current.url, {
                         'no': no,
                         'index': index,
                         'visible': true,
@@ -104,6 +104,7 @@ define('/Sidebar', function (require, module, exports) {
 
     return panel.wrap({
         'active': function (item) {
+            panel.show();
 
             if (!item) {
                 var data = current.data;
@@ -129,12 +130,13 @@ define('/Sidebar', function (require, module, exports) {
            
         },
 
-        'leave': function (sw) {
-            panel.$.toggleClass('leave', sw);
-        },
-
         //设置备用 logo
-        'logo': function (url) {
+        'logo': function (data) {
+            if (!data) {
+                return;
+            }
+
+            var url = typeof data == 'object' ? data.logo : data;
             current.logo = url;
         },
     });

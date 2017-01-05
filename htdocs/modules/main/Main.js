@@ -17,6 +17,7 @@ define('/Main', function (require, module, exports) {
     var current = {
         'url': null,
         'visible': false,   //记录 sidebar 是否可见。
+        'config': null,
     };
 
 
@@ -79,7 +80,7 @@ define('/Main', function (require, module, exports) {
             },
 
             'line': function (y) {
-                Mark.render(y);
+                Mark.render(y, current.config.fadeIn);
             },
 
             'hash': function (hash) {
@@ -97,10 +98,13 @@ define('/Main', function (require, module, exports) {
     panel.on('render', function (url, isSidebarVisible) {
 
         var data = current.url = Url.parse(url);
+        
+
         panel.$.toggleClass('source', data.isCode);
 
+ 
         Header.render(data);
-        Content.render(url);
+        Content.render(url, current.config.fadeIn);
         Mark.render(data);
         NotFound.hide();
 
@@ -141,7 +145,22 @@ define('/Main', function (require, module, exports) {
             setPadding(data.visible);
         },
 
+        'config': function (config) {
+            current.config = config;
+        },
        
+        'leave': function (sw) {
+            Header.leave(sw);
+
+            if (current.url.isCode) {
+                Content.$.toggleClass('header-fixed', sw);
+            }
+        },
+
+        //Header 显示/隐藏时，调整 top 距离
+        'setTop': function (isHeaderVisible) {
+            panel.$.parent().toggleClass('no-header', !isHeaderVisible);
+        },
     });
 
 });

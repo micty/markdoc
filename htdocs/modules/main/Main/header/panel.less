@@ -11,6 +11,11 @@
     -webkit-box-align: center;
     border-bottom: 1px solid #e5e5e5;
 
+    &.fixed{
+        position: fixed;
+        top: 0px;
+    }
+
     a {
         margin-left: 18px;
         color: #4078c0;
@@ -37,19 +42,19 @@
                 height: 14px;
                 width: 14px;
                 background-color: transparent;
-                border: 1px solid #34495e;
+                border: 1px solid #bcbfc1;
                 border-radius: 1px;
                 display: inline-block;
                 box-sizing: border-box;
                 cursor: pointer;
-                z-index: 1;
+                z-index: 0;
 
                 &::before, &::after {
                     content: '';
                     box-sizing: border-box;
                     position: absolute;
                     height: 0;
-                    background-color: #4078c0;
+                    background-color: #c11515;
                     display: inline-block;
                     transform-origin: left top;
                     border-radius: 5px;
@@ -67,7 +72,7 @@
                     top: 5px;
                     left: 1px;
                     transform: rotate(-45deg);
-                    width: 1px;
+                    width: 2px;
                 }
             }
 
@@ -78,10 +83,10 @@
                 cursor: pointer;
                 zoom: 2;
                 opacity: 0;
-                z-index: 2;
+                z-index: 1;
 
                 &:checked + i {
-                    border-color: #4078c0;
+                    border-color: #bcbfc1;
 
                     &::before {
                         height: 13px;

@@ -13,12 +13,23 @@ define('/Main/Mark', function (require, module, exports) {
     
 
     var type$fn = {
-        'number': function (y) {
+        'number': function (y, fadeIn) {
+          
             //ÐÐºÅ
             var no = (y - 4) / 20;
             no = Math.floor(no) + 1;
 
+           
+
             var top = no * 20 + 20;
+
+            if (fadeIn) {
+                top += 12;
+            }
+
+            if (no < 1 || top < 0) {
+                top = -1000; //±ÜÃâ¸ú Header ÖØµþ¡£
+            }
 
             panel.$.css({
                 'top': top + 'px',
@@ -48,8 +59,8 @@ define('/Main/Mark', function (require, module, exports) {
     });
 
 
-    panel.on('render', function (data) {
-        type$fn[typeof data](data);
+    panel.on('render', function (data, fadeIn) {
+        type$fn[typeof data](data, fadeIn);
     });
 
 

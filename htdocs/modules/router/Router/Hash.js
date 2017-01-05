@@ -46,6 +46,15 @@ define('/Router/Hash', function (require, module, exports) {
         }
 
 
+        //file
+        var isOrigin = url.startsWith('@');
+        if (isOrigin) {
+            return {
+                'file': url,
+            };
+        }
+
+
         var ext = Url.extname(url);
 
         //sidebar

@@ -19,6 +19,7 @@ define('/Main/Content/Helper', function (require, module, exports) {
         'ul': null,     //行号列表
     };
 
+
     return {
 
         /**
@@ -30,14 +31,23 @@ define('/Main/Content/Helper', function (require, module, exports) {
         'fill': function (config) {
 
             var container = $(config.container);
-            var html = marked(config.content);
+            var html = config.content;
+
+            if (config.isOrigin) {
+                html = '<pre><code data-language="' + config.ext + '" class="hljs">' + html + '</code></pre>';
+            }
+            else {
+                html = marked(html);
+            }
+
+
 
             container.addClass('Markdown').html(html);
 
 
             //在语法高亮之前做代码的美化
             container.find('code[data-language]').each(function () {
-
+              
                 var code = this;
                 var language = code.getAttribute('data-language');
                 var text = code.innerText;
@@ -108,15 +118,15 @@ define('/Main/Content/Helper', function (require, module, exports) {
 
             var code = current.code;
             var ul = current.ul;
+            var html = current.html;
 
             //显示空行。
             if (checked) {
                 //重新计算高度。
-                var height = Lines.getHeight(code.html());
+                var height = Lines.getHeight(html);
                 code.parent().height(height);
-
                 ul.find('li').show();
-                code.html(current.html);
+                code.html(html);
                 return;
             }
 
@@ -133,7 +143,7 @@ define('/Main/Content/Helper', function (require, module, exports) {
 
 
             //重新计算高度。
-            var height = Lines.getHeight(code.html());
+            var height = Lines.getHeight(html);
             code.parent().height(height);
 
             //隐藏多余的行号
@@ -141,6 +151,8 @@ define('/Main/Content/Helper', function (require, module, exports) {
             ul.find('li').show();
             ul.find('li:gt(' + maxIndex + ')').hide();
         },
+
+        
     };
 
 

@@ -86,8 +86,19 @@ define('/Router', function (require, module, exports) {
                 var files = url.split(',');
 
                 files = files.map(function (file) {
+                    
+                    var isOrigin = file.startsWith('@');
+                    if (isOrigin) {
+                        file = file.slice(1);
+                    }
+
+
                     if (file.startsWith('/')) {
                         file = baseDir + file.slice(1);
+                    }
+
+                    if (isOrigin) {
+                        file = '@' + file;
                     }
 
                     return file;
@@ -124,9 +135,19 @@ define('/Router', function (require, module, exports) {
 
         'auto': function (file) {
 
+            var isOrigin = file.startsWith('@');
+            if (isOrigin) {
+                file = file.slice(1);
+            }
+
             //文件在基准目录里，删掉基准目录前缀，并且以 '/' 开头。
             if (file.startsWith(baseDir)) {
                 file = file.slice(baseDir.length - 1);
+            }
+
+            if (isOrigin) {
+                Hash.set('file', '@' + file);
+                return
             }
 
             var ext = Url.extname(file);

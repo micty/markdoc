@@ -55,7 +55,11 @@ define('/Main/Header', function (require, module, exports) {
 
 
 
-    return panel.wrap();
+    return panel.wrap({
+        'leave': function (sw) {
+            panel.$.toggleClass('fixed', sw);
+        },
+    });
 
 
 

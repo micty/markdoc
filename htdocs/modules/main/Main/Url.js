@@ -7,6 +7,11 @@ define('/Main/Url', function (require, module, exports) {
 
     function parse(url) {
 
+        var isOrigin = url.startsWith('@');
+        if (isOrigin) {
+            url = url.slice(1);
+        }
+
         var index = url.lastIndexOf('.');
 
         if (index < 0) {
@@ -14,7 +19,7 @@ define('/Main/Url', function (require, module, exports) {
                 'url': url,
                 'name': url,
                 'ext': '',
-                'isCode': false,
+                'isCode': isOrigin,
             };
         }
 
@@ -31,7 +36,7 @@ define('/Main/Url', function (require, module, exports) {
             'url': url,
             'name': name,
             'ext': ext,
-            'isCode': !isMarkdown,
+            'isCode': isOrigin || !isMarkdown,
         };
     }
 

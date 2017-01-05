@@ -12,10 +12,12 @@ define('/Scroller', function (require, module, exports) {
     var recent = 0;         //上次滚动后的 scrollTop 值。
     var isUping = false;
     var isDowning = false;
+    var isCode = false;
+    var max = 67;
+
 
     panel.on('init', function () {
 
-        var max = 67;
         var leaved = false;
 
         $(window).on('scroll', function (event) {
@@ -39,7 +41,11 @@ define('/Scroller', function (require, module, exports) {
                 }
                 else {
                     isUping = true;
-                    panel.fire('up');
+
+                    //源代码视图时，不触发 up 事件。
+                    if (!isCode) {
+                        panel.fire('up');
+                    }
                 }
             }
             else { //向下滚动
@@ -79,17 +85,22 @@ define('/Scroller', function (require, module, exports) {
 
 
 
-    panel.on('render', function () {
-
+    panel.on('render', function (is_code) {
+        isCode = is_code;
     });
 
 
     return panel.wrap({
-        reset: function () {
+        'reset': function () {
             recent = 0;         //上次滚动后的 scrollTop 值。
             isUping = false;
             isDowning = false;
             panel.fire('reset');
+        },
+
+        //Header 显示/隐藏时，调整 top 距离
+        'setTop': function (isHeaderVisible) {
+            max = isHeaderVisible ? 67 : 0;
         },
     });
 });

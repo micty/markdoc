@@ -18,6 +18,10 @@ KISP.launch(function (require, module) {
         'menu': function (url) {
             Router.auto(url);
         },
+        'visible': function (visible) {
+            Scroller.setTop(visible);
+            Main.setTop(visible);
+        },
     });
 
     Sidebar.on({
@@ -27,26 +31,23 @@ KISP.launch(function (require, module) {
         'active': function (url) {
             Main.render(url, true);
         },
-        404: {
-            'group': function (url, data) {
-                Router.notfound(url, data);
-            },
-            'item': function (url, data) {
-                Router.notfound(url, data);
-            },
+        404: function (url, data) {
+            Router.notfound(url, data);
         },
     });
 
     Scroller.on({
         'leave': function () {
             Header.leave(true);
-            Sidebar.leave(true);
+            Main.leave(true);
         },
         'top': function () {
             Header.reset();
+            Main.leave(false);
         },
         'return': function () {
-            Sidebar.leave(false);
+            Header.leave(false);
+            Main.leave(false);
         },
         'up': function () {
             Header.fixed(true);
@@ -70,13 +71,12 @@ KISP.launch(function (require, module) {
         'render': function (isCode, title) {
             Title.render(title);
             FixedMenus.render(isCode);
-            Scroller.render();
+            Scroller.render(isCode);
         },
         'click': function () {
             Scroller.reset();
         },
         'hash': function (hash) {
-            console.log(hash)
             Router.set(hash);
         },
     });
@@ -98,8 +98,9 @@ KISP.launch(function (require, module) {
             },
             'success': function (data) {
                 Header.render(data.header);
-                Sidebar.logo(data.header.logo);
+                Sidebar.logo(data.header);
                 Footer.render(data.footer);
+                Main.config(data);
             },
         },
         'sidebar': function (url, item) {

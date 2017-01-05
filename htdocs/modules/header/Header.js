@@ -12,7 +12,9 @@ define('/Header', function (require, module, exports) {
     var Logo = module.require('Logo');
     var Search = module.require('Search');
 
-    var panel = KISP.create('Panel', '#div-panel-header');
+    var panel = KISP.create('Panel', '#div-panel-header', {
+        showAfterRender: false,
+    });
     var current = null;
 
 
@@ -47,27 +49,48 @@ define('/Header', function (require, module, exports) {
 
 
     panel.on('render', function (data) {
+       
+        if (!data || data.disabled) {
+            panel.hide();
+            panel.fire('visible', [false]);
+            return;
+        }
+
+
         current = data;
         Search.render(data.search);
         Groups.render(data.menus);
         Logo.render(data.logo);
+        panel.show();
+        panel.fire('visible', [true]);
+
     });
 
 
-
+    
 
 
     return panel.wrap({
 
         fixed: function (sw) {
+            
+            //给禁用了
+            if (!current) {
+                return;
+            }
+
             if (!sw) {
-                panel.$.removeClass('fixed');
+                if (panel.$.hasClass('fixed')) {
+                    panel.$.addClass('slide-up');
+                }
                 return;
             }
 
             var fixed = current.fixed !== false;    //配置是否明确禁用 fixed
             if (fixed) {
                 panel.$.addClass('fixed');
+                panel.$.removeClass('slide-up');
+
             }
         },
 
@@ -76,7 +99,7 @@ define('/Header', function (require, module, exports) {
         },
 
         reset: function () {
-            panel.$.removeClass('leave fixed');
+            panel.$.removeClass('leave fixed slide-up');
         },
         
 

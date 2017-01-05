@@ -85,8 +85,10 @@ define('/Sidebar/Groups', function (require, module, exports) {
                 data: {
                     'no': no,
                     'name': group.name,
-                    'display': group.fold ? 'display: none;' : '',
+                    'title-display': group.name ? '': 'display: none;',
+                    'items-display': group.fold ? 'display: none;' : '',
                     'up-down': group.fold ? 'down' : 'up',
+
                 },
 
                 list: group.items,

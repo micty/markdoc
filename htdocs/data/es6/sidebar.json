@@ -1,10 +1,11 @@
 ﻿{
     "file": "./readme.md",
-    "logo": "",
+    "!logo": "style/img/logo.png",
+    "logo": "ES6入门教程",
     "fixed": true,
     "groups": [
         {
-            "name": "ECMAScript 6入门",
+            "!name": "ECMAScript 6入门",
             "base": "./docs/",
             "ext": ".md",
             "items": [

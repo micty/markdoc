@@ -13,19 +13,27 @@ define('/Main/Content/Loader', function (require, module, exports) {
 
 
     //根据后缀名加上相应的语言类型。
-    function format(url, md) {
+    function format(content, url, isOrigin) {
+
 
         var ext = Url.extname(url);
 
-        if (!ext || ext == 'md' || ext == 'txt' || ext== 'markdown') {
-            return md;
+        if (isOrigin) {
+            return content;
         }
 
-        md = '``` ' + ext + '\r\n' +
-                md + '\r\n' +
+
+
+        if (!ext || ext == 'md' || ext == 'txt' || ext== 'markdown') {
+            return content;
+        }
+
+        content =
+            '``` ' + ext + '\r\n' +
+                content + '\r\n' +
             '```';
 
-        return md;
+        return content;
     }
 
 
@@ -39,14 +47,23 @@ define('/Main/Content/Loader', function (require, module, exports) {
             var urls = url.split(',');
             var tasks = new ParallelTasks(urls);
             var values = [];
+            var isOrigin = false;
+            var ext = '';
 
             tasks.on('each', function (url, index, done) {
 
                 var api = new API(url);
 
-                api.on('success', function (md) {
-                    md = format(url, md);
-                    values[index] = md;      //内容有顺序关系。
+                api.on('success', function (content, url, origin) {
+
+                    if (index == 0) {
+                        isOrigin = origin;
+                        ext = Url.extname(url);
+                    }
+                  
+
+                    content = format(content, url, origin);
+                    values[index] = content;      //内容有顺序关系。
                     done();
                 });
 
@@ -57,7 +74,10 @@ define('/Main/Content/Loader', function (require, module, exports) {
 
             //子任务并行处理完成。
             tasks.on('all', function () {
-                fn && fn(values.join(''));
+                fn && fn(values.join(''), {
+                    'isOrigin': isOrigin,
+                    'ext': ext,
+                });
             });
 
             tasks.run();

@@ -45,7 +45,7 @@ define('/Main/Content', function (require, module, exports) {
     });
 
 
-    panel.on('render', function (url) {
+    panel.on('render', function (url, fadeIn) {
 
 
         //如果 100ms 内能完成请求，则不显示 loading。
@@ -53,6 +53,8 @@ define('/Main/Content', function (require, module, exports) {
         var loading = false;
         var title = '';         //要在浏览器中显示的标题
         container.hide();
+
+        panel.$.toggleClass('fadeIn', !!fadeIn);
         panel.$.removeClass('show');
 
         var tid = setTimeout(function () {
@@ -64,19 +66,24 @@ define('/Main/Content', function (require, module, exports) {
             loading = false;
             clearTimeout(tid);
             container.show();
-            panel.$.addClass('show');
+            if (fadeIn) {
+                panel.$.addClass('show');
+            }
+
             panel.fire('render', [title]);
         }
 
 
-        Loader.load(url, function (content) {
-           
+        Loader.load(url, function (content, options) {
+
             visible = true;  //每次填充都要重置。
 
             Helper.fill({
                 'container': container,
                 'content': content,
                 'baseUrl': url,
+                'isOrigin': options.isOrigin,
+                'ext': options.ext,
             });
 
             panel.$.find(titles).each(function () {
@@ -126,7 +133,7 @@ define('/Main/Content', function (require, module, exports) {
 
         'empty': Helper.empty,
 
-       
+        
     });
 
 });

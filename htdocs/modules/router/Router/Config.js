@@ -39,7 +39,7 @@ define('/Router/Config', function (require, module, exports) {
 
 
                     //header
-                    var header = json.header;
+                    var header = json.header || {};
                     var menus = header.menus = header.menus || [];
 
                     [

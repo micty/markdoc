@@ -18,16 +18,25 @@ define('API', function (require, module, exports) {
     var url$data = {};
     var defaults = KISP.data(module.id);
 
-    console.log(defaults);
-
     function API(url) {
 
         var ext = Url.extname(url);
+        var isOrigin = url.startsWith('@');
+
+        if (isOrigin) {
+            url = url.slice(1);
+        }
+
+        //这个关闭，否则在内容区会死循环加载。
+        if (ext == 'html' || ext == 'htm') {
+            isOrigin = false; 
+        }
 
         var meta = {
             'url': url,
             'ext': ext,
             'emitter': new Emitter(this),
+            'isOrigin': isOrigin,
         };
 
         mapper.set(this, meta);
@@ -46,17 +55,20 @@ define('API', function (require, module, exports) {
         },
 
         get: function () {
+            
             var meta = mapper.get(this);
             var url = meta.url;
             var emitter = meta.emitter;
             var ext = meta.ext;
             var data = url$data[url];
+            var isOrigin = meta.isOrigin;
 
             if (data) {
-                if (ext == 'json') {
+                if (ext == 'json' && !isOrigin) {
                     data = JSON.parse(data);          //拷贝一份。
                 }
-                emitter.fire('success', [data, url]);
+
+                emitter.fire('success', [data, url, isOrigin]);
                 return;
             }
 
@@ -70,11 +82,11 @@ define('API', function (require, module, exports) {
                 'success': function (data) {
                     url$data[url] = data;
 
-                    if (ext == 'json') {
+                    if (ext == 'json' && !isOrigin) {
                         data = JSON.parse(data);
                     }
 
-                    emitter.fire('success', [data, url]);
+                    emitter.fire('success', [data, url, isOrigin]);
                 },
 
                 'error': function (xhr, type, msg) {

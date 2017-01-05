@@ -62,10 +62,8 @@ define('/Header/Groups', function (require, module, exports) {
         });
 
 
-        var tid = null;
 
         panel.$.on('mouseover', '[data-type="group"]', function () {
-            clearTimeout(tid);
             var li = this;
             $(li).addClass('on');
         });
@@ -73,9 +71,6 @@ define('/Header/Groups', function (require, module, exports) {
         panel.$.on('mouseleave', '[data-type="group"]', function () {
             var li = this;
             $(li).removeClass('on');
-
-            tid = setTimeout(function () {
-            }, 1000);
         });
 
     });
@@ -84,8 +79,6 @@ define('/Header/Groups', function (require, module, exports) {
 
 
     panel.on('render', function (data) {
-
-
         list = data;
         panel.fill(data);
     });
