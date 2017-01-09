@@ -71,6 +71,14 @@ define('/Router/Hash', function (require, module, exports) {
                 'item': url,
             };
         }
+
+        //把第0组的组号省略。
+        //item，如 `2`
+        if ((/^\d+$/).test(url)) {
+            return {
+                'item': '0/' + url,
+            };
+        }
         
         //file
         return {
@@ -97,6 +105,11 @@ define('/Router/Hash', function (require, module, exports) {
 
         var sidebar = data['sidebar'];
         var item = data['item'];
+
+        //把第0组的组号省略。
+        if (item && item.startsWith('0/')) {
+            item = item.slice(2);
+        }
 
         if (sidebar && item) {
             return sidebar + seperater + item;
@@ -154,6 +167,10 @@ define('/Router/Hash', function (require, module, exports) {
             var sidebar = hash.sidebar;
             var item = hash.item;
 
+            //把第0组的组号省略。
+            if (item && !item.includes('/')) {
+                item = '0/' + item;
+            }
 
 
             if (sidebar) { //指定了 sidebar

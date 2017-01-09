@@ -2,6 +2,7 @@
 {
     "!file": "./readme.md",
     "file": "./es6/sidebar.json",
+    
     "fadeIn": true,
     "header": {
         "!disabled": true,
@@ -9,6 +10,11 @@
         "search": { },
         "fixed": true,
         "menus": [
+            {
+                "name": "重新介绍 JavaScript",
+                "file": "./jsdn/a.md"
+
+            },
             {
                 "name": "ES6 教程",
                 "file": "./es6/sidebar.json"

@@ -58,6 +58,10 @@ KISP.launch(function (require, module) {
         'reset': function () {
             Header.fixed(false);
         },
+        'x': function (x) {
+            Header.setLeft(x);
+            Sidebar.setLeft(x);
+        },
     });
 
 

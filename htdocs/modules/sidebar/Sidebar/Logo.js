@@ -34,7 +34,11 @@ define('/Sidebar/Logo', function (require, module, exports) {
     });
 
 
-    return panel.wrap();
+    return panel.wrap({
+        'setLeft': function (x) {
+            panel.$.css('left', 70 - x + 'px');
+        },
+    });
 
 
 });

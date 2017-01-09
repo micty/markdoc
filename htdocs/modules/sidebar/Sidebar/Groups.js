@@ -180,6 +180,9 @@ define('/Sidebar/Groups', function (require, module, exports) {
          
         },
 
+        'setLeft': function (x) {
+            panel.$.css('left', 60 - x + 'px');
+        },
     });
 
 });

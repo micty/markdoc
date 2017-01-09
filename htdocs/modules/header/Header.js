@@ -102,7 +102,11 @@ define('/Header', function (require, module, exports) {
             panel.$.removeClass('leave fixed slide-up');
         },
         
-
+        'setLeft': function (x) {
+            if (panel.$.hasClass('fixed')) {
+                panel.$.css('left', 0 - x + 'px');
+            }
+        },
     });
 
 

@@ -139,6 +139,11 @@ define('/Sidebar', function (require, module, exports) {
             var url = typeof data == 'object' ? data.logo : data;
             current.logo = url;
         },
+
+        'setLeft': function (x) {
+            Logo.setLeft(x);
+            Groups.setLeft(x);
+        },
     });
 
 });
