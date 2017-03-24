@@ -1,0 +1,62 @@
+.panel-main footer {
+    position: absolute;
+    left: 52px;
+    right: 52px;
+    bottom: 0;
+    padding: 18px 0;
+    line-height: 20px;
+    height: 20px;
+    border-top: 1px solid #ccc;
+    background: #fff;
+    display: flex;
+    font-size: 12px;
+    font-family: "Helvetica Neue", Verdana;
+}
+.panel-main footer .contact {
+    position: absolute;
+    left: 0;
+    color: #61676c;
+    font-size: 0;
+}
+.panel-main footer .contact li {
+    display: inline-block;
+    text-align: center;
+    padding: 0 6px;
+    border-right: 1px solid #ccc;
+    font-size: 12px;
+    cursor: pointer;
+}
+.panel-main footer .contact li a {
+    color: #61676c;
+}
+.panel-main footer .contact li a:hover {
+    text-decoration: underline;
+}
+.panel-main footer .contact li:last-child {
+    border: none;
+}
+.panel-main footer .copyright {
+    flex: 1;
+    text-align: center;
+    color: #7f878d;
+}
+.panel-main footer .copyright a {
+    color: #7f878d;
+}
+.panel-main footer .share {
+    position: absolute;
+    right: 0;
+}
+.panel-main footer .share li {
+    float: right;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 0;
+}
+.panel-main footer .share li img {
+    padding: 3px 5px;
+    height: 14px;
+    width: 14px;
+}

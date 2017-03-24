@@ -50,6 +50,10 @@
                     {
                         "name": "Path.js",
                         "file": "./source/Path.js"
+                    },
+                    {
+                        "name": "SQL语言",
+                        "file": "./source/Sale_Out_Template.md"
                     }
                 ]
             },
