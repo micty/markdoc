@@ -29,7 +29,6 @@ define('/Main/Content/Helper', function (require, module, exports) {
        * @param {string} 内容里的超链接中的相对 url
        */
         'fill': function (config) {
-
             var container = $(config.container);
             var html = config.content;
 
@@ -63,12 +62,12 @@ define('/Main/Content/Helper', function (require, module, exports) {
 
                 //对源代码添加行号显示
                 var html = Lines.getNumbers(text);
-                html = '<span>' + language + '</span>' + html;
+                html = '<span data-cmd="language">' + language + '</span>' + html;
 
                 var height = Lines.getHeight(text);
                 var pre = code.parentNode;
 
-                $(pre).wrap('<div class="source-code"></div>')
+                $(pre).wrap('<div data-cmd="source-code" class="source-code"></div>')
                     .before(html)
                     .height(height);     //设置高度，以撑开高度
             });
@@ -103,6 +102,24 @@ define('/Main/Content/Helper', function (require, module, exports) {
             container.find('h1,h2,h3,h4,h5,h6').each(function () {
                 $(this).wrapInner('<span></span>');
             });
+
+
+            //折叠起来时，整个源代码区别可点击。
+            container.on('click', '[data-cmd="source-code"]', function () {
+                var $div = $(this);
+                
+                if ($div.hasClass('on')) {
+                    $div.removeClass('on');
+                }
+
+            });
+
+            container.on('click', '[data-cmd="language"]', function (event) {
+                var $div = $(this.parentNode);
+                $div.toggleClass('on');
+                event.stopPropagation();
+            });
+
 
 
             current.code = container.find('pre>code');

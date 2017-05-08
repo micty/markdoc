@@ -4,7 +4,7 @@
 
     KISP.data({
         'API': {
-            cache: true,
+            cache: false,
         },
     });
 
