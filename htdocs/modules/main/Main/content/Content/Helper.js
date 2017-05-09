@@ -104,21 +104,7 @@ define('/Main/Content/Helper', function (require, module, exports) {
             });
 
 
-            //折叠起来时，整个源代码区别可点击。
-            container.on('click', '[data-cmd="source-code"]', function () {
-                var $div = $(this);
-                
-                if ($div.hasClass('on')) {
-                    $div.removeClass('on');
-                }
 
-            });
-
-            container.on('click', '[data-cmd="language"]', function (event) {
-                var $div = $(this.parentNode);
-                $div.toggleClass('on');
-                event.stopPropagation();
-            });
 
 
 

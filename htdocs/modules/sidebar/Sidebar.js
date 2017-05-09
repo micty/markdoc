@@ -45,8 +45,8 @@ define('/Sidebar', function (require, module, exports) {
 
 
         Groups.on({
-            'item': function (id) {
-                panel.fire('item', [id]);
+            'item': function (id, openNew) {
+                panel.fire('item', [id, openNew]);
             },
 
             'active': function (group, item) {

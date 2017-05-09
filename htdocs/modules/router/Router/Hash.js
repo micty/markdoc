@@ -219,8 +219,7 @@ define('/Router/Hash', function (require, module, exports) {
 
     return panel.wrap({
 
-        'add': function (key, value) {
-
+        'add': function (key, value, openNew) {
             var hash = parse(location.hash);
 
             //重载 set({ ... })，批量设置的情况
@@ -232,7 +231,15 @@ define('/Router/Hash', function (require, module, exports) {
             }
 
             hash = stringify(hash);
-            location.hash = hash;
+
+            if (openNew) {
+                var url = location.origin + location.pathname + '#' + hash;
+                window.open(url);
+            }
+            else {
+                location.hash = hash;
+            }
+
         },
 
         'set': function (key, value) {

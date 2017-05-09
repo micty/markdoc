@@ -45,6 +45,22 @@ define('/Main/Content', function (require, module, exports) {
     });
 
 
+    panel.on('init', function () {
+        //折叠起来时，整个源代码区别可点击。
+        container.on('click', '[data-cmd="source-code"]', function () {
+            var $div = $(this);
+            if ($div.hasClass('on')) {
+                $div.removeClass('on');
+            }
+        });
+
+        container.on('click', '[data-cmd="language"]', function (event) {
+            console.log('click:', new Date().getTime());
+            $(this.parentNode).toggleClass('on');
+            event.stopPropagation();
+        });
+    });
+
     panel.on('render', function (url, fadeIn) {
 
 

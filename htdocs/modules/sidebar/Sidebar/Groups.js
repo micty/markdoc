@@ -111,13 +111,16 @@ define('/Sidebar/Groups', function (require, module, exports) {
         });
 
 
-        panel.$.on('click', '[data-type="item"]', function () {
+        panel.$.on('mouseup', '[data-type="item"]', function (event) {
             var li = this;
             var index = +li.getAttribute('data-index');
             var no = +li.getAttribute('data-no');
             var id = no + '/' + index;
 
-            panel.fire('item', [id]);
+            //同时按下ctrl键或按下了鼠标中键，则打开新页面。
+            var openNew = event.ctrlKey || event.which == 2; 
+            panel.fire('item', [id, openNew]);
+
 
         });
 

@@ -164,7 +164,9 @@ define('/Router', function (require, module, exports) {
             Hash.setRelative(hash, baseDir);
         },
 
-        'add': Hash.add,
+        'add': function (key, value, openNew) {
+            Hash.add(key, value, openNew);
+        },
 
         'notfound': function (url, data) {
             panel.fire('404', [url, data]);

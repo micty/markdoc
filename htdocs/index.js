@@ -25,8 +25,8 @@ KISP.launch(function (require, module) {
     });
 
     Sidebar.on({
-        'item': function (id) {
-            Router.add('item', id);
+        'item': function (id, openNew) {
+            Router.add('item', id, openNew);
         },
         'active': function (url) {
             Main.render(url, true);
