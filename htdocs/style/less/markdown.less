@@ -54,6 +54,8 @@
     pre {
         margin: 0;
         padding: 0px 5px;
+        transition: height 0.3s 0.1s ease;
+        overflow: hidden;
 
         code {
             color: #000;
@@ -152,8 +154,8 @@
             color: white;
             cursor: pointer;
 
-            &.on {
-                background: #7f878d;
+            &:hover {
+                background: #7c7c7d;
             }
         }
 
@@ -165,11 +167,15 @@
             }
 
             > ul {
-                display: none;
+                height: 0 !important;
+                transition: height 0.3s 0.1s ease;
+                overflow: hidden;
             }
 
             > pre {
-                display: none;
+                height: 0 !important;
+                transition: height 0.3s 0.1s ease;
+                overflow: hidden;
             }
         }
 
@@ -187,6 +193,8 @@
             line-height: 20px;
             margin: 0;
             border-right: solid 1px #ddd;
+            transition: height 0.3s 0.1s ease;
+            overflow: hidden;
 
             li {
                 list-style: none;
