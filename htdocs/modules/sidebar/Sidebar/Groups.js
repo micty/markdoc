@@ -117,9 +117,16 @@ define('/Sidebar/Groups', function (require, module, exports) {
             var no = +li.getAttribute('data-no');
             var id = no + '/' + index;
 
-            //同时按下ctrl键或按下了鼠标中键，则打开新页面。
-            var openNew = event.ctrlKey || event.which == 2; 
-            panel.fire('item', [id, openNew]);
+            var which = event.which;
+
+            //按下鼠标左键或中键。
+            if (which == 1 || which == 2) {
+                //同时按下ctrl键或按下了鼠标中键，则打开新页面。
+                var openNew = event.ctrlKey || which == 2;
+
+                panel.fire('item', [id, openNew]);
+            }
+            
 
 
         });
