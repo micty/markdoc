@@ -125,6 +125,10 @@ define('/Sidebar/Groups', function (require, module, exports) {
                 var openNew = event.ctrlKey || which == 2;
 
                 panel.fire('item', [id, openNew]);
+
+                if (which == 2) {
+                    event.preventDefault();
+                }
             }
             
 

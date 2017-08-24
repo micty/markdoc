@@ -17,7 +17,6 @@ define('/Router/Hash', function (require, module, exports) {
 
     //把 hash 字符串按字段优先级解析成一个对象。
     function parse(hash) {
-
         if (!hash) {
             return {};
         }
@@ -29,14 +28,17 @@ define('/Router/Hash', function (require, module, exports) {
         if (hash.includes('=')) {
             return $.Object.parseQueryString(hash);
         }
+        
 
+        //解析如 `/a/b/c:0,1,2,3` 这样的格式。
+        //以分隔符 `:` 为分界，`/a/b/c` 是目录名部分，`0,1,2,3` 是文件名部分
         var list = hash.split(seperater);
         var url = list[0];
+        var value = list[1];
+
         if (!url) {
             return {};
         }
-
-        var value = list[1];
 
         if (url.endsWith('/')) {
             return {
@@ -47,6 +49,7 @@ define('/Router/Hash', function (require, module, exports) {
 
 
         //file
+        //如 `@/es6/sidebar.json`，显示源文件。
         var isOrigin = url.startsWith('@');
         if (isOrigin) {
             return {
@@ -72,7 +75,7 @@ define('/Router/Hash', function (require, module, exports) {
             };
         }
 
-        //把第0组的组号省略。
+        //把第 0 组的组号省略。
         //item，如 `2`
         if ((/^\d+$/).test(url)) {
             return {
@@ -138,7 +141,7 @@ define('/Router/Hash', function (require, module, exports) {
             old = parse(old);
 
             //把基目录和文件名组合起来。
-            var file = hash.file;
+            var file = hash.file || '';
             var dir = hash.dir || '';
 
             var fileChanged =
@@ -148,8 +151,17 @@ define('/Router/Hash', function (require, module, exports) {
             if (fileChanged) {
 
                 var files = file.split(',').map(function (file) {
+                    if (!file) {
+                        return dir + 'index.md'; //默认是 index.md
+                    }
+
+                    if (file.endsWith('/')) {
+                        file = file + 'index.md';
+                    }
+
                     var index = file.lastIndexOf('.');
-                    if (index < 0) {
+
+                    if (index < 0) { //不含有后缀名
                         file += '.md';
                     }
 
@@ -167,7 +179,7 @@ define('/Router/Hash', function (require, module, exports) {
             var sidebar = hash.sidebar;
             var item = hash.item;
 
-            //把第0组的组号省略。
+            //把第 0 组的组号省略。
             if (item && !item.includes('/')) {
                 item = '0/' + item;
             }
