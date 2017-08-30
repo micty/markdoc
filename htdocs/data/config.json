@@ -2,7 +2,8 @@
 {
     "!file": "./readme.md",
     "!!file": "./es6/sidebar.json",
-    "file": "./house/permit/sidebar.json",
+    "!!!file": "./house/permit/sidebar.json",
+    "file": "./weber/sidebar.json",
     
     "fadeIn": true,
     "header": {

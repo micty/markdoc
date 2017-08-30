@@ -27,7 +27,8 @@ define('/FixedMenus', function (require, module, exports) {
                     break;
 
                 case 'outline':
-                    panel.fire('outline');
+                case 'print':
+                    panel.fire(cmd);
                     break;
             }
         });

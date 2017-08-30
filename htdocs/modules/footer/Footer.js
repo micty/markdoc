@@ -9,7 +9,7 @@ define('/Footer', function (require, module, exports) {
     var Logos = module.require('Logos');
     var Menus = module.require('Menus');
 
-    var panel = KISP.create('Panel');
+    var panel = KISP.create('Panel', '#footer-panel-footer');
 
 
     panel.on('init', function () {

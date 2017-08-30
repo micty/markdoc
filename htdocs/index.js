@@ -1,6 +1,7 @@
 ﻿
 KISP.launch(function (require, module) {
 
+    var $ = KISP.require('$');
     var Router = module.require('Router');
     var Sidebar = module.require('Sidebar');
     var Header = module.require('Header');
@@ -64,10 +65,25 @@ KISP.launch(function (require, module) {
         },
     });
 
+    //切换打印模式和正常模式。
+    function print() {
+        FixedMenus.$.toggleClass('print');
+        Header.$.toggleClass('print');
+        Sidebar.$.toggleClass('print');
+        Main.$.toggleClass('print');
+        Footer.$.toggleClass('print');
+        $(document.body).toggleClass('print');
+    }
 
     FixedMenus.on({
         'outline': function () {
             Main.outline();
+        },
+        'print': function () {
+            print();
+
+            //同步模式，打印窗口关闭后会有返回值。
+            document.execCommand('print') && print();
         },
     });
 
