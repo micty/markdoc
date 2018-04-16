@@ -1,0 +1,48 @@
+﻿{
+    "file": "./readme.md",
+    "logo": "auto-weber",
+    "mutex": false,
+    "groups": [
+        {
+            "name": "介绍",
+            "base": "./docs/master/",
+            "ext": ".md",
+            "fold": false,
+            "items": [
+                {
+                    "name": "gaze",
+                    "file": "gaze"
+                },
+                {
+                    "name": "less",
+                    "file":  "less-node"
+
+                },
+                {
+                    "name": "快速开始",
+                    "file": "start"
+                },
+                {
+                    "name": "母版页",
+                    "file": "master"
+                },
+                {
+                    "name": "引入 less 文件",
+                    "file": "less"
+                },
+                {
+                    "name": "引入 js 文件",
+                    "file": "js"
+                },
+                {
+                    "name": "引入 html 片段文件",
+                    "file": "html"
+                },
+            ]
+        }
+
+
+    ]
+
+
+}

@@ -1,12 +1,10 @@
 ﻿
-define('/Main/NotFound', function (require, module, exports) {
+KISP.panel('/Main/NotFound', function (require, module, panel) {
 
     var $ = require('$');
-    var MiniQuery = require('MiniQuery');
     var KISP = require('KISP');
 
 
-    var panel = KISP.create('Panel', '#div-main-notfound');
  
 
     panel.on('init', function () {
@@ -15,6 +13,12 @@ define('/Main/NotFound', function (require, module, exports) {
     });
 
 
+    /**
+    *   data = {
+    *       no: 0,      //可选。 菜单栏 sidebar 的组号。
+    *       index 0,    //可选。 菜单栏 sidebar 某组内的索引号。
+    *   };
+    */
     panel.on('render', function (file, data) {
 
         var isItem = 'index' in data;
@@ -32,7 +36,5 @@ define('/Main/NotFound', function (require, module, exports) {
     });
 
 
-
-    return panel.wrap();
 
 });

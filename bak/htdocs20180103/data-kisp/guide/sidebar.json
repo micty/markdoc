@@ -1,0 +1,21 @@
+﻿{
+    "!file": "./readme.md",
+    "logo": "style/img/logo.png",
+    "mutex": true,
+    "groups": [
+        {
+            "name": "教程",
+            "base": "./api/",
+            "ext": ".md",
+            "fold": false,
+            "items": [
+                { "name": "后台数据请求", "file": "API" }, 
+                { "name": "本地代理模拟服务器响应", "file": "Proxy" }, 
+                { "name": "客户端存储", "file": "Storage" }, 
+            ]
+        },
+        
+    ]
+
+
+}

@@ -1,21 +1,12 @@
 ﻿
-define('/Main/Content', function (require, module, exports) {
-
+KISP.panel('/Main/Content', function (require, module, panel) {
     var $ = require('$');
-    var MiniQuery = require('MiniQuery');
     var KISP = require('KISP');
-
-    var Helper = module.require('Helper');
+    var MarkDoc = require('MarkDoc');
     var Loader = module.require('Loader');
-    var CurrentLine = module.require('CurrentLine');
 
-    var panel = KISP.create('Panel', '#div-main-content', {
-        //showAfterRender: false,
-    });
-
-    var visible = false;
-    var titles = 'h1,h2,h3,h4,h5,h6';
-    var container = $('#div-main-content-container');
+    var markdoc = null;
+   
 
     panel.on('init', function () {
 
@@ -23,103 +14,79 @@ define('/Main/Content', function (require, module, exports) {
             panel.fire('line', [event.offsetY]);
         });
 
-        panel.$.on('click', titles, function (event) {
-            if (event.target.tagName.toLowerCase() != 'span') {
-                return;
-            }
 
-            $(this).nextUntil(titles).animate({
-                height: 'toggle',
-                opacity: 'toggle',
-            });
+        markdoc = new MarkDoc({
+            container: panel.$.find('[data-id="content"]'),
         });
 
-        panel.$.on('click', 'a[href^="#"]', function (event) {
-            var a = this;
-            var href = a.getAttribute('href');
-      
-            event.preventDefault();
 
+        
+        markdoc.on('render', function () {
+
+            var list = markdoc.getOutlines();
+
+            panel.fire('outline', [list]);
+
+        });
+
+
+        markdoc.on('hash', function (href) {
             panel.fire('hash', [href]);
         });
     });
 
 
-    panel.on('init', function () {
-        //折叠起来时，整个源代码区别可点击。
-        container.on('click', '[data-cmd="source-code"]', function () {
-            var $div = $(this);
-            if ($div.hasClass('on')) {
-                $div.removeClass('on');
-            }
-        });
-
-        container.on('click', '[data-cmd="language"]', function (event) {
-            console.log('click:', new Date().getTime());
-            $(this.parentNode).toggleClass('on');
-            event.stopPropagation();
-        });
-    });
-
-    panel.on('render', function (url, fadeIn) {
 
 
+    /**
+    *   options = {
+    *       url: '',        //文档的 url 地址。
+    *       fadeIn: true,   //是否淡入显示。
+    *   };
+    */
+    panel.on('render', function (options) {
         //如果 100ms 内能完成请求，则不显示 loading。
         //否则就显示 loading 至少 800ms，以避免内容太快回来而闪一下。
         var loading = false;
-        var title = '';         //要在浏览器中显示的标题
-        container.hide();
+        var fadeIn = options.fadeIn;
 
-        panel.$.toggleClass('fadeIn', !!fadeIn);
-        panel.$.removeClass('show');
-
+        //100ms 后开始显示 loading。
         var tid = setTimeout(function () {
             loading = true;
             panel.fire('loading');
         }, 100);
 
-        function show() {
-            loading = false;
-            clearTimeout(tid);
-            container.show();
-            if (fadeIn) {
-                panel.$.addClass('show');
-            }
-
-            panel.fire('render', [title]);
-        }
+        
+        panel.$.toggleClass('fadeIn', !!fadeIn);
+        panel.$.removeClass('show');
+        markdoc.hide();
 
 
-        Loader.load(url, function (content, options) {
+        Loader.load(options.url, function (content, data) {
 
-            visible = true;  //每次填充都要重置。
-
-            Helper.fill({
-                'container': container,
+            //要在浏览器中显示的标题
+            var title = markdoc.render({
                 'content': content,
-                'baseUrl': url,
-                'isOrigin': options.isOrigin,
-                'ext': options.ext,
+                'baseUrl': data.url,
+                'language': data.isOrigin ? data.ext : '',
+                'imgUrl': data.imgBase, //img 标签的基准地址。
+
             });
 
-            panel.$.find(titles).each(function () {
+            //已经显示了 loading，则让它显示 800ms 后再隐藏。
+            loading ? setTimeout(show, 800) : show();
 
-                var $this = $(this);
+            function show() {
+                loading = false;
+                clearTimeout(tid);
+                markdoc.show();
 
-                if (!title) {
-                    title = $this.text();
+                if (fadeIn) {
+                    panel.$.addClass('show');
                 }
 
-                var els = $this.nextUntil(titles);
-                $(this).toggleClass('title', els.length > 0);
-            });
 
-
-            if (loading) {
-                setTimeout(show, 800);
-            }
-            else {
-                show();
+                panel.fire('render', [title]);
             }
      
         });
@@ -131,25 +98,22 @@ define('/Main/Content', function (require, module, exports) {
 
 
 
-    return panel.wrap({
+    return {
 
         //显示大纲
         'outline': function () {
-            var $ = container.find('>*:not(' + titles + ')');
-            var value = visible ? 'hide' : 'show';
-
-            $.animate({
-                'height': value,
-                'opacity': value,
-            }, 'fast');
-
-            visible = !visible;
-            
+            markdoc.outline();
         },
 
-        'empty': Helper.empty,
+        'empty': function () {
+            markdoc.empty(...arguments);
+        },
 
-        
-    });
+        'toOutline': function (index) {
+            markdoc.toOutline(index);
+        },
+
+
+    };
 
 });

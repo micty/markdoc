@@ -1,0 +1,204 @@
+.MarkDoc {
+    font: 16px/1.6 "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+}
+.MarkDoc.SourceMode .source-code {
+    background: none;
+}
+.MarkDoc.SourceMode .source-code > span {
+    display: none;
+}
+.MarkDoc img {
+    max-width: 100%;
+}
+.MarkDoc ul {
+    padding-left: 32px;
+}
+.MarkDoc ul > li {
+    list-style: disc;
+}
+.MarkDoc li,
+.MarkDoc ol {
+    list-style: decimal;
+}
+.MarkDoc table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    /*font-family: 'Fixedsys Excelsior 3.01', Fixedsys;*/
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei', 'WenQuanYi Micro Hei', SimSun, Song, sans-serif;
+    font-size: 16px;
+}
+.MarkDoc table thead {
+    background: #F0F0F0;
+}
+.MarkDoc table th,
+.MarkDoc table td {
+    border: 1px solid #dddddd;
+    padding: 5px 5px;
+    text-align: left;
+}
+.MarkDoc table code {
+    padding: 3px 4px 3px 4px;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Sans GB', STHeiti, 'Microsoft YaHei', 'WenQuanYi Micro Hei', SimSun, Song, sans-serif;
+}
+.MarkDoc code {
+    padding: 3px 4px 3px 4px;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    /*font-family: 'Fixedsys Excelsior 3.01', Fixedsys;*/
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+.MarkDoc pre {
+    margin: 0;
+    padding: 0px 5px;
+    transition: height 0.3s 0.1s ease;
+    overflow: hidden;
+}
+.MarkDoc pre code {
+    color: #000;
+    background-color: transparent;
+    cursor: text;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+.MarkDoc h2,
+.MarkDoc h3,
+.MarkDoc h4,
+.MarkDoc h5 {
+    margin-top: 13px;
+    margin-bottom: 16px;
+}
+.MarkDoc h1,
+.MarkDoc h2 {
+    /*border-bottom: 1px solid #ddd;*/
+    padding-bottom: 10px;
+}
+.MarkDoc h1 {
+    font-size: 32px;
+}
+.MarkDoc h2 {
+    font-size: 28px;
+    /*margin-top: 0 !important;*/
+}
+.MarkDoc h3 {
+    font-size: 24px;
+}
+.MarkDoc h4 {
+    font-size: 20px;
+}
+.MarkDoc h5 {
+    font-size: 18px;
+}
+.MarkDoc hr {
+    height: 4px;
+    padding: 0;
+    margin: 16px 0;
+    background-color: #e7e7e7;
+    border: 0 none;
+}
+.MarkDoc blockquote {
+    margin: 0px 0 16px 0;
+    /* padding: 0 15px; */
+    color: #777;
+    border-left: 10px solid #E7ECEE;
+    background-color: #F2F4F6;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 10px 20px;
+}
+.MarkDoc blockquote p {
+    margin-left: 0;
+}
+.MarkDoc p {
+    /*text-indent: 32px;*/
+}
+.MarkDoc p,
+.MarkDoc ul {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+.MarkDoc a {
+    color: #4183c4;
+    text-decoration: none;
+}
+.MarkDoc a:hover {
+    text-decoration: underline;
+}
+.MarkDoc .source-code {
+    background-color: #f9f9f9;
+    margin-bottom: 12px;
+    position: relative;
+    border: solid 1px #f9f9f9;
+    /*�������ͱ�ǩ*/
+    /*�۵�ʱ��*/
+    /*�к��б�*/
+}
+.MarkDoc .source-code > .language {
+    padding: 4px 10px;
+    background: #E1E1E1;
+    color: white;
+}
+.MarkDoc .source-code > .language.foldable {
+    cursor: pointer;
+}
+.MarkDoc .source-code > .language.foldable:hover {
+    background: #1f79d2;
+}
+.MarkDoc .source-code.on {
+    cursor: pointer;
+    border: solid 1px #1f79d2;
+    transition: border 0.5s 0.3s ease;
+}
+.MarkDoc .source-code.on > .language {
+    background: #1f79d2;
+}
+.MarkDoc .source-code.on > .line-numbers-total {
+    margin-left: 20px;
+    opacity: 1;
+    transition: opacity 0.5s 0.3s ease;
+}
+.MarkDoc .source-code.on > .line-numbers {
+    height: 0 !important;
+    transition: height 0.3s 0.1s ease;
+    overflow: hidden;
+}
+.MarkDoc .source-code.on > pre {
+    height: 0 !important;
+    transition: height 0.3s 0.1s ease;
+    overflow: hidden;
+}
+.MarkDoc .source-code > .line-numbers-total {
+    background: none;
+    color: #5394d4;
+    font-size: 14px;
+    opacity: 0;
+}
+.MarkDoc .source-code > .line-numbers {
+    padding-left: 0px;
+    /*font-family: 'Fixedsys Excelsior 3.01', Fixedsys;*/
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    text-align: center;
+    position: absolute;
+    /*background: #f2f2f2;*/
+    color: #8B9CC2;
+    width: 30px;
+    line-height: 20px;
+    margin: 0;
+    border-right: solid 1px #ddd;
+    transition: height 0.3s 0.1s ease;
+    overflow: hidden;
+    text-align: right;
+}
+.MarkDoc .source-code > .line-numbers li {
+    list-style: none;
+    padding-right: 5px;
+}
+.MarkDoc .source-code > pre {
+    margin-left: 45px;
+}
+.MarkDoc .source-code > pre code {
+    display: block;
+    line-height: 20px;
+    padding: 0px;
+    /*background: #8BC34A;*/
+}

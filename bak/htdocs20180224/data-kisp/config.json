@@ -1,0 +1,69 @@
+﻿
+{
+    "file": "./readme.md",
+    "header": {
+        "logo": "style/img/logo.png",
+        "search": { },
+        "fixed": true,
+        "menus": [
+            {
+                "name": "教程",
+                "file": "./guide/sidebar.json"
+            },
+            {
+                "name": "API",
+                "file": "./api/sidebar.json"
+            },
+            {
+                "name": "示例",
+                "file": "./demo/sidebar.json"
+            },
+            {
+                "name": "更新历史",
+                "file": "./history/sidebar.json"
+            },
+            {
+                "name": "更新历史",
+                "file": "./readme.md",
+            },
+            
+        ]
+
+    },
+
+    "footer": {
+        "copyright": "© 2014 - 2016 KISP. All rights reserved. <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备16104043号</a>",
+        "menus": [
+            {
+                "name": "关于KISP",
+                "file": "./article/API.md"
+            },
+            {
+                "name": "用户协议",
+                "file": "./article/CMD.md"
+            },
+            {
+                "name": "联系我们",
+                "file": "./article/Storage.md"
+            }
+        ],
+        "logos": [
+            {
+                "name": "邮箱",
+                "logo": "style/img/icon-mail.png",
+                "file": "./article/Storage.md"
+            },
+            {
+                "name": "消息",
+                "logo": "style/img/icon-msg.png",
+                "file": "./article/Storage.md"
+            },
+            {
+                "name": "微博",
+                "logo": "style/img/icon-weibo.png",
+                "file": "./article/Storage.md"
+            }
+        ]
+    }
+
+}

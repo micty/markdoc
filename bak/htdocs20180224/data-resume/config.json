@@ -1,0 +1,26 @@
+﻿
+{
+    "file": "./readme.md",
+    "fadeIn": true,
+    "header": {
+        "disabled": true,
+        "logo": "style/img/logo.png",
+        "search": { },
+        "fixed": true,
+        "menus": [
+            
+        ]
+
+    },
+
+    "footer": {
+        "copyright": "© 2014 - 2017 KISP. All rights reserved. <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备16104043号</a>",
+        "menus": [
+            
+        ],
+        "logos": [
+           
+        ]
+    }
+
+}

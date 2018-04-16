@@ -4,66 +4,55 @@
 define('/Main/Content/Loader', function (require, module, exports) {
 
     var $ = require('$');
-    var MiniQuery = require('MiniQuery');
     var KISP = require('KISP');
     var API = require('API');
     var Url = require('Url');
 
-    var ParallelTasks = require('ParallelTasks');
+    var Tasks = KISP.require('Tasks');
 
 
-    //根据后缀名加上相应的语言类型。
-    function format(content, url, isOrigin) {
-
-
-        var ext = Url.extname(url);
-
-        if (isOrigin) {
-            return content;
-        }
-
-
-
-        if (!ext || ext == 'md' || ext == 'txt' || ext== 'markdown') {
-            return content;
-        }
-
-        content =
-            '``` ' + ext + '\r\n' +
-                content + '\r\n' +
-            '```';
-
-        return content;
-    }
-
-
-
+    var texts = [
+        'md',
+        'txt',
+        'markdown',
+    ];
 
 
     return {
 
-        'load': function (url, fn) {
-
+        load: function (url, fn) {
             var urls = url.split(',');
-            var tasks = new ParallelTasks(urls);
+            var tasks = new Tasks(urls);
             var values = [];
-            var isOrigin = false;
-            var ext = '';
+
+            var info = null;
+
 
             tasks.on('each', function (url, index, done) {
 
                 var api = new API(url);
 
-                api.on('success', function (content, url, origin) {
-
+                api.on('success', function (content, options) {
+                    //以首个为准。
                     if (index == 0) {
-                        isOrigin = origin;
-                        ext = Url.extname(url);
+                        var ext = options.ext;
+
+                        //根据后缀名判断需要作为纯文本进行显示的后缀名。
+                        var isPlain = !ext || texts.includes(ext);
+
+                        //如果不明确指定为源代码模式，则通过后缀名进行判断。
+                        var isOrigin = options.isOrigin || !isPlain; 
+
+                        info = {
+                            'ext': ext,
+                            'isOrigin': isOrigin,
+                            'url': options.url,
+                            'imgBase': options.imgBase,
+                        };
                     }
                   
-
-                    content = format(content, url, origin);
                     values[index] = content;      //内容有顺序关系。
+
                     done();
                 });
 
@@ -74,13 +63,11 @@ define('/Main/Content/Loader', function (require, module, exports) {
 
             //子任务并行处理完成。
             tasks.on('all', function () {
-                fn && fn(values.join(''), {
-                    'isOrigin': isOrigin,
-                    'ext': ext,
-                });
+
+                fn && fn(values.join(''), info);
             });
 
-            tasks.run();
+            tasks.parallel();
         },
     };
 

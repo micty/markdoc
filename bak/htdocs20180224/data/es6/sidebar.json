@@ -1,0 +1,117 @@
+﻿{
+    "file": "./readme.md",
+    "!logo": "style/img/logo.png",
+    "logo": "ES6入门教程",
+    "fixed": true,
+    "groups": [
+        {
+            "!name": "ECMAScript 6入门",
+            "base": "./docs/",
+            "ext": ".md",
+            "items": [
+                {
+                    "name": "前言",
+                    "file": "../readme"
+                },
+                {
+                    "name": "ECMAScript 6简介",
+                    "file": "intro"
+                },
+                {
+                    "name": "let和const命令",
+                    "file": "let"
+                },
+                {
+                    "name": "变量的解构赋值",
+                    "file": "destructuring"
+                },
+                {
+                    "name": "字符串的扩展",
+                    "file": "string"
+                },
+                {
+                    "name": "正则的扩展",
+                    "file": "regex"
+                },
+                {
+                    "name": "数值的扩展",
+                    "file": "number"
+                },
+                {
+                    "name": "数组的扩展",
+                    "file": "array"
+                },
+                {
+                    "name": "函数的扩展",
+                    "file": "function"
+                },
+                {
+                    "name": "对象的扩展",
+                    "file": "object"
+                },
+                {
+                    "name": "Symbol",
+                    "file": "symbol"
+                },
+                {
+                    "name": "Proxy和Reflect",
+                    "file": "proxy"
+                },
+                {
+                    "name": "Set和Map数据结构",
+                    "file": "set-map"
+                },
+                {
+                    "name": "Iterator和for...of循环",
+                    "file": "iterator"
+                },
+                {
+                    "name": "Generator函数",
+                    "file": "generator"
+                },
+                {
+                    "name": "Promise对象",
+                    "file": "promise"
+                },
+                {
+                    "name": "异步操作和Async函数",
+                    "file": "async"
+                },
+                {
+                    "name": "Class",
+                    "file": "class"
+                },
+                {
+                    "name": "Decorator",
+                    "file": "decorator"
+                },
+                {
+                    "name": "Module",
+                    "file": "module"
+                },
+                {
+                    "name": "编程风格",
+                    "file": "style"
+                },
+                {
+                    "name": "读懂规格",
+                    "file": "spec"
+                },
+                {
+                    "name": "二进制数组",
+                    "file": "arraybuffer"
+                },
+                {
+                    "name": "SIMD",
+                    "file": "simd"
+                },
+                {
+                    "name": "参考链接",
+                    "file": "reference"
+                }
+            ]
+        }
+    ]
+
+
+}

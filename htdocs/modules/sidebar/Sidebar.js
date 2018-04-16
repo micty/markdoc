@@ -2,19 +2,14 @@
 /**
 * 侧边菜单栏模块
 */
-define('/Sidebar', function (require, module, exports) {
-
+KISP.panel('/Sidebar', function (require, module, panel) {
     var $ = require('$');
-    var MiniQuery = require('MiniQuery');
     var KISP = require('KISP');
 
     var API = module.require('API');
     var Groups = module.require('Groups');
     var Logo = module.require('Logo');
 
-    var panel = KISP.create('Panel', '#div-panel-sidebar', {
-        showAfterRender: false,
-    });
 
     var current = {
         data: null,
@@ -23,6 +18,10 @@ define('/Sidebar', function (require, module, exports) {
         ready: false,
         url: '',
     };
+
+
+    panel.set('show', false);
+
 
     panel.on('init', function () {
 
@@ -74,14 +73,14 @@ define('/Sidebar', function (require, module, exports) {
                 'group': function (no) {
                     panel.fire('404', [current.url, {
                         'no': no,
-                        'visible': true,
+                        'sidebar': true,
                     }]);
                 },
                 'item': function (no, index) {
                     panel.fire('404', [current.url, {
                         'no': no,
                         'index': index,
-                        'visible': true,
+                        'sidebar': true,
                     }]);
                 },
             },

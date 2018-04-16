@@ -1,0 +1,124 @@
+﻿{
+    "file": "./readme.md",
+    "logo": "style/img/logo.png",
+    "mutex": false,
+    "groups": [
+        {
+            "name": "用户管理",
+            "base": "./docs/user/",
+            "ext": ".md",
+            "fold": true,
+            "items": [
+                {
+                    "name": "用户登录",
+                    "file": "User.login"
+                },
+            ]
+        },
+        {
+            "name": "土地管理",
+            "base": "./docs/land/",
+            "ext": ".md",
+            "fold": true,
+            "items": [
+                {
+                    "name": "土地出让列表",
+                    "file": "Land.page"
+                },
+                {
+                    "name": "土地出让详情",
+                    "file": "Land.get"
+                }
+            ]
+        },
+        {
+            "name": "规划管理",
+            "base": "./docs/plan/",
+            "ext": ".md",
+            "fold": true,
+            "items": [
+                {
+                    "name": "规划许可 - 待办列表",
+                    "file": "Plan.todos"
+                },
+                {
+                    "name": "规划许可 - 已办列表",
+                    "file": "Plan.page"
+                },
+                {
+                    "name": "规划许可 - 详情",
+                    "file": "Plan.get"
+                },
+                {
+                    "name": "规划许可证 - 列表",
+                    "file": "PlanLicense.list"
+                },
+                {
+                    "name": "规划许可证 - 详情",
+                    "file": "PlanLicense.get"
+                }
+            ]
+        },
+        {
+            "name": "建设管理",
+            "base": "./docs/construct/",
+            "ext": ".md",
+            "fold": true,
+            "items": [
+
+                {
+                    "name": "建设许可 - 待办列表",
+                    "file": "Construct.todos"
+                },
+                {
+                    "name": "建设许可 - 已办列表",
+                    "file": "Construct.page"
+                },
+                {
+                    "name": "施工许可证 - 详情",
+                    "file": "Construct.get"
+                }
+            ]
+        },
+        {
+            "name": "销售管理",
+            "base": "./docs/sale/",
+            "ext": ".md",
+            "fold": true,
+            "items": [
+
+                {
+                    "name": "销售许可 - 待办列表",
+                    "file": "Sale.todos"
+                },
+                {
+                    "name": "销售许可 - 已办列表",
+                    "file": "Sale.page"
+                },
+                {
+                    "name": "销售许可 - 详情",
+                    "file": "Sale.get"
+                },
+                {
+                    "name": "预售许可许(现售备案) - 列表",
+                    "file": "SaleLicense.list"
+                },
+                {
+                    "name": "预售许可许(现售备案) - 详情",
+                    "file": "SaleLicense.get"
+                },
+                {
+                    "name": "已售记录 - 列表",
+                    "file": "Saled.list"
+                },
+                {
+                    "name": "已售记录 - 详情",
+                    "file": "Saled.get"
+                }
+            ]
+        }
+
+    ]
+
+
+}

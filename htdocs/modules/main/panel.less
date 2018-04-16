@@ -10,24 +10,24 @@
     min-width: 750px;
     max-width: 1024px;
     margin: 0 auto;
-    padding: 0px 52px 0 52px;
+    padding: 0px 60px;
     box-sizing: content-box;
     word-wrap: break-word;
     background: #fff;
-    min-height: e("calc(100vh - 68px)");
+    min-height: calc(100vh - 68px);
 
     &.source {
         max-width: none;
         padding: 0;
         margin: 0;
 
-        .source-code {
+        /*.source-code {
             background: none;
 
             > span {
                 display: none;
             }
-        }
+        }*/
 
         .contact {
             padding-left: 0px;
@@ -59,23 +59,6 @@
     }
 
 
-    .source-code {
-        background: #f9f9f9;
-
-        > span {
-            /*display: none;*/
-        }
-
-        > ul {
-            background: none;
-            border-right: solid 1px #eee;
-            width: 45px;
-        }
-
-        > pre {
-            margin-left: 45px;
-        }
-    }
 
     .current-line {
         width: 100%;

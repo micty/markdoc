@@ -1,0 +1,164 @@
+﻿{
+    "file": "./readme.md",
+    "!file": "./es6/sidebar.json",
+    "!file": "./house/permit/sidebar.json",
+
+
+    "!file": "./weber/sidebar.json",
+
+
+    "header": {
+        "logo": "style/img/logo.png",
+        "search": { },
+        "fixed": true,
+        "menus": [
+            {
+                "name": "重新介绍 JavaScript",
+                "file": "./jsdn/a.md"
+
+            },
+            {
+                "name": "ES6 教程",
+                "file": "./es6/sidebar.json"
+            },
+            {
+                "name": "前端开发规范",
+                "base": "./specification/",
+                "ext": "/index.md",
+                "file": "",
+                "items": [
+                    {
+                        "name": "JavaScript 开发规范",
+                        "file": "js"
+                    },
+                    {
+                        "name": "重构页面开发规范",
+                        "file": "refactor"
+                    }
+                ]
+            },
+
+            {
+                "name": "测试",
+                "items": [
+                    {
+                        "name": "KISP 源代码 JS",
+                        "file": "../f/kisp/kisp.debug.js"
+                    },
+                    {
+                        "name": "KISP 源代码 CSS",
+                        "file": "../f/kisp/kisp.debug.css"
+                    },
+                    {
+                        "name": "Path.js",
+                        "file": "./source/Path.js"
+                    },
+                    {
+                        "name": "SQL语言",
+                        "file": "./source/Sale_Out_Template.md"
+                    }
+                ]
+            },
+            {
+                "name": "KIS轻应用后台文档",
+                "base": "./app/",
+                "ext": "/sidebar.json",
+                "file": "./article/definejs.md",
+                "items": [
+                    {
+                        "name": "微销售",
+                        "file": "vGuide"
+                    },
+                    {
+                        "name": "微门店",
+                        "file": "vStore"
+                    },
+                    {
+                        "name": "会员营销",
+                        "file": "message"
+                    }
+                ]
+            },
+            {
+                "name": "专题文章",
+                "base": "./article/",
+                "ext": ".md",
+                "file": "",
+                "items": [
+                    {
+                        "name": "KISP 框架",
+                        "file": "KISP"
+                    },
+                    {
+                        "name": "后台数据请求",
+                        "file": "API"
+                    },
+                    {
+                        "name": "本地代理模拟服务器响应",
+                        "file": "Proxy"
+                    },
+                    {
+                        "name": "使用微信接口",
+                        "file": "WeChat"
+                    },
+                    {
+                        "name": "将配置数据从代码中分离出来",
+                        "file": "Config-and-Code"
+                    }
+                ]
+
+            }
+        ]
+
+    },
+
+    "main": {
+        "fadeIn": true,
+        "min-width": 750,
+        "max-width": 750,
+        "padding": 0
+    },
+
+    "!footer": {
+        "copyright": "© 2014 - 2016 KISP. All rights reserved. <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备16104043号</a>",
+        "menus": [
+            {
+                "name": "关于KISP",
+                "file": "./article/API.md"
+            },
+            {
+                "name": "用户协议",
+                "file": "./article/CMD.md"
+            },
+            {
+                "name": "联系我们",
+                "file": "./article/Storage.md"
+            }
+        ],
+        "logos": [
+            {
+                "name": "邮箱",
+                "logo": "style/img/icon-mail.png",
+                "file": "./article/Storage.md"
+            },
+            {
+                "name": "消息",
+                "logo": "style/img/icon-msg.png",
+                "file": "./article/Storage.md"
+            },
+            {
+                "name": "微博",
+                "logo": "style/img/icon-weibo.png",
+                "file": "./article/Storage.md"
+            }
+        ]
+    },
+    "menus": [
+        { "cmd": "top", "text": "顶部" },
+        { "cmd": "home", "text": "首页" },
+        { "cmd": "outline", "text": "提纲" },
+        { "cmd": "print", "text": "打印" },
+        { "cmd": "bottom", "text": "底部" }
+    ]
+
+}

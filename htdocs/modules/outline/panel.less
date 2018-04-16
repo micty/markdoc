@@ -1,0 +1,39 @@
+
+.panel-outline {
+    height: 100%;
+    position: fixed;
+    right: 0px;
+    top: 0px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.25);
+    background: #fff;
+    width: 320px;
+
+    &.print{
+        display: none !important;
+    }
+
+    header {
+        font-size: 20px;
+        border-bottom: dashed 1px #eee;
+        padding: 20px 10px;
+        margin: 0px 0px 10px 0px;
+        color: #535353;
+        font-weight: normal;
+    }
+
+    > div {
+        height: calc(100% - 87px);
+
+        ::-webkit-scrollbar {
+            display: none; /*Òþ²Ø¹ö¶¯Ìõ*/
+        }
+    }
+
+    ul.Outline {
+        padding: 0px 14px 0px 20px;
+
+        li {
+            padding: 1px 0px;
+        }
+    }
+}

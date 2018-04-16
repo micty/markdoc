@@ -1,0 +1,140 @@
+###获取用户订单详情接口
+获取用户订单详情接口
+
+**接口地址：**
+
+> 正式地址：
+> 
+> 测试地址: http://kisapp.kingdee.com:88/api/user/get_order_detail
+
+
+
+**请求方式：**
+post
+
+**请求参数：**
+
+参数名|必选|类型|说明|
+------ |------ |------ |------ | 
+`uid` | 是 | string|用户UID
+`access_token` | 是 | string|校验码
+`order_num` | 是 | string|订单编号 
+
+**返回值：**
+``` json
+{
+  "msg": "success",
+  "code": "0000",
+  "data": {
+    "order_info": {
+      "product_sn": "2910300465",
+      "order_type": 3,
+      "create_time": "2018-03-08 13:53:04",
+      "product_name": "金蝶KIS专业版15.0",
+      "pay_type": 0,
+      "notify_code": "",
+      "price": "12625.00",
+      "real_pay": "0.00",
+      "pay_time": null,
+      "invoice_type": 1,
+      "user_account": "",
+      "contact_phone": "15899872592",
+      "contact_name": "李农成",
+      "email": "15899872592@126.com",
+      "address": "北京市北京市市辖区东城区金蝶大厦1002",
+      "modules_list": [
+        {
+          "cellNum": 6,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 5,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 17,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 2,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 4,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 19,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 8,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 3,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 20,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        },
+        {
+          "cellNum": 18,
+          "product_name": "金蝶KIS专业版15.0",
+          "station": "1",
+          "price": ""
+        }
+      ]
+    },
+    "log": [
+  {
+    "id": 3,
+    "order_num": "KIS201711281918093902415",
+    "content": "出库",
+    "create_time": "2017-11-30 19:44:32",
+    "operator": "李白"
+  },
+  {
+    "id": 1,
+    "order_num": "KIS201711281918093902415",
+    "content": "付款",
+    "create_time": "2017-11-22 19:43:20",
+    "operator": "李农成"
+  },
+  {
+    "id": 2,
+    "order_num": "KIS201711281918093902415",
+    "content": "付款",
+    "create_time": "2017-11-22 19:43:20",
+    "operator": "兰陵王"
+  }
+],
+    "invoice": {
+      "type": 1,
+      "tax_num": "56562232323",
+      "title": "深圳市微程科技",
+      "title_type": 1
+    }
+  }
+}
+```
+ 

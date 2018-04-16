@@ -5,25 +5,23 @@
 body {
     overflow-y: scroll;
     overflow-x: auto;
-    min-width: 1114px;
     box-sizing: border-box;
 
     .wrapper {
         display: flex;
         margin-top: 68px;
 
-        &.no-header{
+        &.no-header {
             margin-top: 0px;
         }
     }
 
 
-    &.print{
-        .wrapper{
+    &.print {
+        .wrapper {
             margin-top: 0px;
         }
     }
-    
 }
 
 
@@ -67,6 +65,55 @@ ul {
     margin: 0;
     padding: 0;
 }
+
+body {
+    ::-webkit-scrollbar {
+        height: 10px !important;
+        width: 8px !important;
+    }
+
+    ::-webkit-scrollbar-track-piece {
+        /*background-color: #fff;*/
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #c8d2dc;
+        border-radius: 4px;
+    }
+
+    ::-webkit-resizer {
+        background-repeat: no-repeat;
+        background-position: bottom right;
+    }
+
+    /**针对 body 自身的: **/
+
+    &::-webkit-scrollbar {
+        height: 10px !important;
+        width: 8px !important;
+    }
+
+    &::-webkit-scrollbar-track-piece {
+        /*background-color: #fff;*/
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: #c8d2dc;
+        border-radius: 4px;
+    }
+
+    &::-webkit-resizer {
+        background-repeat: no-repeat;
+        background-position: bottom right;
+    }
+
+  
+}
+
+
+
+
+
 
 
 body,
@@ -120,9 +167,9 @@ a {
     text-decoration: none;
 }
 
-    a:hover {
-        text-decoration: underline;
-    }
+a:hover {
+    text-decoration: underline;
+}
 
 sup {
     vertical-align: text-top;

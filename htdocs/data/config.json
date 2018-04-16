@@ -1,31 +1,28 @@
-﻿
 {
-    "!file": "./readme.md",
-    "!!file": "./es6/sidebar.json",
-    "!!!file": "./house/permit/sidebar.json",
-    "file": "./weber/sidebar.json",
-    
-    "fadeIn": true,
+    "file": "/readme.md",
+    "!file": "/weber/sidebar.json",
     "header": {
-        "!disabled": true,
         "logo": "style/img/logo.png",
-        "search": { },
+        "search": {},
         "fixed": true,
         "menus": [
             {
                 "name": "重新介绍 JavaScript",
-                "file": "./jsdn/a.md"
-
+                "base": "",
+                "ext": "",
+                "items": []
             },
             {
                 "name": "ES6 教程",
-                "file": "./es6/sidebar.json"
+                "base": "",
+                "ext": "",
+                "file": "./es6/sidebar.json",
+                "items": []
             },
             {
                 "name": "前端开发规范",
-                "base": "./specification/",
+                "base": "/specification/",
                 "ext": "/index.md",
-                "file": "",
                 "items": [
                     {
                         "name": "JavaScript 开发规范",
@@ -37,9 +34,10 @@
                     }
                 ]
             },
-
             {
                 "name": "测试",
+                "base": "",
+                "ext": "",
                 "items": [
                     {
                         "name": "KISP 源代码 JS",
@@ -63,27 +61,21 @@
                 "name": "KIS轻应用后台文档",
                 "base": "./app/",
                 "ext": "/sidebar.json",
-                "file": "./article/definejs.md",
                 "items": [
                     {
-                        "name": "微销售",
-                        "file": "vGuide"
+                        "name": "会员营销",
+                        "file": "message"
                     },
                     {
                         "name": "微门店",
                         "file": "vStore"
-                    },
-                    {
-                        "name": "会员营销",
-                        "file": "message"
                     }
                 ]
             },
             {
                 "name": "专题文章",
-                "base": "./article/",
+                "base": "/article/",
                 "ext": ".md",
-                "file": "",
                 "items": [
                     {
                         "name": "KISP 框架",
@@ -106,13 +98,32 @@
                         "file": "Config-and-Code"
                     }
                 ]
-
+            },
+            {
+                "name": "其它",
+                "base": "",
+                "ext": "",
+                "file": "",
+                "items": [
+                    {
+                        "name": "房博会",
+                        "file": "./house/permit/sidebar.json"
+                    },
+                    {
+                        "name": "002",
+                        "file": "002"
+                    }
+                ]
             }
         ]
-
     },
-
-    "footer": {
+    "main": {
+        "fadeIn": true,
+        "min-width": 750,
+        "max-width": 1024
+        
+    },
+    "!footer": {
         "copyright": "© 2014 - 2016 KISP. All rights reserved. <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备16104043号</a>",
         "menus": [
             {
@@ -145,6 +156,27 @@
                 "file": "./article/Storage.md"
             }
         ]
-    }
-
+    },
+    "menus": [
+        {
+            "cmd": "top",
+            "text": "顶部"
+        },
+        {
+            "cmd": "home",
+            "text": "首页"
+        },
+        {
+            "cmd": "outline",
+            "text": "提纲"
+        },
+        {
+            "cmd": "print",
+            "text": "打印"
+        },
+        {
+            "cmd": "bottom",
+            "text": "底部"
+        }
+    ]
 }

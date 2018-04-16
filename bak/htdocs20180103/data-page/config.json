@@ -1,0 +1,17 @@
+﻿
+{
+    "file": "./readme.md",
+    "fadeIn": true,
+    "header": {
+        "disabled": true,
+        "logo": "style/img/logo.png",
+        "search": { },
+        "fixed": true,
+        "menus": [
+            
+        ]
+
+    },
+
+
+}
