@@ -1,12 +1,13 @@
-{
+﻿{
     "file": "./readme.md",
-    "logo": "接口文档",
+    "logo": "style/img/logo.png",
     "mutex": false,
     "groups": [
         {
             "name": "用户管理",
             "base": "./docs/user/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 {
                     "name": "用户登录",
@@ -18,6 +19,7 @@
             "name": "土地管理",
             "base": "./docs/land/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 {
                     "name": "土地出让列表",
@@ -33,6 +35,7 @@
             "name": "规划管理",
             "base": "./docs/plan/",
             "ext": ".md",
+            "fold": true,
             "items": [
                 {
                     "name": "规划许可 - 待办列表",
@@ -60,7 +63,9 @@
             "name": "建设管理",
             "base": "./docs/construct/",
             "ext": ".md",
+            "fold": true,
             "items": [
+
                 {
                     "name": "建设许可 - 待办列表",
                     "file": "Construct.todos"
@@ -79,7 +84,9 @@
             "name": "销售管理",
             "base": "./docs/sale/",
             "ext": ".md",
+            "fold": true,
             "items": [
+
                 {
                     "name": "销售许可 - 待办列表",
                     "file": "Sale.todos"
@@ -109,17 +116,9 @@
                     "file": "Saled.get"
                 }
             ]
-        },
-        {
-            "name": "测试",
-            "base": "",
-            "ext": "",
-            "items": [
-                {
-                    "name": "JS开发规范",
-                    "file": "data/js-specification.md"
-                }
-            ]
         }
+
     ]
+
+
 }

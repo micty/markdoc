@@ -46,7 +46,9 @@ KISP.panel('/Outline', function (require, module, panel) {
     *   ];
     */
     panel.on('render', function (items) {
+
         outline.fill(items);
+
     });
 
 

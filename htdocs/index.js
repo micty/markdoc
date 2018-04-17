@@ -70,8 +70,7 @@ KISP.launch(function (require, module) {
     FixedMenus.on({
         'outline': function () {
             var visible = Outline.toggle();
-
-            Main.setPadding({'outline': visible, });
+            Main.setPadding({ 'outline': visible, });
         },
         'print': function () {
             //切换打印模式和正常模式。
@@ -84,6 +83,7 @@ KISP.launch(function (require, module) {
                 Outline.$.toggleClass('print');
                 $(document.body).toggleClass('print');
             }
+
             print();
 
             //同步模式，打印窗口关闭后会有返回值。
@@ -92,19 +92,23 @@ KISP.launch(function (require, module) {
     });
 
     Main.on({
-        'render': function (isCode, title) {
-            Title.render(title);
-            FixedMenus.set(isCode);
-            Scroller.render(isCode);
+        'render': function (data) {
+            Title.render(data.title);
+            FixedMenus.set(data.isCode);
+            Scroller.render(data.isCode);
+
+            Outline.render(data.outlines);
+
+            if (data.outline) {
+                Outline.show();
+                Main.setPadding({ 'outline': true, });
+            }
         },
         'click': function () {
             Scroller.reset();
         },
         'hash': function (hash) {
             Router.set(hash);
-        },
-        'outline': function (list) {
-            Outline.render(list);
         },
     });
 

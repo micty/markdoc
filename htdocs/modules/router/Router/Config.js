@@ -26,14 +26,17 @@ define('/Router/Config', function (require, module, exports) {
                     var url = options.url;
                     var json = JSON.stringify(data);
 
-                    json = JSON.parse(json);
+                    json = JSON.parse(json) || {};
 
 
                     [ 'file', 'sidebar', ].forEach(function (key) {
                         var file = json[key];
-                        if (file) {
-                            json[key] = Url.relative(url, file);
+                        if (!file) {
+                            return;
                         }
+
+                        json[key] = Url.relative(url, file);
+
                     });
 
                     Header.normalize(json.header, url);

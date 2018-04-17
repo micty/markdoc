@@ -13,9 +13,9 @@ KISP.panel('/Main', function (require, module, panel) {
 
 
     var meta = {
-        'url': null,
+        'urlInfo': null,
         'sidebar': false,   //记录 sidebar 是否可见。
-        'outline': false,   //提纲栏是否可见。
+        'outline': false,   //记录 outline 是否可见。
         'config': null,
     };
 
@@ -25,9 +25,10 @@ KISP.panel('/Main', function (require, module, panel) {
         Style.init(panel);
 
         $(window).on('resize', function () {
-            
-            Style.setPadding(meta);
-
+            Style.setPadding({
+                'sidebar': meta.sidebar,
+                'outline': meta.outline,
+            });
         });
 
         Header.on({
@@ -51,15 +52,25 @@ KISP.panel('/Main', function (require, module, panel) {
                 Loading.show();
             },
 
-            'render': function (title) {
-                Loading.hide();
+            'render': function (data) {
+                var isCode = meta.urlInfo.isCode;
+                var title = data.title;
+                var outline = meta.config.outline;  //是否自动显示提纲 true|false。
 
-                var isCode = meta.url.isCode;
                 if (isCode) {
-                    title = meta.url.name + ' 源代码';
+                    title = meta.urlInfo.name + ' 源代码';
+                    outline = false;
                 }
 
-                panel.fire('render', [isCode, title]);
+
+                Loading.hide();
+
+                panel.fire('render', [{
+                    'isCode': isCode,
+                    'title': title,
+                    'outlines': data.outlines, //提纲列表数据 []。
+                    'outline': outline,
+                }]);
             },
 
             'line': function (y) {
@@ -68,10 +79,6 @@ KISP.panel('/Main', function (require, module, panel) {
 
             'hash': function (hash) {
                 panel.fire('hash', [hash]);
-            },
-
-            'outline': function (list) {
-                panel.fire('outline', [list]);
             },
         });
 
@@ -87,49 +94,48 @@ KISP.panel('/Main', function (require, module, panel) {
     *   options = {
     *       url: '',            //要显示的文件的 url 地址。
     *       sidebar: false,     //侧边栏是否显示。
-    *       outline: false,     //提纲栏是否显示。
     *   };
     */
     panel.on('render', function (options) {
-        var outline = options.outline;
+        meta.sidebar = options.sidebar;
+        meta.urlInfo = Url.parse(options.url);
 
-        //如果未指定，则使用上次的。
-        if (outline === undefined) {
-            outline = meta.outline;
-        }
-        else {
-            meta.outline = outline;
-        }
+        var isCode = meta.urlInfo.isCode;
 
-
-        var url = options.url;
-        var sidebar = meta.sidebar = options.sidebar;
-        var data = meta.url = Url.parse(url);
-        var isCode = data.isCode;
 
         //切换普通模式和代码模式。
         panel.$.toggleClass('source', isCode);
  
         //针对代码模式的头部工具栏，仅代码模式时显示。
-        Header.render(data);
+        Header.render(meta.urlInfo);
 
 
         Content.render({
-            'url': url,
+            'url': options.url,
             'fadeIn': meta.config.fadeIn,
         });
 
         Mark.render(isCode);
         NotFound.hide();
-        Style.setPadding(meta);
-        Style.setWidth(meta.config, isCode);
+
+        Style.setPadding({
+            'sidebar': meta.sidebar,
+            'outline': meta.outline,
+        });
+
+        Style.setWidth({
+            'isCode': isCode,
+            'min-width': meta.config['min-width'],
+            'max-width': meta.config['max-width'],
+        });
     });
 
 
-    return {
 
-        //显示大纲。 暂时不用了。
-        'outline': Content.outline,
+
+
+
+    return {
 
         'loading': function () {
             panel.$.removeClass('source');
@@ -169,23 +175,32 @@ KISP.panel('/Main', function (require, module, panel) {
         },
 
         'config': function (config) {
-            meta.config = config;
+            meta.config = config || {
+                'fadeIn': true,
+                'outline': false,   //提纲栏是否自动显式。 
+                'min-width': 750,
+                'max-width': 1024,
+            };
+
         },
 
         'leave': function (sw) {
             Header.leave(sw);
 
-            if (meta.url.isCode) {
+            if (meta.urlInfo.isCode) {
                 Content.$.toggleClass('header-fixed', sw);
             }
         },
 
-        //Header 显示/隐藏时，调整 top 距离
+        /**
+        * Header 显示或隐藏时，调整 top 距离。
+        */
         'setTop': function (isHeaderVisible) {
             panel.$.parent().toggleClass('no-header', !isHeaderVisible);
         },
 
         /**
+        * 设置 padding-right。
         *   options = {
         *       outline: false,     //提纲栏是否可见。
         *   };
@@ -194,9 +209,15 @@ KISP.panel('/Main', function (require, module, panel) {
             options = options || {};
             meta.outline = options.outline;
 
-            Style.setPadding(meta);
+            Style.setPadding({
+                'sidebar': meta.sidebar,
+                'outline': meta.outline,
+            });
         },
 
+        /**
+        * 滚动到指定索引的提纲处。
+        */
         'toOutline': function (index) {
             Content.toOutline(index);
         },

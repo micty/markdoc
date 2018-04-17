@@ -1,8 +1,8 @@
 {
-    "name": "weberp",
+    "name": "markdoc",
     "version": "",
     "repository": {},
-    "description": "weberp",
+    "description": "markdoc",
     "dependencies": {
         "cheerio": ""
     },

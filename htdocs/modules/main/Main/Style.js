@@ -51,9 +51,17 @@ define('/Main/Style', function (require, module, exports) {
         },
 
 
-        setWidth: function (config, isCode) {
+        /**
+        *   
+        *   options = {
+        *       'isCode': false,    //可选。
+        *       'min-width': 0,     //可选。
+        *       'max-width': 0,     //可选。
+        *   };
+        */
+        setWidth: function (options) {
             //代码模式下，不限制 width 和 padding，让它充满页面。
-            if (isCode) {
+            if (options.isCode) {
                 panel.$.css({
                     'min-width': '',
                     'max-width': '',
@@ -62,10 +70,9 @@ define('/Main/Style', function (require, module, exports) {
                 return;
             }
 
-            //普通模式下，如果配置中指定了 width 和 padding，则设置。
-            var minWidth = config['min-width'];
-            var maxWidth = config['max-width'];
-            var padding = config['padding'];
+            //普通模式下，如果配置中指定了 width，则设置。
+            var minWidth = options['min-width'];
+            var maxWidth = options['max-width'];
 
             if (typeof minWidth == 'number') {
                 panel.$.css('min-width', minWidth + 'px');
@@ -75,13 +82,6 @@ define('/Main/Style', function (require, module, exports) {
                 panel.$.css('max-width', maxWidth + 'px');
             }
 
-            if (typeof padding == 'number') {
-                padding += 'px';
-            }
-
-            if (padding) {
-                panel.$.css('padding', padding );
-            }
         },
     };
 

@@ -1,20 +1,23 @@
 
 /.svn
 
-/bin/config
+/bak
+
 /bin/node_modules
-/bin/build.js
-/bin/open.js
-/bin/qr.js
-/bin/watch.js
+/bin/console.log
+/bin/package-lock.json
+
 
 /build
 
-/htdocs/style/css
-/htdocs/index.html
+
+
 /htdocs/data-house
 /htdocs/data-kisp
 /htdocs/data-resume
 /htdocs/data/weber
 /htdocs/data/house
+/htdocs/packages
+/htdocs/style/css
+/htdocs/index.html
 

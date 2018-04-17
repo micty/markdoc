@@ -21,11 +21,14 @@ KISP.panel('/Main/Content', function (require, module, panel) {
 
 
         
-        markdoc.on('render', function () {
+        markdoc.on('render', function (data) {
 
-            var list = markdoc.getOutlines();
+            var outlines = markdoc.getOutlines();
 
-            panel.fire('outline', [list]);
+            panel.fire('render', [{
+                'title': data.title,
+                'outlines': outlines,
+            }]);
 
         });
 
@@ -64,29 +67,28 @@ KISP.panel('/Main/Content', function (require, module, panel) {
 
         Loader.load(options.url, function (content, data) {
 
-            //要在浏览器中显示的标题
-            var title = markdoc.render({
-                'content': content,
-                'baseUrl': data.url,
-                'language': data.isOrigin ? data.ext : '',
-                'imgUrl': data.imgBase, //img 标签的基准地址。
-
-            });
-
             //已经显示了 loading，则让它显示 800ms 后再隐藏。
             loading ? setTimeout(show, 800) : show();
+
 
             function show() {
                 loading = false;
                 clearTimeout(tid);
+
+                //要在浏览器中显示的标题
+                markdoc.render({
+                    'content': content,
+                    'baseUrl': data.url,
+                    'language': data.isOrigin ? data.ext : '',
+                    'imgUrl': data.imgBase, //img 标签的基准地址。
+                });
+
                 markdoc.show();
+
 
                 if (fadeIn) {
                     panel.$.addClass('show');
                 }
-
-
-                panel.fire('render', [title]);
             }
      
         });

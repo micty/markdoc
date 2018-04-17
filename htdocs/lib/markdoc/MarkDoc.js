@@ -176,9 +176,10 @@ define('MarkDoc', function (require, module, exports) {
             current.html = current.code.html();
             current.ul = meta.$.find('ul');
 
-            meta.emitter.fire('render');
 
-            return title;
+            meta.emitter.fire('render', [{
+                'title': title,
+            }]);
 
         },
 
