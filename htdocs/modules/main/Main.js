@@ -16,7 +16,12 @@ KISP.panel('/Main', function (require, module, panel) {
         'urlInfo': null,
         'sidebar': false,   //记录 sidebar 是否可见。
         'outline': false,   //记录 outline 是否可见。
-        'config': null,
+        'config': {
+            'fadeIn': true,
+            'outline': false,   //提纲栏是否自动显式。 
+            'min-width': 750,
+            'max-width': 1024,
+        },
     };
 
 
@@ -175,13 +180,7 @@ KISP.panel('/Main', function (require, module, panel) {
         },
 
         'config': function (config) {
-            meta.config = config || {
-                'fadeIn': true,
-                'outline': false,   //提纲栏是否自动显式。 
-                'min-width': 750,
-                'max-width': 1024,
-            };
-
+            Object.assign(meta.config, config);
         },
 
         'leave': function (sw) {
@@ -220,6 +219,10 @@ KISP.panel('/Main', function (require, module, panel) {
         */
         'toOutline': function (index) {
             Content.toOutline(index);
+        },
+
+        'font': function (size) {
+            Content.font(size);
         },
     };
 

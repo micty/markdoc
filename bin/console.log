@@ -1,3 +1,65 @@
 
-2018-04-17 15:49:00
-打开页面 http://172.20.58.63/Studio/markdoc/htdocs/index.html
+2019-03-22 13:44:38
+写入 ../htdocs/packages/all.json
+
+2019-03-22 13:44:40
+匹配到 2 个母版页:
+    ../htdocs/demo.master.html
+    ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/demo.master.html
+写入 ../htdocs/demo.html
+<< 完成编译 ../htdocs/demo.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/index.master.html
+混入 ../htdocs/modules/header/panel.html
+混入 ../htdocs/modules/sidebar/panel.html
+混入 ../htdocs/modules/main/Main/404/panel.html
+混入 ../htdocs/modules/main/Main/loading/panel.html
+混入 ../htdocs/modules/main/Main/header/panel.html
+混入 ../htdocs/modules/main/Main/mark/panel.html
+混入 ../htdocs/modules/main/Main/content/panel.html
+混入 ../htdocs/modules/footer/panel.html
+混入 ../htdocs/modules/main/panel.html
+混入 ../htdocs/modules/outline/panel.html
+混入 ../htdocs/modules/tools/panel.html
+编译 ../htdocs/style/less/index.less
+写入 ../htdocs/style/css/style.less.index.css
+编译 ../htdocs/lib/markdoc/panel.less
+写入 ../htdocs/style/css/lib.markdoc.panel.css
+编译 ../htdocs/lib/outline/panel.less
+写入 ../htdocs/style/css/lib.outline.panel.css
+编译 ../htdocs/modules/footer/panel.less
+写入 ../htdocs/style/css/modules.footer.panel.css
+编译 ../htdocs/modules/header/panel.less
+写入 ../htdocs/style/css/modules.header.panel.css
+编译 ../htdocs/modules/main/Main/404/panel.less
+写入 ../htdocs/style/css/modules.main.Main.404.panel.css
+编译 ../htdocs/modules/main/Main/content/panel.less
+写入 ../htdocs/style/css/modules.main.Main.content.panel.css
+编译 ../htdocs/modules/main/Main/header/panel.less
+写入 ../htdocs/style/css/modules.main.Main.header.panel.css
+编译 ../htdocs/modules/main/Main/loading/panel.less
+写入 ../htdocs/style/css/modules.main.Main.loading.panel.css
+编译 ../htdocs/modules/main/Main/mark/panel.less
+写入 ../htdocs/style/css/modules.main.Main.mark.panel.css
+编译 ../htdocs/modules/main/panel.less
+写入 ../htdocs/style/css/modules.main.panel.css
+编译 ../htdocs/modules/outline/panel.less
+写入 ../htdocs/style/css/modules.outline.panel.css
+编译 ../htdocs/modules/sidebar/panel.less
+写入 ../htdocs/style/css/modules.sidebar.panel.css
+编译 ../htdocs/modules/tools/panel.less
+写入 ../htdocs/style/css/modules.tools.panel.css
+混入 ../htdocs/lib/markdoc/panel.html
+混入 ../htdocs/lib/outline/panel.html
+写入 ../htdocs/index.html
+<< 完成编译 ../htdocs/index.master.html
+准备开始监控，请稍候...
+
+2019-03-22 13:44:42
+=================================全部编译完成=================================
+耗时 9658 ms
+打开页面 http://localhost/Studio/markdoc/htdocs/index.html
+...ooooOOOOoooo...
+>> watching...

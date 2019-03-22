@@ -1,4 +1,5 @@
-﻿<!--不可见 删掉show类，上滑再添加fixed类-->
+﻿
+
 <div data-panel="/Header" class="panel-header" style="display:none;">
 
     <div data-panel="/Header/Logo" class="logo">
@@ -16,21 +17,25 @@
         </div>
 
         <ul data-panel="/Header/Groups">
+            <template name="icon">
+                <i class="icon {icon}"></i>
+            </template>
+
             <template name="group" placeholder="groups">
                 <li data-type="group" data-no="{no}" class="{class}">
-                    <span>{name}</span>
+                    <span>{icon}{name}</span>
+
                     <div class="dropdown">
                         <ul class="detail">
                             <template name="item" placeholder="items">
                                 <li data-type="item" data-no="{no}" data-index="{index}">
-                                    {name}
+                                    {icon}{name}
                                 </li>
                             </template>
                         </ul>
                     </div>
                 </li>
             </template>
-           
         </ul>
     </div>
 

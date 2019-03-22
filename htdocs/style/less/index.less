@@ -16,6 +16,22 @@ body {
         }
     }
 
+    > div.loading {
+        display: none;
+        position: absolute;
+        z-index: 1024;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+    }
+
+    &.loading {
+        > div.loading {
+            display: block;
+        }
+    }
 
     &.print {
         .wrapper {
@@ -85,9 +101,7 @@ body {
         background-repeat: no-repeat;
         background-position: bottom right;
     }
-
     /**针对 body 自身的: **/
-
     &::-webkit-scrollbar {
         height: 10px !important;
         width: 8px !important;
@@ -107,7 +121,12 @@ body {
         background-position: bottom right;
     }
 
-  
+    ::selection { 
+        background: #ff9632; 
+            /*background: #cfd7ff;*/
+        color: unset;
+
+    } 
 }
 
 

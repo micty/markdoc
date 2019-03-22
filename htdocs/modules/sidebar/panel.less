@@ -1,17 +1,17 @@
 
 
 .panel-sidebar {
-    &.print{
+    &.print {
         display: none;
     }
 
-    @sidebar-width:200px;
+    @sidebar-width: 200px;
 
     position: relative;
     width: @sidebar-width;
     padding-left: 60px;
     height: calc(100vh - 90px);
-   
+
 
     &.fixed {
         .head {
@@ -44,7 +44,6 @@
             text-decoration: none;
             color: #000;
         }
-        
     }
 
     .groups {
@@ -57,7 +56,7 @@
         font-size: 14px;
         background-color: #fff;
         margin: 0px 0px 10px 10px;
-        padding-top:13px;
+        padding-top: 13px;
         overflow-x: hidden;
         overflow-y: scroll;
 
@@ -71,7 +70,7 @@
             font-size: 15px;
             cursor: pointer;
 
-            i {
+            i.arrow {
                 float: right;
                 margin-right: 5px;
                 color: rgb(228, 228, 228);
@@ -148,6 +147,8 @@
                     }
                 }
 
+                
+
                 &.on {
                     color: #6bb3dd;
                     font-weight: 700;
@@ -155,6 +156,10 @@
                 }
             }
         }
+
+        .icon {
+                    margin-right: 5px;
+                }
 
         &::-webkit-scrollbar {
             width: 2px;

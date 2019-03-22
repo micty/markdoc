@@ -16,7 +16,7 @@ KISP.panel('/Main/Content', function (require, module, panel) {
 
 
         markdoc = new MarkDoc({
-            container: panel.$.find('[data-id="content"]'),
+            'container': panel.$.find('[data-id="content"]'),
         });
 
 
@@ -115,6 +115,11 @@ KISP.panel('/Main/Content', function (require, module, panel) {
             markdoc.toOutline(index);
         },
 
+        'font': function (size) {
+            markdoc.$.css({
+                'font-size': size + 'px',
+            });
+        },
 
     };
 

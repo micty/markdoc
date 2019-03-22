@@ -14,7 +14,7 @@ KISP.panel('/Header', function (require, module, panel) {
 
 
 
-    panel.set('show', false); //禁用 render 后的自动显示。
+    panel.set('show', false); //禁止 render 后自动显示。
 
     panel.on('init', function () {
 

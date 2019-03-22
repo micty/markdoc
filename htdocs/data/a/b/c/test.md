@@ -4,11 +4,9 @@
 
 ![](upload/paste/2018-04-03/171321-8F9C.png)
 
-![](upload/paste/2018-04-03/171505-6ADC.png)
 
-![](upload/paste/2018-04-03/171953-6FC6.png)
 
-![](upload/paste/2018-04-03/172003-161B.png)
+
 
 ```js
 
@@ -43,6 +41,8 @@
     });
     
 ```
+![](upload/paste/2018-04-03/171953-6FC6.png)
 
-
+![](upload/paste/2018-04-03/172003-161B.png)
+![](upload/paste/2018-04-03/171505-6ADC.png)
 

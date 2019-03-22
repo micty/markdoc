@@ -78,7 +78,7 @@ define('MarkDoc/Code', function (require, module, exports) {
         */
         wrap: function (meta, options) {
             var $pre = $(options.element.parentNode);
-            var html = options.language + options.numbers;
+            var html = options.language +  options.numbers;
 
             $pre.wrap(meta.samples['source']);
             $pre.before(html);

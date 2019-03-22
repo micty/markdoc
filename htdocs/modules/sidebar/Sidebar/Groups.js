@@ -56,7 +56,7 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
             var selector = '[data-no="' + no + '"]';
             var div = 'div' + selector;
             var ul = panel.$.find('ul' + selector);
-            var i = $(div).find('i');
+            var i = $(div).find('i[data-no]');
 
             if (open) {
                 ul.slideDown('fast', function () {
@@ -78,8 +78,12 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
     panel.on('init', function () {
 
+        var tplIcon = null;
+
         panel.template({
             '': function (data) {
+                tplIcon = this.template('icon');
+
                 var html = this.fill('group', data.groups);
 
                 return {
@@ -87,32 +91,46 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
                 };
             },
 
+            'icon': function (item) {
+                var icon = item.icon;
+                if (!icon) {
+                    return '';
+                }
+
+                return {
+                    'icon': icon,
+                };
+            },
+
             'group': {
                 '': function (group, no) {
 
                     var html = this.fill('item', group.items, no);
-
+                    var icon = tplIcon.fill(group);
                     return {
                         'no': no,
+                        'icon': icon.trim(),
                         'name': group.name,
                         'title-display': group.name ? '' : 'display: none;',
                         'items-display': group.fold ? 'display: none;' : '',
                         'up-down': group.fold ? 'down' : 'up',
-
                         'items': html,
                     };
                 },
 
+                
+
                 'item': {
                     '': function (item, index, no) {
+                        var icon = tplIcon.fill(item);
 
                         return {
                             'index': index,
+                            'icon': icon.trim(),
                             'name': item.name,
                             'no': no,            //组号
                         };
                     },
-                    
                 },
             },
 

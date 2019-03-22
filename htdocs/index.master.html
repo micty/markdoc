@@ -4,10 +4,22 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>MarkDoc</title>
    
-    <link href="f/fontawesome-free-5.0.8/web-fonts-with-css/css/fontawesome-all.debug.css" rel="stylesheet" />
+    <link href="f/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.debug.css" rel="stylesheet" />
     <link href="f/highlight/styles/default.css" rel="stylesheet" />
     <link href="f/kisp/kisp.debug.css" rel="stylesheet" />
-
+    <script>
+        (function () {
+            var browser = navigator.userAgent;
+            var supported =
+                browser.indexOf('Chrome') > 0 ||
+                browser.indexOf('Safari') > 0 ||
+                browser.indexOf('Firefox') > 0;
+            if (!supported) {
+                alert('为提升性能和体验，本网站仅支持 Chrome、Safari 等主流浏览器。');
+                location.href = 'https://www.baidu.com/s?wd=chrome';
+            }
+        })();
+    </script>
     <!--weber.less.begin-->
     <script>
         [
@@ -20,7 +32,15 @@
 
 
 </head>
-<body>
+<body class="loading">
+    <div class="loading">
+        <ul class="UI-Loading">
+            <li class="red"></li>
+            <li class="yellow"></li>
+            <li class="green"></li>
+        </ul>
+    </div>
+
     <link rel="html" href="modules/header/panel.html" />
 
     <div class="wrapper">
@@ -28,7 +48,8 @@
         <link rel="html" href="modules/main/panel.html" />
         <link rel="html" href="modules/outline/panel.html" />
     </div>
-    <link rel="html" href="modules/menus/panel.html" />
+
+    <link rel="html" href="modules/tools/panel.html" />
 
     <!--weber.html.begin-->
     <script>

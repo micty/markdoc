@@ -10,8 +10,13 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
     panel.on('init', function () {
 
+        var tplIcon = null;
+
+
         panel.template({
             '': function (data) {
+                tplIcon = this.template('icon');
+
                 var html = this.fill('group', data.groups);
 
                 return {
@@ -19,31 +24,44 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
                 };
             },
 
+            'icon': function (item) {
+                var icon = item.icon;
+                if (!icon) {
+                    return '';
+                }
+
+                return {
+                    'icon': icon,
+                };
+            },
+
             'group': {
                 '': function (group, no) {
-
                     var items = group.items || [];
                     var html = this.fill('item', items, no);
+                    var icon = tplIcon.fill(group);
 
                     return {
                         'no': no,            //组号
+                        'icon': icon.trim(),
                         'name': group.name,
                         'class': items.length > 0 ? 'group' : '',
-
                         'items': html,
                     };
                 },
+                
 
                 'item': {
                     '': function (item, index, no) {
+                        var icon = tplIcon.fill(item);
 
                         return {
                             'index': index,
+                            'icon': icon.trim(),
                             'name': item.name,
                             'no': no,            //组号
                         };
                     },
-
                 },
             },
 

@@ -107,6 +107,7 @@ define('MarkDoc', function (require, module, exports) {
             var content = Content.get(meta, {
                 'language': options.language,
                 'content': options.content,
+
                 'process': function (content) {
                     var values = meta.emitter.fire('process', [content]);
                     return values.length > 0 ? values[0] : content;
@@ -140,6 +141,7 @@ define('MarkDoc', function (require, module, exports) {
                 var element = item.element;
                 var language = item.language;
                 var code = meta.code;
+                var $element = $(element);
 
                 //尝试把 json 格式化一下。
                 if (code.format) {
@@ -160,7 +162,56 @@ define('MarkDoc', function (require, module, exports) {
 
                 //语法高亮
                 content = Highlight.highlight(language, content);
-                $(element).addClass('hljs').html(content);
+                $element.addClass('hljs');
+                $element.html(content);
+
+                //双击进入可编辑模式。
+                $element.on('dblclick', function () {
+                    $element.attr('contenteditable', true);
+                    this.focus();
+
+                    var selection = window.getSelection();
+                    var range = document.createRange();
+
+                    //全选内容。
+                    range.selectNodeContents(this);
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                });
+
+                //失焦就退出可编辑模式。
+                $element.on('blur', function () {
+                    $element.attr('contenteditable', false);
+
+                    //尝试把 json 格式化一下。
+                    if (code.format) {
+                        Code.format(element);
+                    }
+
+                    //重新语法高亮。
+                    var content = this.innerText; //重新获取。
+                    content = Highlight.highlight(language, content);
+                    $element.html(content);
+                });
+
+                
+                //代码区进入可编辑模式时，监听内容的输入，以便调整高度和重新生成行号。
+                $element.on('input', function (event) {
+                    var content = this.innerText; //重新获取。
+                    var height = Lines.getHeight(content);
+                    var pre = this.parentNode;
+                    var div = pre.parentNode;
+
+                    $(pre).height(height);
+
+                    //指定了要生成行号，则根据内容重新生成行号。
+                    if (code.numbers) {
+                        var html = Lines.getNumbers(meta, content);
+                        $(div).find('[data-id="line-numbers"]').html(html);
+                    }
+                });
+
+                
 
             });
 
@@ -282,7 +333,13 @@ define('MarkDoc', function (require, module, exports) {
             }
 
             var $el = $(el);
-            el.scrollIntoViewIfNeeded();
+
+            if (el.scrollIntoViewIfNeeded) {
+                el.scrollIntoViewIfNeeded();
+            }
+            else {//兼容一下低端浏览器。
+                el.scrollIntoView();
+            }
 
             //闪两次
             var timeout = 200;

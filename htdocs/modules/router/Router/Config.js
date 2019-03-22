@@ -19,9 +19,14 @@ define('/Router/Config', function (require, module, exports) {
         'on': emitter.on.bind(emitter),
 
         'get': function (url) {
+
             var api = new API(url);
 
             api.on({
+                'request': function () {
+                    emitter.fire('loading');
+                },
+
                 'success': function (data, options) {
                     var url = options.url;
                     var json = JSON.stringify(data);
@@ -46,7 +51,7 @@ define('/Router/Config', function (require, module, exports) {
                 },
 
                 'error': function () {
-                    KISP.alert('加载 ' + url + ' 失败，请稍候刷新重试。');
+                    KISP.alert(`加载 ${url} 失败，请稍候刷新重试。`);
                 },
             });
 

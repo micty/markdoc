@@ -1,46 +1,58 @@
-﻿{
-    "file": "./readme.md",
-    "!file": "./es6/sidebar.json",
-    "!file": "./house/permit/sidebar.json",
-
-
-    "!file": "./weber/sidebar.json",
-
-
+{
+    "!file": "./readme.md",
+    "file": "./weber/sidebar.json",
     "header": {
         "logo": "style/img/logo.png",
-        "search": { },
+        "search": {},
         "fixed": true,
         "menus": [
             {
                 "name": "重新介绍 JavaScript",
-                "file": "./jsdn/a.md"
-
+                "base": "",
+                "ext": "",
+                "file": "/jsdn/a.md",
+                "icon": "fa fa-folder-open",
+                "items": []
             },
             {
                 "name": "ES6 教程",
-                "file": "./es6/sidebar.json"
+                "base": "",
+                "ext": "",
+                "file": "/es6/sidebar.json",
+                "icon": "fa fa-tv",
+                "items": []
             },
             {
                 "name": "前端开发规范",
-                "base": "./specification/",
+                "base": "/specification/",
                 "ext": "/index.md",
                 "file": "",
+                "icon": "fas fa-cloud",
                 "items": [
                     {
                         "name": "JavaScript 开发规范",
-                        "file": "js"
+                        "file": "js",
+                        "icon": "fab fa-qq"
                     },
                     {
                         "name": "重构页面开发规范",
-                        "file": "refactor"
+                        "file": "refactor",
+                        "icon": "fas fa-cog"
                     }
                 ]
             },
-
             {
                 "name": "测试",
+                "base": "",
+                "ext": "",
+                "file": "",
+                "icon": "fas fa-bell",
                 "items": [
+                    {
+                        "name": "纯文章",
+                        "file": "!/a/b/c/test.md",
+                        "icon": ""
+                    },
                     {
                         "name": "KISP 源代码 JS",
                         "file": "../f/kisp/kisp.debug.js"
@@ -51,19 +63,22 @@
                     },
                     {
                         "name": "Path.js",
-                        "file": "./source/Path.js"
+                        "file": "/source/Path.js",
+                        "icon": ""
                     },
                     {
                         "name": "SQL语言",
-                        "file": "./source/Sale_Out_Template.md"
+                        "file": "/source/Sale_Out_Template.md",
+                        "icon": ""
                     }
                 ]
             },
             {
                 "name": "KIS轻应用后台文档",
-                "base": "./app/",
+                "base": "/app/",
                 "ext": "/sidebar.json",
-                "file": "./article/definejs.md",
+                "file": "/article/definejs.md",
+                "icon": "fas fa-file-alt",
                 "items": [
                     {
                         "name": "微销售",
@@ -81,9 +96,10 @@
             },
             {
                 "name": "专题文章",
-                "base": "./article/",
+                "base": "/article/",
                 "ext": ".md",
                 "file": "",
+                "icon": "fas fa-cog",
                 "items": [
                     {
                         "name": "KISP 框架",
@@ -106,59 +122,78 @@
                         "file": "Config-and-Code"
                     }
                 ]
-
             }
         ]
-
     },
-
     "main": {
         "fadeIn": true,
-        "min-width": 750,
-        "max-width": 750,
-        "padding": 0
+        "min-width": 350,
+        "max-width": 850
     },
-
-    "!footer": {
+    "footer": {
         "copyright": "© 2014 - 2016 KISP. All rights reserved. <a href='http://www.miitbeian.gov.cn/' target='_blank'>粤ICP备16104043号</a>",
         "menus": [
             {
                 "name": "关于KISP",
-                "file": "./article/API.md"
+                "file": "/article/API.md"
             },
             {
                 "name": "用户协议",
-                "file": "./article/CMD.md"
+                "file": "/article/CMD.md"
             },
             {
                 "name": "联系我们",
-                "file": "./article/Storage.md"
+                "file": "/article/Storage.md"
             }
         ],
         "logos": [
             {
                 "name": "邮箱",
                 "logo": "style/img/icon-mail.png",
-                "file": "./article/Storage.md"
+                "file": "/article/Storage.md"
             },
             {
                 "name": "消息",
                 "logo": "style/img/icon-msg.png",
-                "file": "./article/Storage.md"
+                "file": "/article/Storage.md"
             },
             {
                 "name": "微博",
                 "logo": "style/img/icon-weibo.png",
-                "file": "./article/Storage.md"
+                "file": "/article/Storage.md"
             }
         ]
     },
     "menus": [
-        { "cmd": "top", "text": "顶部" },
-        { "cmd": "home", "text": "首页" },
-        { "cmd": "outline", "text": "提纲" },
-        { "cmd": "print", "text": "打印" },
-        { "cmd": "bottom", "text": "底部" }
+        {
+            "cmd": "top",
+            "text": "顶部",
+            "icon": "fas fa-chevron-up"
+        },
+        {
+            "cmd": "home",
+            "text": "首页",
+            "icon": "fas fa-home"
+        },
+        {
+            "cmd": "outline",
+            "text": "提纲",
+            "icon": "fas fa-list"
+        },
+         {
+            "cmd": "font",
+            "text": "字体",
+            "icon": "fas fa-font"
+        },
+        {
+            "cmd": "print",
+            "text": "打印",
+            "icon": "fas fa-print"
+        },
+        {
+            "cmd": "bottom",
+            "text": "底部",
+            "icon": "fas fa-chevron-down"
+        }
     ]
-
 }

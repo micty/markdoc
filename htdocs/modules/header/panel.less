@@ -1,7 +1,7 @@
 
 
 .panel-header {
-    &.print{
+    &.print {
         display: none;
     }
 
@@ -19,11 +19,7 @@
     z-index: 2;
     opacity: 1;
     visibility: visible;
-    transition: 
-        top 0.5s ease-in-out, 
-        opacity 0.5s ease-in-out,  
-        visibility 0.5s ease-in-out,
-        box-shadow 0.5s ease-in-out;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 
     @time: 0.2s;
 
@@ -32,11 +28,7 @@
         top: -67px;
         opacity: 0;
         visibility: hidden;
-        transition: 
-            top 0.5s ease-in-out, 
-            opacity 0.5s ease-in-out,  
-            visibility 0.5s ease-in-out, 
-            box-shadow 0.5s ease-in-out;
+        transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
     }
 
     &.fixed {
@@ -45,13 +37,8 @@
         opacity: 1;
         visibility: visible;
         box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.25);
-
         /**不要用 all，因为 left 值会给 js 动态改变，不需要动画*/
-        transition: 
-            top 0.5s ease-in-out, 
-            opacity 0.5s ease-in-out,  
-            visibility 0.5s ease-in-out,
-            box-shadow 0.5s ease-in-out;
+        transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out, visibility 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
 
         &.slide-up {
             top: -67px;
@@ -191,6 +178,7 @@
 
                         &::after {
                             content: '';
+                            color: #b3b3b3;
                             display: inline-block;
                             margin-left: 4px;
                             width: 0;
@@ -203,6 +191,8 @@
                             transition: all 0.5s ease-in-out;
                         }
                     }
+
+
 
                     .dropdown {
                         position: absolute;
@@ -270,6 +260,11 @@
                             }
                         }
                     }
+                }
+
+
+                .icon {
+                    margin-right: 5px;
                 }
             }
         }

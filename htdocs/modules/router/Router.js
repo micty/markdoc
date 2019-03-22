@@ -1,6 +1,6 @@
 ﻿
 /**
-* 
+* 路由器模板。
 */
 KISP.panel('/Router', function (require, module, panel) {
     var KISP = require('KISP');
@@ -11,16 +11,18 @@ KISP.panel('/Router', function (require, module, panel) {
 
     var Config = module.require('Config');
     var Hash = module.require('Hash');
+    var File = module.require('File');
 
-    var config = null;
+
+    var config = null;  //config.json 文件解析出来的对象。
     var defaults = KISP.data('config');
 
 
     panel.on('init', function () {
-        
 
         function fireDefault(item) {
             var url = config.file;
+
             if (!url) {
                 return;
             }
@@ -35,19 +37,21 @@ KISP.panel('/Router', function (require, module, panel) {
             }
         }
 
-
+        //静态事件。
         API.on({
             404: function (url) {
                 panel.fire('404', [url]);
             },
         });
 
+
         Config.on({
+            'loading': function () {
+                panel.fire('config', 'loading');
+            },
             'success': function (data) {
-               
                 config = data;
                 panel.fire('config', 'success', [data]);
-
                 Hash.render();
             },
         });
@@ -62,11 +66,14 @@ KISP.panel('/Router', function (require, module, panel) {
                 fireDefault();
             },
 
+            'plain': function (isPlain) {
+                panel.fire('plain', [isPlain]);
+            },
+            'outline': function (isOutline) {
+                panel.fire('outline', [isOutline]);
+            },
             'sidebar': function (url, item) {
-                if (url.startsWith('/')) {
-                    url = defaults.base + url.slice(1);
-                }
-
+                url = File.normalize(url);
                 panel.fire('sidebar', [url, item]);
             },
 
@@ -79,29 +86,7 @@ KISP.panel('/Router', function (require, module, panel) {
             },
 
             'file': function (url) {
-                var files = url.split(',');
-
-                files = files.map(function (file) {
-                    
-                    var isOrigin = file.startsWith('@');
-                    if (isOrigin) {
-                        file = file.slice(1);
-                    }
-
-
-                    if (file.startsWith('/')) {
-                        file = defaults.base + file.slice(1);
-                    }
-
-                    if (isOrigin) {
-                        file = '@' + file;
-                    }
-
-                    return file;
-                });
-
-                url = files.join(',');
-
+                url = File.normalize(url);
                 panel.fire('file', [url]);
             },
         });
@@ -110,24 +95,33 @@ KISP.panel('/Router', function (require, module, panel) {
     });
 
 
-
+    /**
+    * 
+    */
     panel.on('render', function () {
         var qs = Query.get(window) || {};
         var url = defaults.url = qs.config || defaults.url;
 
+        //记录 `config.json` 文件所在的目录，以它作为根目录。 
+        //路径中以 `/` 开头的路径都是相对于根目录的，如 `/a/b/c.md`，则完整路径为 `data/a/b/c.md`。
+
         defaults.base = Url.dir(url); //以 '/' 结尾。
+        File.init(defaults);
 
-        panel.fire('config', 'loading');
+
+        //加载 config.json 文件。
         Config.get(url);
-
 
     });
 
 
 
+
+
+
     return {
 
-        'auto': function (file) {
+        auto: function (file) {
             var isOrigin = file.startsWith('@');
             if (isOrigin) {
                 file = file.slice(1);
@@ -153,12 +147,20 @@ KISP.panel('/Router', function (require, module, panel) {
         },
 
 
-        'set': function (hash) {
+        set: function (hash) {
             Hash.setRelative(hash, defaults.base);
         },
 
-        'add': function (key, value, openNew) {
+        add: function (key, value, openNew) {
             Hash.add(key, value, openNew);
+        },
+
+        /**
+        * 
+        */
+        normalize: function (url) {
+            url = File.normalize(url);
+            return url
         },
 
     };

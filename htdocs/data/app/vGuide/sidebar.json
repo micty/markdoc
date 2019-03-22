@@ -2,28 +2,46 @@
     "file": "",
     "logo": "",
     "mutex": false,
+    "!fixed":  false,
     "groups": [
+        {
+            "name": "abc",
+            "fold": false,
+            "base": "",
+            "ext": "",
+            "items": [
+                {
+                    "name": "1000",
+                    "file": "/app/vGuide/address/address1.md"
+                }
+            ]
+        },
         {
             "name": "商品（基础资料）",
             "fold": true,
             "base": "./base/",
             "ext": ".md",
+            "icon": "fa fa-folder-open",
             "items": [
                 {
                     "name": "客户列表",
-                    "file": "customer"
+                    "file": "customer",
+                    "icon": "fa fa-folder-open"
                 },
                 {
                     "name": "类目列表",
-                    "file": "type"
+                    "file": "type",
+                    "icon": "fa fa-tv"
                 },
                 {
                     "name": "商品列表",
-                    "file": "productlist"
+                    "file": "productlist",
+                    "icon": "fa fa-folder-open"
                 },
                 {
                     "name": "商品信息",
-                    "file": "productinfo"
+                    "file": "productinfo",
+                    "icon": "fa fa-folder-open"
                 },
                 {
                     "name": "商品库存",
@@ -60,6 +78,7 @@
             "fold": true,
             "base": "./address/",
             "ext": ".md",
+            "icon": "fa fa-folder",
             "items": [
                 {
                     "name": "收货地址(订单)",
@@ -88,6 +107,7 @@
             "fold": true,
             "base": "./order/",
             "ext": ".md",
+            "icon": "fa fa-folder",
             "items": [
                 {
                     "name": "运费",
@@ -144,6 +164,7 @@
             "fold": true,
             "base": "./delivery/",
             "ext": ".md",
+            "icon": "fa fa-folder",
             "items": [
                 {
                     "name": "提交出库单",
@@ -168,6 +189,7 @@
             "fold": true,
             "base": "./other/",
             "ext": ".md",
+            "icon": "fa fa-folder",
             "items": [
                 {
                     "name": "获取列表(订单和出库单)",
@@ -180,6 +202,7 @@
             "fold": true,
             "base": "./receipt/",
             "ext": ".md",
+            "icon": "fa fa-folder",
             "items": [
                 {
                     "name": "提交收款单",
@@ -200,6 +223,7 @@
             "fold": true,
             "base": "./other/",
             "ext": ".md",
+            "icon": "fa fa-folder",
             "items": [
                 {
                     "name": "获取用户信息",

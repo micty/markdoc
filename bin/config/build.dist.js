@@ -19,8 +19,8 @@ module.exports = {
 
         'f/font-awesome/**/*',
 
-        'f/fontawesome-free-5.0.8/**/*',
-        '!f/fontawesome-free-5.0.8/web-fonts-with-css/**/*',
+        'f/fontawesome-free-5.0.13/**/*',
+        '!f/fontawesome-free-5.0.13/web-fonts-with-css/**/*',
 
     ],
 

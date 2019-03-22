@@ -1,109 +1,96 @@
 ﻿
 /**
-* url 地址栏的 hash 工具模块
+* url 地址栏的 hash 工具模块。
 */
 KISP.panel('/Router/Hash', function (require, module, panel) {
     var KISP = require('KISP');
     var $ = require('$');
     var Hash = KISP.require('Hash');
     var Parser = module.require('Parser');
+    var File = module.require('File');
 
 
     panel.on('init', function () {
-
         var fired = false;
 
-        Hash.onchange(window, function (hash, old) {
+
+        //第一个参数 true 表示一进入页面只要有 hash 就立即触发
+        Hash.onchange(window, true, function (hash, old) {
 
             panel.fire('change');
 
-            if (!hash) { //针对后退时，退到无 hash 的状态
+            //针对后退时，退到无 hash 的状态
+            if (!hash) {
+                panel.fire('plain', [false]); //这里要触发一下，以便恢复之前可能被隐藏的 header、footer 等。
                 panel.fire('none');
                 return;
             }
 
-            hash = Parser.parse(hash);
-            old = Parser.parse(old);
 
+            hash = Parser.parse(hash);  //当前的 hash 对象。
+            old = Parser.parse(old);    //之前的 hash 对象。
 
-            //把基目录和文件名组合起来。
-            var file = hash.file || '';
-            var dir = hash.dir || '';
+            panel.fire('plain', [hash.isPlain]);
+            panel.fire('outline', [hash.isOutline]);
 
-            var fileChanged =
-                    file && file != old.file || 
-                    dir && dir != old.dir;
+           
+            var file = File.normalize(hash, old);
 
-            if (fileChanged) {
-
-                var files = file.split(',').map(function (file) {
-                    if (!file) {
-                        return dir + 'index.md'; //默认是 index.md
-                    }
-
-                    if (file.endsWith('/')) {
-                        file = file + 'index.md';
-                    }
-
-                    var index = file.lastIndexOf('.');
-
-                    if (index < 0) { //不含有后缀名
-                        file += '.md';
-                    }
-
-                    file = dir + file;
-
-                    return file;
-                });
-
-                file = files.join(',');
-
+            //显示单个文件。
+            if (file) {
                 panel.fire('file', [file]);
+                return;
             }
 
 
             var sidebar = hash.sidebar;
             var item = hash.item;
 
-            //把第 0 组的组号省略。
+
+            //把第 0 组的组号省略了，补回来。
+            //如 `/es6/sidebar.json:5`，则当成是第 0 组的第 5 项。
             if (item && !item.includes('/')) {
                 item = '0/' + item;
             }
 
-
-            if (sidebar) { //指定了 sidebar
-
-                if (sidebar != old.sidebar) {   //切换了 sidebar。
+            //指定了 sidebar。
+            if (sidebar) { 
+                //切换了 sidebar。
+                if (sidebar != old.sidebar) {   
                     panel.fire('sidebar', [sidebar, item]);
+                    return;
                 }
-                else {  // sidebar 未发生变化。
-                    if (item && item != old.item) { //仅改变了 item。 
-                        panel.fire('item', [item]);
-                    }
-                }
-            }
-            else {  //无 sidebar
-           
-                if (!fired && !file) { //首次触发，即在页面加载后第一次触发的。
-                    panel.fire('no-sidebar', [item]);
-                    fired = true;
+
+                //sidebar 未发生变化，仅改变了 item。 
+                if (item && item != old.item) {
+                    panel.fire('item', [item]);
                 }
                 else {
-                    if (item && item != old.item) { //仅改变了 item。
-                        panel.fire('item', [item]);
-                    }
+                    panel.fire('sidebar', [sidebar, item]);
+                }
+                return
+
+            }
+           
+
+            //没有指定 sidebar。
+            //主要针对在 config.json 的 file 字段指定为一个 sidebar.json 文件的情况。
+            //此时，不需要通过 hash 来指定 sidebar 文件，而是根据 config.json 文件来读取。
+            //因此，sidebar 文件只需要读取一次，后续的 hash 变化了就触发 item 事件即可。
+            if (!fired) { //首次触发，即在页面加载后第一次触发的。
+                panel.fire('no-sidebar', [item]);
+                fired = true;
+            }
+            else {
+                if (item && item != old.item) { //仅改变了 item。
+                    panel.fire('item', [item]);
                 }
             }
 
+        }); 
 
-        }, true); //最后一个参数 true 表示一进入页面只要有 hash 就立即触发
 
 
-        //针对首次进入时，无 hash 的状态
-        var hash = Hash.get(window, ''); //获取字符串形式
-        if (!hash) {
-            panel.fire('none');
-        }
 
     });
 
@@ -111,6 +98,12 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
     panel.on('render', function () {
 
 
+        //针对首次进入时，无 hash 的状态
+        var hash = Hash.get(window, ''); //获取字符串形式
+
+        if (!hash) {
+            panel.fire('none');
+        }
     });
 
 

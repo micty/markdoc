@@ -1,6 +1,6 @@
 ﻿
 /**
-* 侧边菜单栏模块
+* 侧边菜单栏。
 */
 KISP.panel('/Sidebar', function (require, module, panel) {
     var $ = require('$');
@@ -11,10 +11,10 @@ KISP.panel('/Sidebar', function (require, module, panel) {
     var Logo = module.require('Logo');
 
 
-    var current = {
+    var meta = {
         data: null,
         item: null,
-        logo: '',
+        logo: '',       //备用 logo。
         ready: false,
         url: '',
     };
@@ -27,18 +27,16 @@ KISP.panel('/Sidebar', function (require, module, panel) {
 
         API.on({
             'success': function (data) {
-               
+                var fixed = data.fixed !== false;   //配置是否明确禁用 fixed。 默认是启用 fixed 的。   
+                var logo = data.logo || meta.logo;  //logo 图标。
 
-                current.data = data;
-                panel.show();
+                meta.data = data;
 
-                var fixed = data.fixed !== false;       //配置是否明确禁用 fixed
                 panel.$.toggleClass('fixed', fixed);
-
-                var logo = data.logo || current.logo;
                 Logo.render(logo);
-
                 Groups.render(data);
+
+                panel.show();
             },
         });
 
@@ -51,17 +49,17 @@ KISP.panel('/Sidebar', function (require, module, panel) {
             'active': function (group, item) {
                 panel.fire('active', [item.file]);
             },
-            'render': function () {
-          
-                current.ready = true;
 
-                var item = current.item;
+            'render': function () {
+                meta.ready = true;
+
+                var item = meta.item;
                 if (item) {
                     Groups.active(item);
                     return;
                 }
 
-                var url = current.data.file;
+                var url = meta.data.file;
                 if (url) {
                     panel.fire('active', [url]);
                     return;
@@ -69,15 +67,16 @@ KISP.panel('/Sidebar', function (require, module, panel) {
 
                 Groups.active('0/0');
             },
+
             404: {
                 'group': function (no) {
-                    panel.fire('404', [current.url, {
+                    panel.fire('404', [meta.url, {
                         'no': no,
                         'sidebar': true,
                     }]);
                 },
                 'item': function (no, index) {
-                    panel.fire('404', [current.url, {
+                    panel.fire('404', [meta.url, {
                         'no': no,
                         'index': index,
                         'sidebar': true,
@@ -89,12 +88,16 @@ KISP.panel('/Sidebar', function (require, module, panel) {
     });
 
 
-
+    /**
+    * 加载和渲染侧边栏。
+    *   url: '',    //必选，sidebar.json 配置文件的 url。
+    *   item: '',   //可选，渲染完成后要激活的菜单项。 如 `1/3`，表示第 1 组的第 3 项。
+    */
     panel.on('render', function (url, item) {
-        
         panel.hide();
-        current.item = item;
-        current.url = url;
+
+        meta.url = url;     
+        meta.item = item;
 
         API.get(url);
       
@@ -106,7 +109,7 @@ KISP.panel('/Sidebar', function (require, module, panel) {
             panel.show();
 
             if (!item) {
-                var data = current.data;
+                var data = meta.data;
                 var url = data.file;
                 if (!url) {
                     return;
@@ -118,7 +121,7 @@ KISP.panel('/Sidebar', function (require, module, panel) {
             }
 
 
-            if (current.ready) {
+            if (meta.ready) {
                 Groups.active(item);
                 return;
             }
@@ -136,7 +139,8 @@ KISP.panel('/Sidebar', function (require, module, panel) {
             }
 
             var url = typeof data == 'object' ? data.logo : data;
-            current.logo = url;
+
+            meta.logo = url;
         },
 
         'setLeft': function (x) {

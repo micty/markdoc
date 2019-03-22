@@ -16,20 +16,30 @@ define('MarkDoc/Events', function (require, module, exports) {
 
             meta.bind = true;
 
-            //点击语言标签时。
-            meta.code.foldable && meta.$.on('click', '[data-cmd="language"]', function (event) {
-                $(this.parentNode).toggleClass('on');
-                event.stopPropagation();
-            });
 
+            if (meta.code.foldable) {
 
-            //折叠起来时，整个源代码区别可点击。
-            meta.code.foldable && meta.$.on('click', '[data-cmd="source-code"]', function () {
-                var $div = $(this);
-                if ($div.hasClass('on')) {
-                    $div.removeClass('on');
-                }
-            });
+                //点击语言标签时。
+                meta.$.on('click', '[data-cmd="language"]', function (event) {
+                    var $div = $(this.parentNode);
+
+                    $div.toggleClass('on');
+
+                    setTimeout(function () {
+                        $div.toggleClass('done');
+                    }, 300);
+
+                    event.stopPropagation();
+                });
+
+                //折叠起来时，整个源代码区别可点击。
+                meta.$.on('click', '[data-cmd="source-code"]', function () {
+                    var $div = $(this);
+
+                    $div.removeClass('on done');
+                });
+            }
+
 
 
             //点击超链接时。
@@ -42,18 +52,23 @@ define('MarkDoc/Events', function (require, module, exports) {
             });
             
 
-            //点击标题时。
-            meta.titles.foldable && meta.$.on('click', meta.titles.selector, function (event) {
-                if (event.target.tagName.toLowerCase() != 'span') {
-                    return;
-                }
 
-                $(this).nextUntil(meta.titles.selector).animate({
-                    height: 'toggle',
-                    opacity: 'toggle',
+            if (meta.titles.foldable) {
+                //点击标题时。
+                meta.$.on('click', meta.titles.selector, function (event) {
+                    if (event.target.tagName.toLowerCase() != 'span') {
+                        return;
+                    }
+
+                    $(this).nextUntil(meta.titles.selector).animate({
+                        height: 'toggle',
+                        opacity: 'toggle',
+                    });
                 });
-            });
 
+            }
+
+           
         },
 
     };

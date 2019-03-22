@@ -1,85 +1,104 @@
-﻿{
+{
     "file": "./readme.md",
     "!logo": "style/img/logo.png",
     "logo": "ES6入门教程",
     "fixed": true,
     "groups": [
         {
-            "!name": "ECMAScript 6入门",
+            "name": "",
+            "fold": false,
             "base": "./docs/",
             "ext": ".md",
             "items": [
                 {
-                    "name": "前言",
-                    "file": "../readme"
+                    "name": "前言0000",
+                    "file": "../readme",
+                    "icon": "fa fa-folder-open"
                 },
                 {
                     "name": "ECMAScript 6简介",
-                    "file": "intro"
+                    "file": "intro",
+                    "icon": "fa fa-tv"
                 },
                 {
                     "name": "let和const命令",
-                    "file": "let"
+                    "file": "let",
+                    "icon": "fas fa-file"
                 },
                 {
                     "name": "变量的解构赋值",
-                    "file": "destructuring"
+                    "file": "destructuring",
+                    "icon": "fas fa-file"
                 },
                 {
                     "name": "字符串的扩展",
-                    "file": "string"
+                    "file": "string",
+                    "icon": "fas fa-file"
                 },
                 {
                     "name": "正则的扩展",
-                    "file": "regex"
+                    "file": "regex",
+                    "icon": "fas fa-file"
                 },
                 {
                     "name": "数值的扩展",
-                    "file": "number"
+                    "file": "number",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "数组的扩展",
-                    "file": "array"
+                    "file": "array",
+                    "icon": "fas fa-file"
                 },
                 {
                     "name": "函数的扩展",
-                    "file": "function"
+                    "file": "function",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "对象的扩展",
-                    "file": "object"
+                    "file": "object",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Symbol",
-                    "file": "symbol"
+                    "file": "symbol",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Proxy和Reflect",
-                    "file": "proxy"
+                    "file": "proxy",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Set和Map数据结构",
-                    "file": "set-map"
+                    "file": "set-map",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Iterator和for...of循环",
-                    "file": "iterator"
+                    "file": "iterator",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Generator函数",
-                    "file": "generator"
+                    "file": "generator",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Promise对象",
-                    "file": "promise"
+                    "file": "promise",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "异步操作和Async函数",
-                    "file": "async"
+                    "file": "async",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Class",
-                    "file": "class"
+                    "file": "class",
+                    "icon": "fas fa-file-alt"
                 },
                 {
                     "name": "Decorator",
@@ -112,6 +131,4 @@
             ]
         }
     ]
-
-
 }
