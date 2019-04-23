@@ -29,7 +29,7 @@ define('MarkDoc/Image', function (require, module, exports) {
 
             $(el).find('img').each(function () {
                 var img = this;
-                var src = img.getAttribute('src'); //要用这个方法，获取原始的值。 img.src 会返回完整的，不合要求。
+                var src = img.getAttribute('src'); //要用这个方法，获取原始的值。 因为 img.src 会返回完整的，不合要求。
 
                 if (!src || src.startsWith('http://') || src.startsWith('https://')) {
                     return;

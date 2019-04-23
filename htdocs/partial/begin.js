@@ -20,6 +20,7 @@
     Date,
     Error,
     Function,
+    JSON,
     Math,
     Number,
     Object,

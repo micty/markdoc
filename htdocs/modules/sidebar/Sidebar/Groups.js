@@ -1,9 +1,9 @@
 ﻿
 KISP.panel('/Sidebar/Groups', function (require, module, panel) {
-
     var $ = require('$');
     var KISP = require('KISP');
     var $String = KISP.require('String');
+    var Template = module.require('Template');
 
 
     var list = [];
@@ -12,25 +12,21 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
     //展开或折叠指定的组。
     //根据 mutex 字段控制是否使用互斥效果。
     function fold(no, needOpen) {
-
         if (typeof no == 'object') {
             no = +no.getAttribute('data-no');
         }
 
-
         var up = 'fa-angle-double-up';
         var down = 'fa-angle-double-down';
-        var selector = '[data-no="' + no + '"]';
-
-        var div = panel.$.find('div' + selector);
-        var i = $(div).find('i');
+       
 
         //没有指定 needOpen，则自动判断。
         if (needOpen === undefined) {
-            needOpen = i.hasClass(down);
+            var $arrow = panel.$.find(`[data-id="arrow-${no}"]`);
+            needOpen = $arrow.hasClass(down);
         }
 
-        fold(no, needOpen);
+        setStatus(no, needOpen);
 
         if (!mutex) {
             return;
@@ -46,28 +42,42 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
             //只有当前组是需要打开时才处理其它组。 
             //即，如果当前组是由打开到关闭的，则不处理其它组。
             if (needOpen) { 
-                fold(index, !needOpen);
+                setStatus(index, !needOpen);
             }
         });
 
 
         //内部方法。
-        function fold(no, open) {
-            var selector = '[data-no="' + no + '"]';
-            var div = 'div' + selector;
-            var ul = panel.$.find('ul' + selector);
-            var i = $(div).find('i[data-no]');
+        function setStatus(no, open) {
+            var group = list[no];
+            var $icon = panel.$.find(`[data-id="icon-${no}"]`);
+            var $arrow = panel.$.find(`[data-id="arrow-${no}"]`);
+            var $group = panel.$.find(`[data-id="group-${no}"]`);
+
+            var icon = group.icon;
+            var icon2 = group.icon2;
+
 
             if (open) {
-                ul.slideDown('fast', function () {
-                    i.removeClass(down);
-                    i.addClass(up);
+                if (icon2) {
+                    $icon.removeClass(icon);
+                    $icon.addClass(icon2);
+                }
+
+                $group.slideDown('fast', function () {
+                    $arrow.removeClass(down);
+                    $arrow.addClass(up);
                 });
             }
             else {
-                ul.slideUp('fast', function () {
-                    i.removeClass(up);
-                    i.addClass(down);
+                if (icon2) {
+                    $icon.removeClass(icon2);
+                    $icon.addClass(icon);
+                }
+
+                $group.slideUp('fast', function () {
+                    $arrow.removeClass(up);
+                    $arrow.addClass(down);
                 });
             }
         }
@@ -77,95 +87,42 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
 
     panel.on('init', function () {
+        var process = Template.get();
 
-        var tplIcon = null;
-
-        panel.template({
-            '': function (data) {
-                tplIcon = this.template('icon');
-
-                var html = this.fill('group', data.groups);
-
-                return {
-                    'groups': html,
-                };
-            },
-
-            'icon': function (item) {
-                var icon = item.icon;
-                if (!icon) {
-                    return '';
-                }
-
-                return {
-                    'icon': icon,
-                };
-            },
-
-            'group': {
-                '': function (group, no) {
-
-                    var html = this.fill('item', group.items, no);
-                    var icon = tplIcon.fill(group);
-                    return {
-                        'no': no,
-                        'icon': icon.trim(),
-                        'name': group.name,
-                        'title-display': group.name ? '' : 'display: none;',
-                        'items-display': group.fold ? 'display: none;' : '',
-                        'up-down': group.fold ? 'down' : 'up',
-                        'items': html,
-                    };
-                },
-
-                
-
-                'item': {
-                    '': function (item, index, no) {
-                        var icon = tplIcon.fill(item);
-
-                        return {
-                            'index': index,
-                            'icon': icon.trim(),
-                            'name': item.name,
-                            'no': no,            //组号
-                        };
-                    },
-                },
-            },
-
-        });
+        panel.template(process);
 
        
 
-        panel.$.on('click', '[data-type="group"]', function () {
-            fold(this);
+        panel.$on('click', {
+            '[data-type="group"]': function () {
+                fold(this);
+            },
         });
 
+        panel.$on('mouseup', {
+            '[data-type="item"]': function (event) {
+                var li = this;
+                var index = +li.getAttribute('data-index');
+                var no = +li.getAttribute('data-no');
+                var id = no + '/' + index;
+                var which = event.which;
 
-        panel.$.on('mouseup', '[data-type="item"]', function (event) {
-            var li = this;
-            var index = +li.getAttribute('data-index');
-            var no = +li.getAttribute('data-no');
-            var id = no + '/' + index;
+                //按下鼠标左键或中键。
+                if (which == 1 || which == 2) {
+                    //同时按下ctrl键或按下了鼠标中键，则打开新页面。
+                    var openNew = event.ctrlKey || which == 2;
 
-            var which = event.which;
+                    panel.fire('item', [id, openNew]);
 
-            //按下鼠标左键或中键。
-            if (which == 1 || which == 2) {
-                //同时按下ctrl键或按下了鼠标中键，则打开新页面。
-                var openNew = event.ctrlKey || which == 2;
-
-                panel.fire('item', [id, openNew]);
-
-                if (which == 2) {
-                    event.preventDefault();
+                    if (which == 2) {
+                        event.preventDefault();
+                    }
                 }
-            }
-            
 
 
+            },
         });
+
 
     });
 
@@ -182,11 +139,13 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
 
 
-    var exports = null;
 
-    return exports = {
+    return {
+        setLeft: function (x) {
+            panel.$.css('left', 60 - x + 'px');
+        },
 
-        'active': function (id) {
+        active: function (id) {
 
             //取消激活。
             if (id === false) {
@@ -201,20 +160,19 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
             var group = list[no];
             if (!group) {
-                exports.active(false);
+                module.exports.active(false);
                 panel.fire('404', 'group', [no]);
                 return;
             }
 
             var item = group.items[index];
             if (!item) {
-
-                exports.active(false);
+                module.exports.active(false);
                 panel.fire('404', 'item', [no, index]);
                 return;
             }
 
-            var selector = $String.format('li[data-index="{0}"][data-no="{1}"]', index, no);
+            var selector = `li[data-no="${no}"][data-index="${index}"]`;
             var li = panel.$.find(selector);
 
             panel.$.find('li.on').removeClass('on');
@@ -231,9 +189,7 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
         },
 
-        'setLeft': function (x) {
-            panel.$.css('left', 60 - x + 'px');
-        },
+      
     };
 
 });

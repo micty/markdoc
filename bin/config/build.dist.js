@@ -7,20 +7,25 @@ module.exports = {
 
     //构建前要排除在外的文件或目录。
     excludes: [
-        'api/',         //开发测试用的。
+        //'api/',         //开发测试用的。
         'packages/',    //生成的。
+        'babel/',       //生成的。
         'data/demo/',   //组件示例的。
+        'f/kisp/meta/', //kisp 中的元数据，仅用于方便开发者查看模块关系。
+        'f/kisp/src/',  //kisp 的源模块文件，仅用于方便开发者查看源代码。
 
-
-        'data-house/',      //
-        'data-kisp/',       //
-        'data-page/',       //
-        'data-resume/',     //
-
-        'f/font-awesome/**/*',
 
         'f/fontawesome-free-5.0.13/**/*',
-        '!f/fontawesome-free-5.0.13/web-fonts-with-css/**/*',
+        //'f/fontawesome-free-5.0.13/advanced-options/',
+        //'f/fontawesome-free-5.0.13/svg-with-js/', 
+        //'f/fontawesome-free-5.0.13/use-on-desktop/',
+        //'f/fontawesome-free-5.0.13/web-fonts-with-css/**/*',
+        '!f/fontawesome-free-5.0.13/web-fonts-with-css/webfonts/**/*',  //
+        '!f/fontawesome-free-5.0.13/web-fonts-with-css/css/**/*',  //
+
+        'f/highlight/**/*',
+        '!f/highlight/styles/default.css',
+        '!f/highlight/highlight.pack.js',
 
     ],
 
@@ -31,11 +36,14 @@ module.exports = {
         '**/views/',
         'partial/',
         'routers/',
+        'f/kisp/jquery/jquery.ba-resize.min.js',
+        'f/kisp/jquery/jquery-2.1.1.min.js',
+        'f/kisp/jquery/jquery-2.1.1.min.map',
+        'f/fontawesome-free-5.0.13/web-fonts-with-css/css/**/*',
+        '!f/fontawesome-free-5.0.13/web-fonts-with-css/css/fontawesome-all.min.css',  //
 
         '**/*.master.html',
         '**/*.less',
-        '**/*.scss',        //这个类似于 sass
-        '**/*.sass',        //
         '**/*.debug.css',
         '**/*.debug.js',
         '**/index.js',

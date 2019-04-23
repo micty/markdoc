@@ -32,39 +32,29 @@ define('MarkDoc/Lines', function (require, module, exports) {
                 return $String.format(sitem, { 'no': index + 1, });
             });
 
+            var total = list.length;
+            var length = total.toString().length; //最大的行号的数字串的长度
+            var width = length * 10 + 15;
+
+
 
             var html = $String.format(sample, {
+                'width': width,
                 'height': height,
+                'total': total,
                 'items': list.join(''),
-                'total': list.length,
             });
+
+
+            return {
+                'width': width,
+                'height': height,
+                'total': total,
+                'html': html,
+                'list': list,
+            };
         
-            return html;
 
-
-            //var tpl = meta.tpl.template('numbers');
-
-            //tpl.process({
-            //    '': function (data) {
-            //        var items = this.fill('item', data.items);
-
-            //        return {
-            //            'height': height,
-            //            'items': lines.join(''),
-            //        };
-            //    },
-
-            //    'item': function (item, index) {
-            //        return {
-            //            'no': index + 1,
-            //        };
-            //    },
-            //});
-
-            //var html = tpl.fill({
-            //    'height': height,
-            //    'items': lines,
-            //});
         },
 
 

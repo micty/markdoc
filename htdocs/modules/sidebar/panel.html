@@ -14,14 +14,14 @@
 
     <ul data-panel="/Sidebar/Groups" class="groups">
         <template name="icon">
-            <i class="icon {icon}"></i>
+            <i data-id="icon-{id}" class="icon {icon}"></i>
         </template>
         <template name="group" placeholder="groups">
             <li>
                 <div class="title" data-no="{no}" data-type="group" style="{title-display}">
-                    {icon}{name}<i data-no="{no}" class="arrow fa fa-angle-double-{up-down}"></i>
+                    {icon}{name}<i data-id="arrow-{no}" class="arrow fa fa-angle-double-{up-down}"></i>
                 </div>
-                <ul data-no="{no}" style="{items-display}">
+                <ul data-id="group-{no}" style="{items-display}">
                     <template name="item" placeholder="items">
                         <li data-index="{index}" data-no="{no}" data-type="item" class="item">
                             <a>{icon}{name}</a>

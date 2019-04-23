@@ -84,8 +84,10 @@ define('MarkDoc/Code', function (require, module, exports) {
             $pre.before(html);
             $pre.height(options.height); //设置高度，以撑开高度
 
+           
+
             //根据最大的行号的数字串的长度设置 ul 的宽度和 pre 的 margin-left。
-            var $ul = $pre.parent().find('>ul');
+            var $ul = $pre.parent().find('[data-id="line-numbers"]').find('>ul');
             var length = $ul.find('>li').length.toString().length; //最大的行号的数字串的长度
             var width = length * 10 + 15;
 

@@ -12,31 +12,37 @@ define('MarkDoc/Events', function (require, module, exports) {
 
     return {
         
-        bind: function (meta, options) {
+        /**
+        * 
+        */
+        bind: function (meta) {
 
             meta.bind = true;
 
 
             if (meta.code.foldable) {
 
-                //点击语言标签时。
-                meta.$.on('click', '[data-cmd="language"]', function (event) {
-                    var $div = $(this.parentNode);
+                meta.panel.$on('click', '[data-cmd="{value}"]', {
+                    //点击语言标签时。
+                    'language': function (event) {
+                        var $div = $(this.parentNode);
 
-                    $div.toggleClass('on');
+                        $div.toggleClass('on');
 
-                    setTimeout(function () {
-                        $div.toggleClass('done');
-                    }, 300);
+                        setTimeout(function () {
+                            $div.toggleClass('done');
+                        }, 300);
 
-                    event.stopPropagation();
-                });
+                        event.stopPropagation();
+                    },
 
-                //折叠起来时，整个源代码区别可点击。
-                meta.$.on('click', '[data-cmd="source-code"]', function () {
-                    var $div = $(this);
+                    //折叠起来时，整个源代码区别可点击。
+                    'source-code': function (event) {
+                        var $div = $(this);
 
-                    $div.removeClass('on done');
+                        $div.removeClass('on done');
+                    },
+
                 });
             }
 

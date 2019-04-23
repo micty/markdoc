@@ -6,6 +6,7 @@ define('MarkDoc', function (require, module, exports) {
     var KISP = require('KISP');
     var $ = require('$');
     var $Array = KISP.require('Array');
+    var $Object = KISP.require('Object');
     var $String = KISP.require('String');
     var Emitter = KISP.require('Emitter');
     var Template = KISP.require('Template');
@@ -13,6 +14,7 @@ define('MarkDoc', function (require, module, exports) {
     var marked = require('marked');
     var JSON = require('JSON');
 
+    var Defaults = module.require('Defaults');
     var Meta = module.require('Meta');
     var Content = module.require('Content');
     var Events = module.require('Events');
@@ -26,8 +28,7 @@ define('MarkDoc', function (require, module, exports) {
     var Image = module.require('Image');
 
     var mapper = new Map();
-
-
+    var defaults = require(`${module.id}.defaults`);
 
 
 
@@ -38,8 +39,11 @@ define('MarkDoc', function (require, module, exports) {
     *    };
     */
     function MarkDoc(config) {
+        config = $Object.extendDeeply({}, defaults, config);
+
 
         var emitter = new Emitter(this);
+        
 
         var meta = Meta.create(config, {
             'this': this,
@@ -49,19 +53,21 @@ define('MarkDoc', function (require, module, exports) {
         mapper.set(this, meta);
 
         Object.assign(this, {
-            'id': meta.id,
-            '$': meta.$,
-            'data': {},     //用户的自定义数据容器。
+            'id': meta.id,      //
+            '$': meta.$,        //
+            'data': {},         //用户的自定义数据容器。
         });
 
-        //插件机制。
-        this.on('process', function (content) {
-            content = content.split('<li>[ ] ').join('<li class="todo-list-item"> <i class="far fa-square"></i>');
-            content = content.split('<li>[#] ').join('<li class="todo-list-item"> <i class="fas fa-check-square"></i>');
-            content = content.split('<li>[x] ').join('<li class="todo-list-item"> <i class="fas fa-check-square"></i>');
+        //插件机制，替换指定的内容。
+        if (meta.replace) {
+            this.on('process', function (content) {
+                $Object.each(meta.replace, function (key, value) {
+                    content = content.split(key).join(value);
+                });
 
-            return content;
-        });
+                return content;
+            });
+        }
 
     }
 
@@ -82,7 +88,7 @@ define('MarkDoc', function (require, module, exports) {
         /**
         * 渲染生成 markdoc 内容。
         *   options = {
-        *       content: '',        //必选。 要填充的内容。
+        *       content: '',        //必选。 要填充的 markdown 内容。
         *       language: '',       //可选。 语言类型，如 `json`、`javascript` 等。 如果指定，则当成源代码模式展示内容。
         *       baseUrl: '',        //内容里的超链接中的相对 url。 非源代码模式下可用。
         *       imgUrl: '',         //图片 src 属性相对地址的前缀。 即如果 img.src 为相对地址，则加上该前缀补充为完整的 src。
@@ -107,21 +113,13 @@ define('MarkDoc', function (require, module, exports) {
             var content = Content.get(meta, {
                 'language': options.language,
                 'content': options.content,
-
-                'process': function (content) {
-                    var values = meta.emitter.fire('process', [content]);
-                    return values.length > 0 ? values[0] : content;
-                },
+                'process': meta.process,
             });
 
             //提供一个机会可以在 render 时重新传配置。
-            if (options.code) {
-                Object.assign(meta.code, options.code);
-            }
+            Object.assign(meta.code, options.code);
+            Object.assign(meta.titles, options.titles);
 
-            if (options.titles) {
-                Object.assign(meta.titles, options.titles);
-            }
 
             meta.$.html(content);
             meta.$.addClass('MarkDoc');
@@ -140,23 +138,21 @@ define('MarkDoc', function (require, module, exports) {
             Code.each(meta.$, function (item, index) {
                 var element = item.element;
                 var language = item.language;
-                var code = meta.code;
                 var $element = $(element);
 
                 //尝试把 json 格式化一下。
-                if (code.format) {
+                if (meta.code.format) {
                     Code.format(element);
                 }
 
                 var content = element.innerText; //在格式化后重新获取。
-                
-                var height = Lines.getHeight(content);
+                var linesInfo = Lines.getNumbers(meta, content);
 
                 Code.wrap(meta, {
                     'element': element,
-                    'height': height,
-                    'language': code.language ? Code.language(meta, language) : '', //添加语言类型标签。
-                    'numbers': code.numbers ? Lines.getNumbers(meta, content) : '', //对源代码添加行号显示。
+                    'height': linesInfo.height,
+                    'language': meta.code.language ? Code.language(meta, language) : '', //添加语言类型标签。
+                    'numbers': meta.code.numbers ? linesInfo.html : '',                     //对源代码添加行号显示。
                 });
 
 
@@ -184,7 +180,7 @@ define('MarkDoc', function (require, module, exports) {
                     $element.attr('contenteditable', false);
 
                     //尝试把 json 格式化一下。
-                    if (code.format) {
+                    if (meta.code.format) {
                         Code.format(element);
                     }
 
@@ -192,6 +188,8 @@ define('MarkDoc', function (require, module, exports) {
                     var content = this.innerText; //重新获取。
                     content = Highlight.highlight(language, content);
                     $element.html(content);
+
+                   
                 });
 
                 
@@ -201,14 +199,19 @@ define('MarkDoc', function (require, module, exports) {
                     var height = Lines.getHeight(content);
                     var pre = this.parentNode;
                     var div = pre.parentNode;
+                    var $pre = $(pre);
 
-                    $(pre).height(height);
+                    $pre.height(height);
 
                     //指定了要生成行号，则根据内容重新生成行号。
-                    if (code.numbers) {
-                        var html = Lines.getNumbers(meta, content);
-                        $(div).find('[data-id="line-numbers"]').html(html);
+                    if (meta.code.numbers) {
+                        var linesInfo = Lines.getNumbers(meta, content);
+                        var $div = $(div).find('[data-id="line-numbers"]');
+
+                        $div.get(0).outerHTML = linesInfo.html;
+                        $pre.css('margin-left', linesInfo.width);
                     }
+                   
                 });
 
                 

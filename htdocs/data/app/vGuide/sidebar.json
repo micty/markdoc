@@ -21,7 +21,8 @@
             "fold": true,
             "base": "./base/",
             "ext": ".md",
-            "icon": "fa fa-folder-open",
+            "icon": "fa fa-folder",
+            "icon2": "fa fa-folder-open",
             "items": [
                 {
                     "name": "客户列表",
@@ -79,6 +80,7 @@
             "base": "./address/",
             "ext": ".md",
             "icon": "fa fa-folder",
+            "icon2": "fa fa-folder-open",
             "items": [
                 {
                     "name": "收货地址(订单)",
@@ -108,6 +110,7 @@
             "base": "./order/",
             "ext": ".md",
             "icon": "fa fa-folder",
+            "iconOpen": "fa fa-folder-open",
             "items": [
                 {
                     "name": "运费",
