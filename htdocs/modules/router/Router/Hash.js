@@ -31,7 +31,11 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
             old = Parser.parse(old);    //之前的 hash 对象。
 
             panel.fire('plain', [hash.isPlain]);
-            panel.fire('outline', [hash.isOutline]);
+
+            //isOutline 有可能为 undefined，则什么也不处理。
+            if (typeof hash.isOutline == 'boolean') {
+                panel.fire('outline', [hash.isOutline]);
+            }
 
            
             var file = File.normalize(hash, old);

@@ -72,7 +72,7 @@ KISP.panel('/Router/Hash/Parser', function (require, module, panel) {
 
 
             var isPlain = false;
-            var isOutline = false;
+            var isOutline = undefined; //这里用 undefined。 有 true、false、undefined 三种情况。
 
             if (hash.startsWith('!~') || hash.startsWith('~!')) {
                 isPlain = true;
@@ -139,6 +139,7 @@ KISP.panel('/Router/Hash/Parser', function (require, module, panel) {
             if ((/^\d+\/\d+$/).test(url)) {
                 return {
                     'item': url,
+                    'isOutline': isOutline,
                 };
             }
 
@@ -147,6 +148,7 @@ KISP.panel('/Router/Hash/Parser', function (require, module, panel) {
             if ((/^\d+$/).test(url)) {
                 return {
                     'item': '0/' + url,
+                    'isOutline': isOutline,
                 };
             }
 

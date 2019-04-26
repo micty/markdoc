@@ -1,13 +1,16 @@
 ﻿
-
+/**
+* 提纲，即内容目录。
+*/
 KISP.panel('/Outline', function (require, module, panel) {
     var KISP = require('KISP');
     var $String = KISP.require('String');
     var Outline = require('Outline');
 
-
     var outline = null;
     var visible = false;
+
+
 
     panel.set('show', false); //不要在 render 后自动显示。
 
@@ -47,10 +50,21 @@ KISP.panel('/Outline', function (require, module, panel) {
     */
     panel.on('render', function (items) {
 
+        console.log(items);
+
         outline.fill(items);
 
     });
 
+
+    panel.on('show', function () {
+        console.log('show')
+    });
+
+    panel.on('hide', function () {
+        console.log('hide')
+
+    });
 
 
 

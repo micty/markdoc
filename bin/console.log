@@ -1,5 +1,5 @@
 
-2019-04-23 16:03:57
+2019-04-26 15:04:40
 写入 ../htdocs/packages/all.json
 匹配到 1 个母版页:
     ../htdocs/index.master.html
@@ -18,8 +18,6 @@
 混入 ../htdocs/modules/tools/panel.html
 编译 ../htdocs/style/less/index.less
 写入 ../htdocs/style/css/style.less.index.css
-
-2019-04-23 16:03:58
 编译 ../htdocs/lib/markdoc/panel.less
 写入 ../htdocs/style/css/lib.markdoc.panel.css
 编译 ../htdocs/lib/outline/panel.less
@@ -52,54 +50,13 @@
 << 完成编译 ../htdocs/index.master.html
 准备开始监控，请稍候...
 
-2019-04-23 16:03:59
+2019-04-26 15:04:41
 =================================全部编译完成=================================
-耗时 8049 ms
-打开页面 http://localhost/Studio/markdoc/htdocs/index.html
+耗时 1504 ms
 ...ooooOOOOoooo...
 >> watching...
 
-2019-04-23 16:05:57
-文件被修改 ../htdocs/lib/markdoc/MarkDoc/Image.js
-文件被修改 ../htdocs/lib/markdoc/MarkDoc.defaults.js
-文件被修改 ../htdocs/modules/router/Router.js
-文件被修改 ../htdocs/modules/sidebar/Sidebar.js
-文件被修改 ../htdocs/modules/tools/Tools.js
-文件被修改 ../htdocs/modules/header/Header.js
-文件被修改 ../htdocs/index.js
-文件被修改 ../htdocs/index.master.html
-文件被修改 ../htdocs/lib/markdoc/MarkDoc/Lines.js
-文件被修改 ../htdocs/lib/markdoc/MarkDoc/Content.js
-文件被修改 ../htdocs/lib/markdoc/MarkDoc/Events.js
-文件被修改 ../htdocs/lib/markdoc/MarkDoc.js
-文件被修改 ../htdocs/lib/markdoc/MarkDoc/Meta.js
-文件被修改 ../htdocs/modules/router/Router/Config.js
-文件被修改 ../htdocs/lib/markdoc/MarkDoc/Code.js
-文件被修改 ../htdocs/modules/router/Router/Hash.js
-文件被修改 ../htdocs/modules/sidebar/Sidebar/Groups/Template.js
-文件被修改 ../htdocs/modules/sidebar/Sidebar/Groups.js
-文件被修改 ../htdocs/lib/markdoc/panel.html
-文件被修改 ../htdocs/f/kisp/jquery/jquery-3.3.1.debug.js
-文件被修改 ../htdocs/f/kisp/kisp.debug.js
-文件被修改 ../htdocs/config.js
-
-2019-04-23 16:05:58
-文件被修改 ../htdocs/f/kisp/kisp.debug.css
-文件被修改 ../htdocs/modules/tools/panel.html
-文件被修改 ../htdocs/modules/sidebar/panel.html
-文件被修改 ../htdocs/style/less/index.less
-文件被修改 ../htdocs/lib/markdoc/panel.less
-文件被修改 ../htdocs/modules/tools/panel.less
-混入 ../htdocs/lib/markdoc/panel.html
-混入 ../htdocs/modules/tools/panel.html
-混入 ../htdocs/modules/sidebar/panel.html
-------------------------------------------------------------------------------
->> 开始编译 ../htdocs/index.master.html
-写入 ../htdocs/index.html
-<< 完成编译 ../htdocs/index.master.html
->> watching...
-写入 ../htdocs/style/css/style.less.index.css
-写入 ../htdocs/style/css/lib.markdoc.panel.css
-写入 ../htdocs/style/css/modules.tools.panel.css
+2019-04-26 15:56:33
+文件被修改 ../htdocs/modules/outline/Outline.js
 写入 ../htdocs/index.html
 >> watching...
