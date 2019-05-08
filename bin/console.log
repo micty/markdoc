@@ -1,8 +1,11 @@
 
-2019-04-26 15:04:40
+2019-04-30 13:52:38
 写入 ../htdocs/packages/all.json
-匹配到 1 个母版页:
+
+2019-04-30 13:52:39
+匹配到 2 个母版页:
     ../htdocs/index.master.html
+    ../htdocs/static.master.html
 ------------------------------------------------------------------------------
 >> 开始编译 ../htdocs/index.master.html
 混入 ../htdocs/modules/header/panel.html
@@ -48,15 +51,67 @@
 混入 ../htdocs/lib/outline/panel.html
 写入 ../htdocs/index.html
 << 完成编译 ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/static.master.html
+写入 ../htdocs/static.html
+<< 完成编译 ../htdocs/static.master.html
 准备开始监控，请稍候...
 
-2019-04-26 15:04:41
+2019-04-30 13:52:41
 =================================全部编译完成=================================
-耗时 1504 ms
+耗时 3796 ms
 ...ooooOOOOoooo...
 >> watching...
 
-2019-04-26 15:56:33
-文件被修改 ../htdocs/modules/outline/Outline.js
-写入 ../htdocs/index.html
+2019-04-30 13:56:03
+文件被修改 ../htdocs/static.master.html
+
+2019-04-30 13:56:04
+使用缓存 ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/static.master.html
+写入 ../htdocs/static.html
+<< 完成编译 ../htdocs/static.master.html
+>> watching...
+
+2019-04-30 13:56:06
+文件被修改 ../htdocs/static.master.html
+
+2019-04-30 13:56:07
+使用缓存 ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/static.master.html
+写入 ../htdocs/static.html
+<< 完成编译 ../htdocs/static.master.html
+>> watching...
+
+2019-04-30 13:56:10
+文件被修改 ../htdocs/static.master.html
+使用缓存 ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/static.master.html
+
+2019-04-30 13:56:11
+写入 ../htdocs/static.html
+<< 完成编译 ../htdocs/static.master.html
+>> watching...
+
+2019-04-30 13:56:53
+文件被修改 ../htdocs/static.master.html
+
+2019-04-30 13:56:54
+使用缓存 ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/static.master.html
+写入 ../htdocs/static.html
+<< 完成编译 ../htdocs/static.master.html
+>> watching...
+
+2019-04-30 13:58:09
+文件被修改 ../htdocs/static.master.html
+使用缓存 ../htdocs/index.master.html
+------------------------------------------------------------------------------
+>> 开始编译 ../htdocs/static.master.html
+写入 ../htdocs/static.html
+<< 完成编译 ../htdocs/static.master.html
 >> watching...

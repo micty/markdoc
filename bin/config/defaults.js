@@ -79,8 +79,8 @@ module.exports = {
 
     //通过指定 masters 为 null 或去掉，可以禁用母版页功能。
     masters: {
-        //patterns: ['**/*.master.html'],
-        patterns: ['index.master.html'],
+        patterns: ['**/*.master.html'],
+        //patterns: ['index.master.html'],
         dest: '{name}.html',
     },
 
