@@ -282,6 +282,7 @@ define('Navigator', function (require, module, exports) {
             meta.fireEvent = false;
             meta.hash$info = {};
             Hash.set('');
+            meta.fireEvent = true;
           
         },
 

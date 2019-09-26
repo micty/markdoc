@@ -43,11 +43,14 @@ define('/Main/Content/Loader', function (require, module, exports) {
                         //如果不明确指定为源代码模式，则通过后缀名进行判断。
                         var isOrigin = options.isOrigin || !isPlain; 
 
+                        //debugger
+
                         info = {
                             'ext': ext,
                             'isOrigin': isOrigin,
                             'url': options.url,
-                            'imgBase': options.imgBase,
+                            'dir': options.dir,
+                            'baseDir': options.baseDir,
                         };
                     }
                   

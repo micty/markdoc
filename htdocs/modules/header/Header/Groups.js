@@ -49,7 +49,7 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
                         'items': html,
                     };
                 },
-                
+
 
                 'item': {
                     '': function (item, index, no) {
@@ -67,14 +67,8 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
         });
 
-       
-        panel.$.on('click', '[data-type="group"]', function () {
-            var li = this;
-            var no = +li.getAttribute('data-no');
-            var group = list[no];
-            panel.fire('group', [group]);
 
-        });
+
 
         panel.$.on('click', '[data-type="item"]', function (event) {
             var li = this;
@@ -87,21 +81,33 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
             event.stopPropagation();
 
-            panel.$.find('[data-type="group"][data-no="' + no + '"]').removeClass('on');
+            panel.$.find(`[data-type="group"][data-no="${no}"]`).removeClass('on');
 
         });
 
 
 
-        panel.$.on('mouseover', '[data-type="group"]', function () {
-            var li = this;
-            $(li).addClass('on');
+
+        panel.$bind('[data-type="group"]', {
+            'click': function (event) {
+                var li = this;
+                var no = +li.getAttribute('data-no');
+                var group = list[no];
+                panel.fire('group', [group]);
+            },
+
+            'mouseover': function (event) {
+                var li = this;
+                $(li).addClass('on');
+            },
+
+            'mouseleave': function (event) {
+                var li = this;
+                $(li).removeClass('on');
+            },
         });
 
-        panel.$.on('mouseleave', '[data-type="group"]', function () {
-            var li = this;
-            $(li).removeClass('on');
-        });
+
 
     });
 

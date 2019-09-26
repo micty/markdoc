@@ -1,8 +1,7 @@
 
 /**
 */
-define('MarkDoc/Highlight', function (require, module, exports) {
-
+define('MarkDoc/Content/Code/Highlight', function (require, module, exports) {
     var $ = require('$');
     var KISP = require('KISP');
     var $String = KISP.require('String');
@@ -12,8 +11,7 @@ define('MarkDoc/Highlight', function (require, module, exports) {
 
     return {
 
-        highlight: function (type, code) {
-
+        render: function (type, code) {
             if (!code) {
                 return '';
             }
@@ -27,7 +25,8 @@ define('MarkDoc/Highlight', function (require, module, exports) {
                 var info = hljs.highlight(type, code);
                 return info.value;
             }
-            catch (ex) { //不支持某种语法高亮时，直接原样返回
+            catch (ex) {
+                //不支持某种语法高亮时，直接原样返回。
                 return code;
             }
 

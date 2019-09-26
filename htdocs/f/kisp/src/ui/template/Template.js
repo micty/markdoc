@@ -43,10 +43,10 @@ define('Template', function (require, module, exports) {
             }
 
             var isTPL = node.nodeName.toLowerCase() == 'template'; //判断是否为 <template> 模板节点。
-            var html = node.innerHTML;
+            var html = Sample.removeScript(node.innerHTML);         //要先移除可能给 `script` 标签包含的内容
             var info = Parser.parse(html);
 
-            meta.sample = Sample.between(html);
+            meta.sample = Sample.betweenComment(html); 
             meta.name = isTPL ? node.getAttribute('name') : '';
             meta.placeholder = isTPL ? node.getAttribute('placeholder') : '';
             meta.innerHTML = html;
@@ -140,6 +140,8 @@ define('Template', function (require, module, exports) {
         */
         id: '',
 
+
+
         /**
         * 父实例。
         */
@@ -180,6 +182,21 @@ define('Template', function (require, module, exports) {
             }
             
             return meta.sample;
+        },
+
+        /**
+        * 获取内部指定的属性。
+        */
+        get: function (key) {
+            var meta = mapper.get(this);
+            console.warn(`${module.id} 类的实例 get 方法已过时，请不要使用。`);
+
+            switch (key) {
+                case 'name':
+                case 'sample':
+                    return meta[key];
+            }
+
         },
 
         /**

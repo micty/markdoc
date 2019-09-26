@@ -11,8 +11,8 @@ KISP.panel('/Main/Header', function (require, module, panel) {
     var list = [
         { cmd: 'numbers', text: '行号', checked: true, },
         { cmd: 'comment', text: '注释', checked: true, },
-        { cmd: 'empty', text: '空行', checked: true, },
-        { cmd: 'mark', text: '当前行', checked: true, },
+        //{ cmd: 'empty', text: '空行', checked: true, },
+        //{ cmd: 'mark', text: '当前行', checked: true, },
     ];
 
 

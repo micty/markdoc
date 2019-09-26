@@ -5,27 +5,11 @@
 define('MarkDoc', function (require, module, exports) {
     var KISP = require('KISP');
     var $ = require('$');
-    var $Array = KISP.require('Array');
     var $Object = KISP.require('Object');
-    var $String = KISP.require('String');
     var Emitter = KISP.require('Emitter');
-    var Template = KISP.require('Template');
-
-    var marked = require('marked');
-    var JSON = require('JSON');
-
-    var Defaults = module.require('Defaults');
     var Meta = module.require('Meta');
     var Content = module.require('Content');
-    var Events = module.require('Events');
-    var Titles = module.require('Titles');
-    var Href = module.require('Href');
 
-    var Code = module.require('Code');
-    var Highlight = module.require('Highlight');
-    var Lines = module.require('Lines');
-    var Url = module.require('Url');
-    var Image = module.require('Image');
 
     var mapper = new Map();
     var defaults = require(`${module.id}.defaults`);
@@ -34,27 +18,28 @@ define('MarkDoc', function (require, module, exports) {
 
     /**
     * 构造器。
-    *    options = {
+    *    opt = {
     *        container: '',     //要填充的 DOM 元素，内容将会填充到该元素里面。
     *    };
     */
     function MarkDoc(config) {
         config = $Object.extendDeeply({}, defaults, config);
 
-
         var emitter = new Emitter(this);
-        
 
         var meta = Meta.create(config, {
             'this': this,
             'emitter': emitter,
         });
 
+        var panel = meta.panel;
+
+
         mapper.set(this, meta);
 
         Object.assign(this, {
             'id': meta.id,      //
-            '$': meta.$,        //
+            '$': panel.$,        //
             'data': {},         //用户的自定义数据容器。
         });
 
@@ -69,9 +54,36 @@ define('MarkDoc', function (require, module, exports) {
             });
         }
 
+
+        panel.on('init', function () {
+            Content.init(meta);
+        });
+
+        panel.on('render', function (fn) {
+            fn();
+        });
+
+        panel.on('show', function () {
+            emitter.fire('show');
+        });
+
+        panel.on('hide', function () {
+            emitter.fire('hide');
+        });
     }
 
 
+
+
+
+
+
+
+
+
+
+
+    //实例成员。
     MarkDoc.prototype = {
         constructor: MarkDoc,
 
@@ -87,153 +99,47 @@ define('MarkDoc', function (require, module, exports) {
 
         /**
         * 渲染生成 markdoc 内容。
-        *   options = {
-        *       content: '',        //必选。 要填充的 markdown 内容。
-        *       language: '',       //可选。 语言类型，如 `json`、`javascript` 等。 如果指定，则当成源代码模式展示内容。
-        *       baseUrl: '',        //内容里的超链接中的相对 url。 非源代码模式下可用。
-        *       imgUrl: '',         //图片 src 属性相对地址的前缀。 即如果 img.src 为相对地址，则加上该前缀补充为完整的 src。
-        *       code: {
-        *           format: true,   //是否自动格式化（针对 JSON）。
-        *           language: true, //是否显示语言类型标签。
-        *           numbers: true,  //是否显示行号。
-        *           foldable: true, //是否允许通过点击语言类型标签来切换折叠和展开代码区。
+        *   opt = {
+        *       content: '',    //必选，要填充的 markdown 内容。
+        *       language: '',   //可选，语言类型，如 `json`、`javascript` 等。 如果指定，则当成源代码模式展示内容。
+        *       baseUrl: '',    //可选，内容里的图片和超链接中的基准 url。 
+        *                           如果指定，则会相对于该字段补充完整 url。 
+        *                           普通模式下可用，即非源代码模式。
+        *
+        *       code: {             //可选，针对代码区域的控制项。
+        *           format: true,   //可选，是否自动格式化（针对 JSON）。
+        *           type: true,     //可选，是否显示语言类型标签。
+        *           numbers: true,  //可选，是否显示行号。
+        *           foldable: true, //可选，是否允许通过点击语言类型标签来切换折叠和展开代码区。
+        *           line: true,     //可选，是否高亮显示当前选中的行。
         *       },
-        *       titles: {
-        *           selector: 'h1,h2,h3,h4,h5,h6',
-        *           foldable: true,                 //允许折叠。
+
+        *       titles: {           //可选，针对标题区域的控制项。
+        *           selector: '',   //可选，标题的选择器，默认为 `h1,h2,h3,h4,h5,h6`。
+        *           foldable: true, //可选，是否允许折叠。
         *       },
         *       
         *   };
         */
-        render: function (options) {
+        render: function (opt) {
             var meta = mapper.get(this);
-            var current = meta.current;
-            var isSourceMode = !!options.language; //如果指定，则当成源代码模式展示内容。
-
-            var content = Content.get(meta, {
-                'language': options.language,
-                'content': options.content,
-                'process': meta.process,
-            });
 
             //提供一个机会可以在 render 时重新传配置。
-            Object.assign(meta.code, options.code);
-            Object.assign(meta.titles, options.titles);
+            Object.assign(meta.code, opt.code);
+            Object.assign(meta.titles, opt.titles);
 
 
-            meta.$.html(content);
-            meta.$.addClass('MarkDoc');
-            meta.$.toggleClass('SourceMode', isSourceMode);
-            meta.outline.visible = true; //每次填充都要重置。
 
+            meta.panel.render(function () {
+                Content.render(meta, opt);          //初步生成 html 内容。
 
-            //首次绑定。
-            if (!meta.bind) {
-                Events.bind(meta);
-            }
-
-            Image.format(meta.$, options.imgUrl);
-
-
-            Code.each(meta.$, function (item, index) {
-                var element = item.element;
-                var language = item.language;
-                var $element = $(element);
-
-                //尝试把 json 格式化一下。
-                if (meta.code.format) {
-                    Code.format(element);
-                }
-
-                var content = element.innerText; //在格式化后重新获取。
-                var linesInfo = Lines.getNumbers(meta, content);
-
-                Code.wrap(meta, {
-                    'element': element,
-                    'height': linesInfo.height,
-                    'language': meta.code.language ? Code.language(meta, language) : '', //添加语言类型标签。
-                    'numbers': meta.code.numbers ? linesInfo.html : '',                     //对源代码添加行号显示。
-                });
-
-
-                //语法高亮
-                content = Highlight.highlight(language, content);
-                $element.addClass('hljs');
-                $element.html(content);
-
-                //双击进入可编辑模式。
-                $element.on('dblclick', function () {
-                    $element.attr('contenteditable', true);
-                    this.focus();
-
-                    var selection = window.getSelection();
-                    var range = document.createRange();
-
-                    //全选内容。
-                    range.selectNodeContents(this);
-                    selection.removeAllRanges();
-                    selection.addRange(range);
-                });
-
-                //失焦就退出可编辑模式。
-                $element.on('blur', function () {
-                    $element.attr('contenteditable', false);
-
-                    //尝试把 json 格式化一下。
-                    if (meta.code.format) {
-                        Code.format(element);
-                    }
-
-                    //重新语法高亮。
-                    var content = this.innerText; //重新获取。
-                    content = Highlight.highlight(language, content);
-                    $element.html(content);
-
-                   
-                });
-
-                
-                //代码区进入可编辑模式时，监听内容的输入，以便调整高度和重新生成行号。
-                $element.on('input', function (event) {
-                    var content = this.innerText; //重新获取。
-                    var height = Lines.getHeight(content);
-                    var pre = this.parentNode;
-                    var div = pre.parentNode;
-                    var $pre = $(pre);
-
-                    $pre.height(height);
-
-                    //指定了要生成行号，则根据内容重新生成行号。
-                    if (meta.code.numbers) {
-                        var linesInfo = Lines.getNumbers(meta, content);
-                        var $div = $(div).find('[data-id="line-numbers"]');
-
-                        $div.get(0).outerHTML = linesInfo.html;
-                        $pre.css('margin-left', linesInfo.width);
-                    }
-                   
-                });
-
-                
+                meta.emitter.fire('render', [{
+                    'id': meta.id,
+                    'outlines': meta.outlines,
+                }]);
 
             });
 
-            var title = Titles.render(meta);
-
-
-            if (!isSourceMode) {
-                Href.format(meta, options.baseUrl);
-            }
-
-
-            current.code = meta.$.find('pre>code');
-            current.html = current.code.html();
-            current.ul = meta.$.find('ul');
-
-
-            meta.emitter.fire('render', [{
-                'title': title,
-            }]);
 
         },
 
@@ -242,10 +148,7 @@ define('MarkDoc', function (require, module, exports) {
         */
         show: function () {
             var meta = mapper.get(this);
-        
-            meta.$.show(...arguments);
-            meta.emitter.fire('show');
-
+            meta.panel.show();
         },
 
         /**
@@ -253,68 +156,7 @@ define('MarkDoc', function (require, module, exports) {
         */
         hide: function () {
             var meta = mapper.get(this);
-
-            meta.$.hide(...arguments);
-            meta.emitter.fire('hide');
-        },
-
-        /**
-        * 切换显示或隐藏提纲。
-        */
-        outline: function () {
-            var meta = mapper.get(this);
-            var $ = meta.$.find('>*:not(' + meta.titles.selector + ')');
-            var value = meta.outline.visible ? 'hide' : 'show';
-
-            $.animate({
-                'height': value,
-                'opacity': value,
-            }, 'fast');
-
-            meta.outline.visible = !meta.outline.visible;
-        },
-
-        /**
-        * 隐藏或显示空行。
-        */
-        empty: function (checked) {
-            var meta = mapper.get(this);
-            var current = meta.current;
-
-            var code = current.code;
-            var ul = current.ul;
-            var html = current.html;
-
-            //显示空行。
-            if (checked) {
-                //重新计算高度。
-                var height = Lines.getHeight(html);
-                code.parent().height(height);
-                ul.find('li').show();
-                code.html(html);
-                return;
-            }
-
-            //隐藏空行。
-            var html = code.html();
-            var lines = html.split(/\r\n|\n|\r/);
-
-            lines = $Array.map(lines, function (line) {
-                return line.length > 0 ? line : null;
-            });
-
-            html = lines.join('\r\n');
-            code.html(html);
-
-
-            //重新计算高度。
-            var height = Lines.getHeight(html);
-            code.parent().height(height);
-
-            //隐藏多余的行号
-            var maxIndex = lines.length - 1;
-            ul.find('li').show();
-            ul.find('li:gt(' + maxIndex + ')').hide();
+            meta.panel.hide();
         },
 
         /**
@@ -330,12 +172,12 @@ define('MarkDoc', function (require, module, exports) {
         */
         toOutline: function (index) {
             var meta = mapper.get(this);
-            var el = meta.$.find(meta.titles.selector).get(index);
+            var el = meta.panel.$.find(meta.titles.selector).get(index);
+
             if (!el) {
                 return;
             }
 
-            var $el = $(el);
 
             if (el.scrollIntoViewIfNeeded) {
                 el.scrollIntoViewIfNeeded();
@@ -346,6 +188,7 @@ define('MarkDoc', function (require, module, exports) {
 
             //闪两次
             var timeout = 200;
+            var $el = $(el);
 
             $el.addClass('on');
 
@@ -362,27 +205,7 @@ define('MarkDoc', function (require, module, exports) {
                 }, timeout);
 
             }, timeout);
-        },
 
-        /**
-        * 获取提纲列表信息。
-        * 必须在渲染后调用，方能获取到。
-        */
-        getOutlines: function () {
-            var meta = mapper.get(this);
-            var list = meta.$.find(meta.titles.selector).toArray();
-
-            list = list.map(function (el) {
-                var level = el.nodeName.slice(1);
-                var text = el.innerText;
-
-                return {
-                    'level': +level,
-                    'text': text,
-                };
-            });
-
-            return list;
         },
 
     };

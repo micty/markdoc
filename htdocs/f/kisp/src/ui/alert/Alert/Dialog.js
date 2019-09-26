@@ -11,7 +11,7 @@ define('Alert/Dialog', function (require, module, exports) {
     var showFrom = 13;          //记录一下是否由于按下回车键导致的显示。
 
 
-    //创建对话框
+    //创建对话框。
     function create() {
         var Dialog = require('Dialog');
         var config = Defaults.clone(module.parent.id);
@@ -28,9 +28,12 @@ define('Alert/Dialog', function (require, module, exports) {
         });
 
 
-        dialog.on('button', 'ok', function () {
-            var fn = dialog.data('fn');
-            fn && fn();
+
+        dialog.on('button', {
+            'ok': function () {
+                var fn = dialog.data('fn');
+                fn && fn();
+            },
         });
 
 
@@ -46,10 +49,10 @@ define('Alert/Dialog', function (require, module, exports) {
             'hide': function () {
                 visible = false;
 
-                var obj = list.shift();
+                var item = list.shift();
 
-                if (obj) {
-                    render(obj.text, obj.fn);
+                if (item) {
+                    render(item.text, item.fn);
                 }
 
                 activeElement = null;
@@ -57,7 +60,7 @@ define('Alert/Dialog', function (require, module, exports) {
             },
         });
 
-        //响应回车键
+        //响应回车键。
         $(document).on({
             'keydown': function (event) {
                 showFrom = event.keyCode;

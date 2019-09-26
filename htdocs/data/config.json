@@ -122,6 +122,26 @@
                         "file": "Config-and-Code"
                     }
                 ]
+            },
+            {
+                "name": "链接",
+                "base": "/article/",
+            
+                "icon": "fas fa-cog",
+                "items": [
+                    {
+                        "name": "JS 格式化",
+                        "url": "http://tool.oschina.net/codeformat/js/",
+                        "target": "iframe"
+                    },
+                    {
+
+                        "name": "kisp",
+                        "url": "http://kisp.definejs.com/",
+                        "target": "blank"
+                    }
+                    
+                ]
             }
         ]
     },

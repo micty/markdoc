@@ -10,7 +10,9 @@ KISP.launch(function (require, module) {
     var Title = module.require('Title');
     var Outline = module.require('Outline');
     var Tools = module.require('Tools');
+    var Iframe = module.require('Iframe');
 
+    var $body = $(document.body);
 
 
     //对应于加载到的 config.json 的对象。
@@ -22,9 +24,28 @@ KISP.launch(function (require, module) {
         'search': function (value) {
             console.log('search:', value);
         },
-        'menu': function (url) {
-            Router.auto(url);
+
+        'file': function (file) {
+            Router.auto(file);
+            Iframe.hide();
+            $body.removeClass('iframe');
         },
+
+        'url': function (opt) {
+            if (opt.target == 'lelf') {
+                location.href = opt.url;
+            }
+            else {
+                window.open(opt.url);
+            }
+        },
+
+        'iframe': function (opt) {
+            Router.set('#');
+            Iframe.render(opt);
+            $body.addClass('iframe');
+        },
+
         'visible': function (visible) {
             Scroller.setTop(visible);
             Main.setTop(visible);
@@ -91,7 +112,7 @@ KISP.launch(function (require, module) {
                 Main.$.toggleClass('print');
                 Footer.$.toggleClass('print');
                 Outline.$.toggleClass('print');
-                $(document.body).toggleClass('print');
+                $body.toggleClass('print');
             }
 
             print();
@@ -195,7 +216,7 @@ KISP.launch(function (require, module) {
     });
 
     //启动路由解析。
-    $(document.body).removeClass('loading');
+    $body.removeClass('loading');
     Router.render();
 
 

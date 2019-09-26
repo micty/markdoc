@@ -16,6 +16,12 @@ body {
         }
     }
 
+    &.iframe{
+        >.wrapper{
+            display: none;
+        }
+    }
+
     > div.loading {
         display: none;
         position: absolute;
@@ -121,12 +127,11 @@ body {
         background-position: bottom right;
     }
 
-    ::selection { 
-        background: #ff9632; 
-            /*background: #cfd7ff;*/
+    ::selection {
+        background: #ff9632;
+        /*background: #cfd7ff;*/
         color: unset;
-
-    } 
+    }
 }
 
 

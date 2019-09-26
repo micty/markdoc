@@ -3,7 +3,6 @@
 * 
 */
 define('API', function (require, module, exports) {
-
     var KISP = require('KISP');
     var Emitter = KISP.require('Emitter');
     var $ = require('$');
@@ -15,7 +14,7 @@ define('API', function (require, module, exports) {
     var $emitter = new Emitter();   //针对静态的。
     var url$data = {};
     var defaults = KISP.data(module.id);
-    var imgBase = KISP.data('config').base;
+    var baseDir = KISP.data('config').base;
 
     var images = [
         'png',
@@ -32,6 +31,7 @@ define('API', function (require, module, exports) {
     */
     function API(url) {
         var ext = Url.extname(url);
+        var dir = Url.dir(url);
         var isOrigin = url.startsWith('@');
         var isImage = images.includes(ext);
         
@@ -39,8 +39,8 @@ define('API', function (require, module, exports) {
         if (isImage) {
             var img = url;
 
-            if (img.startsWith(imgBase)) {
-                img = img.slice(imgBase.length);
+            if (img.startsWith(baseDir)) {
+                img = img.slice(baseDir.length);
             }
 
             url$data[url] = '![](' + img + ')';
@@ -61,6 +61,7 @@ define('API', function (require, module, exports) {
 
         var meta = {
             'url': url,
+            'dir': dir,
             'ext': ext,
             'isOrigin': isOrigin,
             'isImage': isImage,
@@ -94,9 +95,10 @@ define('API', function (require, module, exports) {
 
                 emitter.fire('success', [data, {
                     'url': url,
+                    'dir': meta.dir,
                     'ext': ext,
                     'isOrigin': isOrigin,
-                    'imgBase': imgBase,
+                    'baseDir': baseDir,
                 }]);
 
 
@@ -118,14 +120,14 @@ define('API', function (require, module, exports) {
 
                     emitter.fire('success', [data, {
                         'url': url,
+                        'dir': meta.dir,
                         'ext': ext,
                         'isOrigin': isOrigin,
-                        'imgBase': imgBase,
+                        'baseDir': baseDir,
                     }]);
                 },
 
                 'error': function (xhr, type, msg) {
-
                     console.log(arguments);
                     emitter.fire('error');
                     $emitter.fire(xhr.status, [url]);

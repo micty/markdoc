@@ -102,14 +102,17 @@ module.exports = {
             props: {},
             query: {},
         },
-        html: {
-            //压缩选项详见: https://github.com/kangax/html-minifier。
-            minify: {
-                collapseWhitespace: true,   //折叠空白。 即删除空行、空格等，压缩最重要的体现。
-                minifyJS: true,             //压缩 html 里的 js。
-                keepClosingSlash: true,     //保留闭合斜线。
-            },
-        },
+
+        //这里不要压缩 html，因为会导致模板有问题。
+        //html: {
+        //    //压缩选项详见: https://github.com/kangax/html-minifier。
+        //    minify: {
+        //        collapseWhitespace: true,   //折叠空白。 即删除空行、空格等，压缩最重要的体现。
+        //        minifyJS: true,             //压缩 html 里的 js。
+        //        keepClosingSlash: true,     //保留闭合斜线。
+        //    },
+        //},
+
     },
 
 };

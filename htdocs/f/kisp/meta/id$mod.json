@@ -450,6 +450,8 @@
     "OuterModule": {
         "id": "OuterModule",
         "dep$count": {
+            "String": 1,
+            "Object": 1,
             "Defaults": 1,
             "Emitter": 1
         },
@@ -958,6 +960,7 @@
     "Template/Parser": {
         "id": "Template/Parser",
         "dep$count": {
+            "String": 1,
             "HTMLParser": 1,
             "Template/Parser/Templates": 1
         },

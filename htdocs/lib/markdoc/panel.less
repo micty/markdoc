@@ -149,12 +149,10 @@
         }
 
         &.title {
-            span {
-                cursor: pointer;
+            cursor: pointer;
 
-                &:hover {
-                    color: #5e6c7d;
-                }
+            &:hover {
+                color: #5e6c7d;
             }
         }
     }
@@ -209,10 +207,71 @@
         margin-bottom: 12px;
         position: relative; //在迁移到别的项目时这个要用到。
         border: solid 1px #f9f9f9;
+
+        button {
+            position: absolute;
+            right: 0px;
+            cursor: pointer;
+            background: #8B9CC2;
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            padding: 2px 15px;
+            display: none;
+
+            &:hover {
+                background: #1f79d2;
+            }
+
+            &:active {
+                background: #2866a4;
+            }
+        }
+
+        code {
+            p {
+                margin: 0px;
+                height: 20px;
+
+                &.on {
+                    background: #ffe69a  !important;
+
+                    &:hover {
+                        background: #ffd760 !important;
+                    }
+                }
+
+                &:hover {
+                    background: #fff7e0;
+                }
+
+                span {
+                    line-height: 0px;
+                }
+            }
+        }
+
+        &:hover {
+            border: solid 1px #e1e1e1;
+            background-color: #fff;
+
+            button {
+                display: inline-block;
+            }
+
+            .line-numbers > ul {
+                background-color: #f9f9f9;
+            }
+
+            > .language {
+                background: #8B9CC2;
+            }
+        }
         /*语言类型标签*/
         > .language {
             padding: 4px 10px;
             background: #E1E1E1;
+            /*background: #8B9CC2;*/
             color: white;
 
             &.foldable {
@@ -229,6 +288,25 @@
             border: solid 1px #1f79d2;
             transition: border 0.5s 0.3s ease;
 
+            &:hover {
+                button {
+                    display: none;
+                }
+
+                &::after {
+                    content: '';
+                    background-image: url(../img/spread.png);
+                    background-repeat: no-repeat;
+                    background-size: 10px;
+                    width: 28px;
+                    height: 25px;
+                    position: absolute;
+                    right: -8px;
+                    top: 8px;
+                }
+            }
+
+
             > .language {
                 background: #1f79d2;
             }
@@ -244,17 +322,13 @@
                         transition: opacity 0.5s 0.3s ease;
                         display: inline-block;
                     }
-
-                    > ul {
-                        height: 0 !important;
-                        transition: height 0.3s 0.1s ease;
-                        overflow: hidden;
-                    }
                 }
             }
 
 
-            > pre {
+            > pre,
+            /*.line-numbers,*/
+            .line-numbers > ul {
                 height: 0 !important;
                 transition: height 0.3s 0.1s ease;
                 overflow: hidden;

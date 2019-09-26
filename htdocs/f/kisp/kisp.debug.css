@@ -634,6 +634,9 @@
 .KISP.Toast.NoIcon div {
     display: none;
 }
+.KISP.Toast.NoIcon .Text {
+    margin-top: 0px;
+}
 
 .KISP.View.FullScreen {
     position: absolute;

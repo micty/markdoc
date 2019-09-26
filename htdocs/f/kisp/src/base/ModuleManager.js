@@ -50,7 +50,7 @@ var ModuleManager = (function (Module) {
             * 即 factory(require, module, exports){ } 中的第一个参数 `require`。
             */
             'require': function (id) {
-                return meta.this.require(id, false);
+                return meta.this.require(id);
             },
 
             /**

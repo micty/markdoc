@@ -2,24 +2,24 @@
 
 <footer data-panel="/Footer">
     <ul data-panel="/Footer/Menus" class="contact">
-        <!--
-        <li data-index="{index}">
-            {name}
-        </li>
-        -->
+        <template>
+            <li data-index="{index}">
+                {name}
+            </li>
+        </template>
     </ul>
 
     <div data-panel="/Footer/Copyright" class="copyright">
-        <!--
+        <template>
             {copyright}
-        -->
+        </template>
     </div>
 
     <ul data-panel="/Footer/Logos" class="share">
-        <!--
-        <li data-index="{index}" >
-            <img src="{logo}" title="{name}"/>
-        </li>
-        -->
+        <template>
+            <li data-index="{index}">
+                <img src="{logo}" title="{name}" />
+            </li>
+        </template>
     </ul>
 </footer>

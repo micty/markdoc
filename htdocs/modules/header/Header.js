@@ -18,6 +18,27 @@ KISP.panel('/Header', function (require, module, panel) {
 
     panel.on('init', function () {
 
+        function fireMenu(opt) {
+            
+
+            if (opt.file) {
+                panel.fire('file', [opt.file]);
+                return;
+            }
+
+            if (opt.url) {
+                if (opt.target == 'iframe') {
+                    panel.fire('iframe', [opt]);
+                }
+                else {
+                    panel.fire('url', [opt]);
+                }
+                return;
+            }
+
+        }
+
+
         Search.on({
             'focus': function () {
                 panel.$.addClass('focus');
@@ -33,13 +54,11 @@ KISP.panel('/Header', function (require, module, panel) {
 
         Groups.on({
             'group': function (group) {
-                var file = group.file;
-                file && panel.fire('menu', [file]);
+                fireMenu(group);
             },
 
             'item': function (item) {
-                var file = item.file;
-                file && panel.fire('menu', [file]);
+                fireMenu(item);
             },
         });
 
@@ -47,7 +66,7 @@ KISP.panel('/Header', function (require, module, panel) {
 
 
     panel.on('render', function (data) {
-       
+
         //无数据，则禁用
         if (!data) {
             panel.hide();

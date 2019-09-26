@@ -51,7 +51,7 @@ define('Storage', function (require, module, exports) {
 
 
         //导出对象。
-        return type$exports[type] = {
+        return exports = type$exports[type] = {
 
             /**
             * 设置一对键值。
@@ -88,6 +88,14 @@ define('Storage', function (require, module, exports) {
                 all = {};
                 save();
             },
+
+            ///***/
+            //getOnce: function (key) {
+            //    var value = exports.get(key);
+            //    exports.remove(key);
+
+            //    return value;
+            //},
 
         };
 

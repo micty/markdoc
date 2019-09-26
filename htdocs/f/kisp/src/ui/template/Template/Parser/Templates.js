@@ -8,7 +8,7 @@ define('Template/Parser/Templates', function (require, module, exports) {
 
 
     /**
-    * ��ȡָ�� template �ڵ�ĸ��� template �ڵ�(��
+    * 获取指定 template 节点的父亲 template 节点(。
     */
     function getParent(tpl) {
         tpl = tpl.parentNode;
@@ -32,8 +32,8 @@ define('Template/Parser/Templates', function (require, module, exports) {
 
 
         /**
-        * �����е� template �ڵ���Ϣ��ȡ������
-        * ����һ���ɶ��� template �ڵ��Ӧ��������Ϣ������ɵ����顣
+        * 把所有的 template 节点信息提取出来。
+        * 返回一个由顶层 template 节点对应的描述信息对象组成的数组。
         */
         get: function (dom) {
             var tpls = dom.getElementsByTagName('template');
@@ -53,7 +53,7 @@ define('Template/Parser/Templates', function (require, module, exports) {
                     'sample': innerHTML,
                     'parent': null,
                     'attributes': attributes,
-                    'items': [],    //ֱ���¼��б�
+                    'items': [],    //直接下级列表。
                 };
 
                 tpl$item.set(tpl, item);
@@ -66,16 +66,16 @@ define('Template/Parser/Templates', function (require, module, exports) {
                 var tpl = getParent(item.node);
                 var parent = tpl$item.get(tpl);
 
-                //�ռ����ڵ㡣
+                //收集根节点。
                 if (!parent) {
                     return true;
                 }
 
-                //˳�㴦��һ��������
+                //顺便处理一下其它。
                 item.parent = parent;
                 parent.items.push(item);
 
-                //�滻����ģ���ڸ�ģ���е����ݡ�
+                //替换掉子模板在父模板中的内容。
                 var sample = parent.sample;
                 var outerHTML = item.outerHTML;
                 var placeholder = item.placeholder;

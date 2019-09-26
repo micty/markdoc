@@ -7,7 +7,6 @@ KISP.panel('/Main', function (require, module, panel) {
     var Loading = module.require('Loading');
     var Header = module.require('Header');
     var Content = module.require('Content');
-    var Mark = module.require('Mark');
     var Style = module.require('Style');
     var Url = module.require('Url');
 
@@ -43,12 +42,6 @@ KISP.panel('/Main', function (require, module, panel) {
             'comment': function (checked) {
                 panel.$.toggleClass('no-comment', !checked);
             },
-            'empty': function (checked) {
-                Content.empty(checked);
-            },
-            'mark': function (checked) {
-                Mark.toggle(checked);
-            },
         });
 
         Content.on({
@@ -78,9 +71,7 @@ KISP.panel('/Main', function (require, module, panel) {
                 }]);
             },
 
-            'line': function (y) {
-                Mark.highlight(y, meta.config.fadeIn);
-            },
+
 
             'hash': function (hash) {
                 panel.fire('hash', [hash]);
@@ -120,7 +111,7 @@ KISP.panel('/Main', function (require, module, panel) {
             'fadeIn': meta.config.fadeIn,
         });
 
-        Mark.render(isCode);
+      
         NotFound.hide();
 
         Style.setPadding({
@@ -163,7 +154,6 @@ KISP.panel('/Main', function (require, module, panel) {
             Header.hide();
             Content.hide();
             Loading.hide();
-            Mark.hide();
 
             //避免跟 Content.loading 事件竞争。
             setTimeout(function () {

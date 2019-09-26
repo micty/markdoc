@@ -6,6 +6,68 @@
 
 [baidu](http://www.baidu.com/)
 
+``` javascript
+
+
+/**
+* 内容切成行。
+*/
+define('MarkDoc/Content/Code/Lines', function (require, module, exports) {
+    var $ = require('$');
+    var KISP = require('KISP');
+    var $String = KISP.require('String');
+
+    return exports = {
+
+        /**
+        *  
+        */
+        parse: function (content) {
+            var lines = content.split(/\r\n|\n|\r/);
+            var height = exports.getHeight(lines);
+
+
+            //最后一个空行要去掉。
+            //因为它在 `<pre></pre>` 中无法展示出来。
+            var lastLine = lines[lines.length - 1];
+         
+            if (!lastLine) {
+                lines = lines.slice(0, -1);
+            }
+
+
+            var total = lines.length;
+            var length = total.toString().length; //最大的行号的数字串的长度
+            var width = length * 10 + 15;
+
+
+            return {
+                'width': width,
+                'height': height,
+                'total': total,
+                'lines': lines,
+            };
+        
+
+        },
+
+        /**
+        * 根据文本内容计算需要的高度。
+        */
+        getHeight: function (lines) {
+            if (!Array.isArray(lines)) {
+                lines = lines.split(/\r\n|\n|\r/);
+            }
+
+            return lines.length * 20;
+        },
+    };
+
+});
+
+
+```
+
 ###1.绪论
 
 JavaScript 是一门语法极其灵活的语言，简单易懂，对代码的格式的要求也相对松散。语法松散是 JavaScript 重要的特征。它灵活易懂，给开发人员带来了很多方便，但如果编写过程中不注意，代码的调试成本和维护成本则会无形地增加。也正因为如此，JavaScript  的编码规范也往往被轻视，开发过程中修修补补，最终也就演变成为后续维护人员的恶梦。软件存在的长期价值直接与编码的质量成比例，编码规范能帮助我们降低编程中不必要的麻烦。
@@ -15,7 +77,7 @@ JavaScript 是一门语法极其灵活的语言，简单易懂，对代码的格
 
 
 
-###[2.JavaScript代码格式](?file=./chapters/2.md)
+###[2.JavaScript代码格式](?file=chapters/2.md)
 - 2.1 缩进
 - 2.2 行长度
 - 2.3多个变量的声明格式

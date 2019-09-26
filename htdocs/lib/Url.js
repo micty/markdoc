@@ -1,25 +1,29 @@
-
+ï»¿
 
 /**
 * 
 */
-define('Url', function (require, module) {
-
+define('Url', function (require, module, exports) {
+    var KISP = require('KISP');
+    var Url = KISP.require('Url');
     var resolveUrl = require('resolveUrl');
 
+    var root = Url.root();
 
-    return {
+
+
+    return exports = {
 
         relative: function (baseUrl, file) {
 
-            //²»ÊÇÒÔ './' »ò '../' ¿ªÍ·µÄ£¬²»´¦Àí
+            //ä¸æ˜¯ä»¥ './' æˆ– '../' å¼€å¤´çš„ï¼Œä¸å¤„ç†
             if (file.indexOf('.') != 0) {
                 return file;
             }
 
-            var dir = baseUrl.split('/').slice(0, -1).join('/') + '/';  //ÌáÈ¡³öÄ¿Â¼
-            var url = resolveUrl(dir, file);    //»ñÈ¡ÍêÕû url
-            var root = resolveUrl('./');        //µ±Ç°Ò³ÃæµÄÄ¿Â¼£¬ÒòÎªÊÇµ¥Ò³£¬ËùÒÔÊÇÍøÕ¾¸ùÄ¿Â¼¡£
+            var dir = baseUrl.split('/').slice(0, -1).join('/') + '/';  //æå–å‡ºç›®å½•
+            var url = resolveUrl(dir, file);    //è·å–å®Œæ•´ url
+            var root = resolveUrl('./');        //å½“å‰é¡µé¢çš„ç›®å½•ï¼Œå› ä¸ºæ˜¯å•é¡µï¼Œæ‰€ä»¥æ˜¯ç½‘ç«™æ ¹ç›®å½•ã€‚
 
             url = url.slice(root.length);
 
@@ -39,9 +43,16 @@ define('Url', function (require, module) {
             return ext;
         },
 
-        resolve: function () {
-            var args = [].slice.call(arguments);
-            return resolveUrl.apply(resolveUrl, args);
+
+        resolve: function (...args) {
+            var url = resolveUrl(...args);
+
+            //å¦‚æœæ˜¯ä»¥æœ¬ç½‘ç«™çš„æ ¹ç›®å½•å¼€å¤´çš„ï¼Œåˆ™åªä¿ç•™ç›¸å¯¹éƒ¨åˆ†ã€‚
+            if (url.startsWith(root)) {
+                url = url.slice(root.length);
+            }
+
+            return url;
         },
 
 
@@ -49,10 +60,12 @@ define('Url', function (require, module) {
             url = url.split('#')[0];
             url = url.split('?')[0];
 
-            var dir = url.split('/').slice(0, -1).join('/') + '/';  //ÌáÈ¡³öÄ¿Â¼
+            var dir = url.split('/').slice(0, -1).join('/') + '/';  //æå–å‡ºç›®å½•
             return dir;
         },
         
+
+       
 
     };
 

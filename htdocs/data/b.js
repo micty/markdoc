@@ -1,12 +1,8 @@
-
-
 define('Download', function (require, module, exports) {
     var File = require('File');
     var MD5 = require('MD5');
     var Path = require('Path');
     var Directory = require('Directory');
-
-
 
     return {
 
@@ -48,9 +44,5 @@ define('Download', function (require, module, exports) {
                 res.download(file);
             });
         },
-
-
     };
-   
-
 });

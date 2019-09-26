@@ -10,9 +10,6 @@ KISP.panel('/Main/Content', function (require, module, panel) {
 
     panel.on('init', function () {
 
-        panel.$.on('click', 'code', function (event) {
-            panel.fire('line', [event.offsetY]);
-        });
 
 
         markdoc = new MarkDoc({
@@ -22,11 +19,12 @@ KISP.panel('/Main/Content', function (require, module, panel) {
 
         
         markdoc.on('render', function (data) {
-
-            var outlines = markdoc.getOutlines();
+            var outlines = data.outlines;
+            var first = outlines[0];
+            var title = first ? first.text : '';
 
             panel.fire('render', [{
-                'title': data.title,
+                'title': title,
                 'outlines': outlines,
             }]);
 
@@ -75,12 +73,12 @@ KISP.panel('/Main/Content', function (require, module, panel) {
                 loading = false;
                 clearTimeout(tid);
 
-                //要在浏览器中显示的标题
+
+               
                 markdoc.render({
                     'content': content,
-                    'baseUrl': data.url,
+                    'baseUrl': options.url,
                     'language': data.isOrigin ? data.ext : '',
-                    'imgUrl': data.imgBase, //img 标签的基准地址。
                 });
 
                 markdoc.show();
@@ -105,10 +103,6 @@ KISP.panel('/Main/Content', function (require, module, panel) {
         //显示大纲
         'outline': function () {
             markdoc.outline();
-        },
-
-        'empty': function () {
-            markdoc.empty(...arguments);
         },
 
         'toOutline': function (index) {

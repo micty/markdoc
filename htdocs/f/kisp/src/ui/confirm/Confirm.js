@@ -14,32 +14,40 @@ define('Confirm', function (require, module, exports) {
     var activeElement = null;   //上次获得焦点的元素。
     var showFrom = 13;          //记录一下是否由于按下回车键导致的显示。
 
+    var defaults = null;
+    
 
     //创建对话框
     function create() {
         var Dialog = require('Dialog');
-        var config = Defaults.clone(module.id);
+
+        defaults = Defaults.clone(module.id);
+
+
 
         var dialog = new Dialog({
             'cssClass': module.id,
-            'volatile': config.volatile,
-            'mask': config.mask,
-            'autoClose': config.autoClose,
-            'height': config.height,
-            'z-index': config['z-index'],
-            'buttons': config.buttons,
-            'scrollable': config.scrollable,
+            'volatile': defaults.volatile,
+            'mask': defaults.mask,
+            'autoClose': defaults.autoClose,
+            'height': defaults.height,
+            'z-index': defaults['z-index'],
+            'buttons': defaults.buttons,
+            'scrollable': defaults.scrollable,
         });
+
 
 
 
         dialog.on('button', {
             'ok': function () {
                 var fn = dialog.data('ok');
+
                 fn && fn();
             },
             'cancel': function () {
                 var fn = dialog.data('cancel');
+
                 fn && fn();
             },
         });
@@ -107,7 +115,14 @@ define('Confirm', function (require, module, exports) {
 
 
 
-
+    /**
+    *   item = {
+    *       text: '',
+    *       ok: fn,
+    *       cancel: fn,
+    *       buttons: ['确定', '取消'],
+    *   };
+    */
     function render(item) {
         dialog = dialog || create();
 
@@ -118,6 +133,17 @@ define('Confirm', function (require, module, exports) {
         });
 
         dialog.show();
+
+
+        //重新设置按钮的文本。
+        var buttons = item.buttons || [];
+
+        defaults.buttons.forEach(function (item, index) {
+            var $btn = dialog.$.find(`button[data-index="${index}"]`);
+            var text = buttons[index] || item.text;
+
+            $btn.html(text);
+        });
 
     }
 
@@ -130,19 +156,19 @@ define('Confirm', function (require, module, exports) {
         /**
         * 显示一个 confirm 对话框。 
         * 支持多次调用，会将多次调用加进队列，在显示完上一次后进行下一次的显示。
-        * 已重载 show({ text, ok, cancel });   //传入一个配置对象。
-        * 已重载 show(text, ok, cancel);       //分开传入参数。
-        * 参数：
-        *   text: '',   //要显示的文本内容。
-        *   ok: fn,     //可选，点击 `确定` 按钮后要执行的回调函数。
-        *   cancel: fn, //可选，点击 `取消` 按钮后要执行的回调函数。
+        * 已重载 show(opt);   //传入一个配置对象。
+        * 已重载 show(text, ok);       //分开传入参数。
+        *   opt = {
+        *       text: '',        //要显示的消息内容。
+        *       ok: fn,         //可选，点击 `确定` 按钮后要执行的回调函数。
+        *       cancel: fn,     //可选，点击 `取消` 按钮后要执行的回调函数。
+        *       buttons: [],    //按钮数组。
+        *   };
         */
-        show: function (text, ok, cancel) {
-
+        show: function (text, ok) {
             var item = typeof text == 'object' ? text : {
                 'text': text,
                 'ok': ok,
-                'cancel': cancel,
             };
 
 

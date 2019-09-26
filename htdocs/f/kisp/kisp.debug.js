@@ -2,8 +2,8 @@
 * KISP JavaScript Library
 * name: pc 
 * version: 8.2.0
-* build time: 2019-03-21 15:02:22
-* concat md5: 147C638ABB4C6EDD7ADF8EBA914E1036
+* build time: 2019-09-24 10:09:47
+* concat md5: D2080A4AF82F28DEB471F2951F9B36CD
 * source files: 123(121)
 *    partial/begin.js
 *    base/Module.js
@@ -398,7 +398,7 @@ var ModuleManager = (function (Module) {
             * 即 factory(require, module, exports){ } 中的第一个参数 `require`。
             */
             'require': function (id) {
-                return meta.this.require(id, false);
+                return meta.this.require(id);
             },
 
             /**
@@ -3438,6 +3438,46 @@ define('Query', function (require, module, exports) {
     var $Object = require('Object');
 
 
+    //把指定的 url 中的查询字符串替换成目标查询字符串。 
+    //同时会保留原有的 hash 串。
+    function replace(url, qs) {
+        qs = qs || '';
+
+        if (typeof qs == 'object') {
+            qs = exports.stringify(qs);
+        }
+        
+        if (qs) {
+            qs = '?' + qs;
+        }
+
+        var hasQuery = url.includes('?');
+        var hasHash = url.includes('#');
+        var parts = [];
+
+
+        if (hasQuery && hasHash) {
+            parts = url.split(/\?|#/g);
+            return parts[0] + qs + '#' + parts[2];
+        }
+
+        if (hasQuery) {
+            parts = url.split('?');
+            return parts[0] + qs;
+        }
+
+        if (hasHash) {
+            parts = url.split('#');
+            return parts[0] + qs + '#' + parts[1];
+        }
+
+
+        return url + qs;
+    }
+
+
+
+
     return exports = /**@lends Query */ {
 
 
@@ -3704,6 +3744,49 @@ define('Query', function (require, module, exports) {
 
 
         /**
+        * 删除指定的 url 的查询字符串。
+        * 已重载 remove(url);          //删除全部查询字符串。
+        * 已重载 remove(url, key);     //删除指定键的查询字符串。
+        * 已重载 remove(window);       //删除指定 window 窗口的全部查询字符串，会导致页面刷新。
+        * 已重载 remove(window, key);  //删除指定 window 窗口的指定键查询字符串，会导致页面刷新。
+        * 已重载 remove(location);     //删除指定 location 窗口的全部查询字符串，会导致页面刷新。
+        * 已重载 remove(location, key);//删除指定 location 窗口的指定键查询字符串，会导致页面刷新。
+        */
+        remove: function (url, key) {
+            var location = null;
+
+            if (typeof url == 'object') {
+                if ('href' in url) {
+                    location = url;         //location
+                }
+                else {
+                    location = url.location; //window
+                }
+
+                url = location.href;
+            }
+
+
+            var qs = '';
+
+            if (key) {
+                qs = exports.get(url);
+                delete qs[key];
+            }
+
+            url = replace(url, qs);
+
+            //设置整个 location.href 会刷新
+            if (location) {
+                location.href = url;
+            }
+
+            return url;
+
+        },
+
+
+        /**
         * 给指定的 url 添加一个随机查询字符串。
         * 注意，该方法会保留之前的查询字符串，并且添加一个键名为随机字符串而值为空字符串的查询字符串。
         * @param {string} url 组装前的 url。
@@ -3741,7 +3824,6 @@ define('Query', function (require, module, exports) {
             Query.set('http://test.com?a=1&b=2#hash', {a: 3, d: 4});  
         */
         set: function (url, key, value) {
-
             var location = null;
 
             if (typeof url == 'object') {
@@ -3751,46 +3833,26 @@ define('Query', function (require, module, exports) {
                 else {      
                     location = url.location; //window
                 }
+
                 url = location.href;
             }
 
 
+            var qs = '';
             var type = typeof key;
             var isValueType = (/^(string|number|boolean)$/).test(type);
 
-            var qs = '';
-
             //set(url, qs);
-            if (arguments.length == 2 && isValueType) { 
+            if (arguments.length == 2 && isValueType) {
                 qs = encodeURIComponent(key);
             }
             else {
-                var obj = type == 'object' ? key : $Object.make(key, value);
-                qs = exports.stringify(obj);
+                qs = type == 'object' ? key : $Object.make(key, value);
             }
 
 
+            url = replace(url, qs);
 
-            var hasQuery = url.indexOf('?') > -1;
-            var hasHash = url.indexOf('#') > -1;
-            var a;
-
-            if (hasQuery && hasHash) {
-                a = url.split(/\?|#/g);
-                return a[0] + '?' + qs + '#' + a[2];
-            }
-
-            if (hasQuery) {
-                a = url.split('?');
-                return a[0] + '?' + qs;
-            }
-
-            if (hasHash) {
-                a = url.split('#');
-                return a[0] + '?' + qs + '#' + a[1];
-            }
-
-            url = url + '?' + qs;
 
             //设置整个 location.href 会刷新
             if (location) {
@@ -4644,7 +4706,7 @@ define('KISP', function (require, module, exports) {
         * 内容不包括本字段动态生成的值部分。
         * 与生成的头部注释中的 md5 值是一致的。
         */
-        md5: '147C638ABB4C6EDD7ADF8EBA914E1036',
+        md5: 'D2080A4AF82F28DEB471F2951F9B36CD',
 
         /**
         * babel 版本号。 (由 packer 自动插入)
@@ -4843,6 +4905,7 @@ define('KISP', function (require, module, exports) {
         * @param {function} fnCancel 点击 `取消` 按钮后要执行的回调函数。
         */
         confirm: InnerModules.bind('Confirm', 'show'),
+
         
     };
 });
@@ -5790,6 +5853,8 @@ define('App.config', /**@lends App.config*/ {
 * @name OuterModule
 */
 define('OuterModule', function (require, module, exports) {
+    var $String = require('String');
+    var $Object = require('Object');
     var Defaults = require('Defaults');
     var Emitter = require('Emitter');
 
@@ -5802,6 +5867,9 @@ define('OuterModule', function (require, module, exports) {
     //对外给业务层使用的模块管理器。
     var mm = new ModuleManager(defaults);
 
+    //针对模板模块。
+    var id$factory = {};
+
 
     return /**@lends Module*/ {
         /**
@@ -5810,13 +5878,26 @@ define('OuterModule', function (require, module, exports) {
         'defaults': defaults,
 
         /**
-        * 定义指定名称的模块。
+        * 定义一个指定名称的静态模块。
+        * 或者定义一个动态模块，模块的 id 是一个模板字符串。
         * 该方法对外给业务层使用的。
         * @function
-        * @param {string} id 模块的名称。
+        * @param {string} id 模块的名称。 可以是一个模板。
         * @param {Object|function} factory 模块的导出函数或对象。
         */
-        'define': mm.define.bind(mm),
+        'define': function (id, factory) {
+            
+            // id 为一个模板字符串，如 `{prefix}/Address`。
+            var isTPL = id.includes('{') && id.includes('}');   
+
+            if (isTPL) {
+                id$factory[id] = factory;   //定义一个模板模块，则先缓存起来。
+            }
+            else {
+                mm.define(id, factory);
+            }
+
+        },
 
         /**
         * 加载指定的模块。
@@ -5828,6 +5909,37 @@ define('OuterModule', function (require, module, exports) {
         * @return 返回指定的模块。 
         */
         'require': mm.require.bind(mm),
+     
+        /**
+        * 使用模板模块动态定义一个模块。
+        * 即填充一个模板模块，以生成（定义）一个真正的模块。
+        *   sid: '',    //模板模板的 id，如 `{prefix}/Address`
+        *   data: {},   //要填充的数据，如 { prefix: 'Demo/User', }
+        */
+        'fill': function (sid, data) {
+
+            //需要扫描所有模板，同时填充它的子模块。
+            $Object.each(id$factory, function (id, factory) {
+
+                //所有以 sid 为开头的模板模块都要填充，
+                //如 sid 为 `{prefix}/Address`，id 为 `{prefix}/Address/API`
+                if (!id.startsWith(sid)) {
+                    return;
+                }
+
+                //填充成完整的模块 id。
+                id = $String.format(id, data); 
+
+                console.log(`动态定义模块: ${id}`);
+
+                mm.define(id, factory);
+
+            });
+
+
+    
+
+        },
 
     };
 
@@ -6277,6 +6389,7 @@ define('Navigator', function (require, module, exports) {
             meta.fireEvent = false;
             meta.hash$info = {};
             Hash.set('');
+            meta.fireEvent = true;
           
         },
 
@@ -7109,7 +7222,7 @@ define('Storage', function (require, module, exports) {
 
 
         //导出对象。
-        return type$exports[type] = {
+        return exports = type$exports[type] = {
 
             /**
             * 设置一对键值。
@@ -7146,6 +7259,14 @@ define('Storage', function (require, module, exports) {
                 all = {};
                 save();
             },
+
+            ///***/
+            //getOnce: function (key) {
+            //    var value = exports.get(key);
+            //    exports.remove(key);
+
+            //    return value;
+            //},
 
         };
 
@@ -8908,6 +9029,15 @@ define('Mask.config', /**@lends Mask.config*/ {
     */
     eventName: 'click',
 
+
+
+    style: {
+        /**
+        * PC 端的用 fixed 定位。
+        */
+        position: 'fixed',
+    },
+
 });
 
 
@@ -9469,7 +9599,9 @@ define('Panel', function (require, module, exports) {
     var Params = module.require('Params');
 
     var mapper = require('Mapper');         //这里要用有继承关系的 Mapper。 因为作为父类。
-    var id$panel = {};
+    var id$panel = {};                      //
+    var id$options = {};                    //
+
     var defaults = Defaults.clone(module.id);
 
 
@@ -9482,7 +9614,7 @@ define('Panel', function (require, module, exports) {
         config = Defaults.clone(module.id, config);
 
         var meta = Meta.create(config, {
-            'moudle': null,                 //如果非空，则是由 Panel.define() 创建的，此时 container='[data-panel="xx"]'。
+            'moudle': null,                 //如果非空，则是由 Panel.define() 创建的，此时 container='[data-panel="XXX"]'。
             'container': container,         //
             'tplContainer': container,      //
             '$emitter': new Emitter(),      //供外部用的事件管理器。
@@ -9676,6 +9808,17 @@ define('Panel', function (require, module, exports) {
         },
 
         /**
+        * 关闭。
+        * 触发事件: `close`。
+        */
+        close: function (...args) {
+            var meta = mapper.get(this);
+
+            //外面可能会用到事件返回值。
+            return meta.emitter.fire('close', args);
+        },
+
+        /**
         * 获取一个状态，该状态表示本组件是否为显示状态。
         */
         visible: function () {
@@ -9702,7 +9845,7 @@ define('Panel', function (require, module, exports) {
         },
 
         /**
-        * 批量绑定(委托)事件到 panel.$ 对象多个元素上。
+        * 批量绑定(委托)事件到 panel.$ 对象的多个元素上。
         * 该方法可以批量绑定一个或多个不同的(委托)事件到多个元素上。
         * 该方法是以事件为组长、选择器为组员进行绑定的。
         * 已重载 $on(name$selector$fn);            //绑定多个(委托)事件到多个元素上。
@@ -9711,7 +9854,7 @@ define('Panel', function (require, module, exports) {
         * 已重载 $on(name, selector$fn);           //绑定单个(委托)事件到多个元素上。
         * 已重载 $on(name, fn);                    //绑定单个事件到当前元素上。
 
-        * 已重载 $on(name, sample, selector$fn);   //绑定单个(委托)事件到多个元素上，这些元素的选择器有共同的填充模板。
+        * 已重载 $on(name, sample, selector$fn);   //绑定单个(委托)事件到多个元素上，这些元素的选择器有共同的填充模板。 此时 sample 中的 `{value}` 会给 selector$fn 中的 selector 填充。
         * 已重载 $on(name, selector, fn);          //绑定单个(委托)事件到单个元素上。
         *   
         *   name: '',           //事件名。 如 `click`。
@@ -9730,6 +9873,16 @@ define('Panel', function (require, module, exports) {
         *           '#id-0': fn,
         *           '#id-1': fn,
         *       },
+        *   });
+        * 例如，绑定选择器有共同模板的多个元素：
+        *   $on('click', '[data-cmd="{value}"]', {
+        *       'print': fn,
+        *       'top': fn,
+        *   });
+        *   等价于：
+        *   $on('click', {
+        *       '[data-cmd="print"]': fn,
+        *       '[data-cmd="top"]': fn,
         *   });
         */
         $on: function (name, sample, selector$fn) {
@@ -9989,12 +10142,16 @@ define('Panel', function (require, module, exports) {
                 'defaults': defaults,
             };
 
-            OuterModule.define(id, function ($require, $module, $exports) {
-                var container = Container.get(id, options.defaults);  //如 `[data-panel="/Users/Main"]`。
-                var panel = new options.constructor(container);
-                var meta = mapper.get(panel);
 
-                meta.module = panel.module = $module;    //指示此 panel 由 Panel.define() 创建的。
+            OuterModule.define(id, function ($require, $module, $exports) {
+                id = $module.id;    //此 id 才是完整的 id。 外面的那个可能是个模板 id。
+
+                var container = Container.get(id, options.defaults);    //如 `[data-panel="/Users/Main"]`。
+                var panel = new options.constructor(container);         //如 new Panel(`[data-panel="/Users/Main"]`)。
+                var meta = mapper.get(panel);                           //获取 panel 对应的元数据。
+
+                //指示此 panel 由 Panel.define() 创建的。
+                meta.module = panel.module = $module;    
 
                 //注意，参数中的 factory 并不是真正的工厂函数，本函数体才是。
                 //因此，参数中的 factory 的返回值 $exports 只是一个部分的导出对象。 
@@ -10113,10 +10270,10 @@ define('Template', function (require, module, exports) {
             }
 
             var isTPL = node.nodeName.toLowerCase() == 'template'; //判断是否为 <template> 模板节点。
-            var html = node.innerHTML;
+            var html = Sample.removeScript(node.innerHTML);         //要先移除可能给 `script` 标签包含的内容
             var info = Parser.parse(html);
 
-            meta.sample = Sample.between(html);
+            meta.sample = Sample.betweenComment(html); 
             meta.name = isTPL ? node.getAttribute('name') : '';
             meta.placeholder = isTPL ? node.getAttribute('placeholder') : '';
             meta.innerHTML = html;
@@ -10210,6 +10367,8 @@ define('Template', function (require, module, exports) {
         */
         id: '',
 
+
+
         /**
         * 父实例。
         */
@@ -10250,6 +10409,21 @@ define('Template', function (require, module, exports) {
             }
             
             return meta.sample;
+        },
+
+        /**
+        * 获取内部指定的属性。
+        */
+        get: function (key) {
+            var meta = mapper.get(this);
+            console.warn(`${module.id} 类的实例 get 方法已过时，请不要使用。`);
+
+            switch (key) {
+                case 'name':
+                case 'sample':
+                    return meta[key];
+            }
+
         },
 
         /**
@@ -10536,7 +10710,7 @@ define('Template', function (require, module, exports) {
 * https://github.com/developit/htmlParser
 */
 define('HTMLParser', function (require, module) {
-    
+
     var exports = {},
             util = {},
             splitAttrsTokenizer = /([a-z0-9_\:\-]*)\s*?=\s*?(['"]?)(.*?)\2\s+/gim,
@@ -10564,15 +10738,9 @@ define('HTMLParser', function (require, module) {
         a.prototype.constructor = a;
     };
 
-    util.selfClosingTags = {
-        img: 1,
-        br: 1,
-        hr: 1,
-        meta: 1,
-        link: 1,
-        base: 1,
-        input: 1,
-    };
+    //by micty��
+    //������˸���ġ�
+    util.selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'frame', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'object', 'param', 'source'];
 
     util.getElementsByTagName = function (el, tag) {
         var els = [], c = 0, i, n;
@@ -10844,7 +11012,9 @@ define('HTMLParser', function (require, module) {
                 commitTextNode();
                 tags.push(tag);
                 tag.parentNode.childNodes.push(tag);
-                if ((token[4] && token[4].indexOf('/') > -1) || util.selfClosingTags.hasOwnProperty(tag.nodeName)) {
+
+                //by micty��
+                if ((token[4] && token[4].indexOf('/') > -1) || util.selfClosingTags.includes(tag.nodeName)) {
                     tag.documentPosition.closeTag = tag.documentPosition.openTag;
                     tag.isSelfClosingTag = true;
                     tag.innerHTML = '';
@@ -10976,13 +11146,10 @@ define('Template/Meta', function (require, module, exports) {
 * 
 */
 define('Template/Parser', function (require, module, exports) {
+    var $String = require('String');
     var HTMLParser = require('HTMLParser');
     var Templates = module.require('Templates');
 
-
-
-    var beginTag = '<script type="text/template">';
-    var endTag = '</script>';
 
 
 
@@ -10990,10 +11157,9 @@ define('Template/Parser', function (require, module, exports) {
 
 
         parse: function (html) {
-            html = html.split(beginTag).join('');
-            html = html.split(endTag).join('');
 
             var dom = HTMLParser.parse(html);
+
             var tpls = Templates.get(dom);
 
             return { dom, tpls, };
@@ -11016,7 +11182,7 @@ define('Template/Parser/Templates', function (require, module, exports) {
 
 
     /**
-    * ��ȡָ�� template �ڵ�ĸ��� template �ڵ�(��
+    * 获取指定 template 节点的父亲 template 节点(。
     */
     function getParent(tpl) {
         tpl = tpl.parentNode;
@@ -11040,8 +11206,8 @@ define('Template/Parser/Templates', function (require, module, exports) {
 
 
         /**
-        * �����е� template �ڵ���Ϣ��ȡ������
-        * ����һ���ɶ��� template �ڵ��Ӧ��������Ϣ������ɵ����顣
+        * 把所有的 template 节点信息提取出来。
+        * 返回一个由顶层 template 节点对应的描述信息对象组成的数组。
         */
         get: function (dom) {
             var tpls = dom.getElementsByTagName('template');
@@ -11061,7 +11227,7 @@ define('Template/Parser/Templates', function (require, module, exports) {
                     'sample': innerHTML,
                     'parent': null,
                     'attributes': attributes,
-                    'items': [],    //ֱ���¼��б�
+                    'items': [],    //直接下级列表。
                 };
 
                 tpl$item.set(tpl, item);
@@ -11074,16 +11240,16 @@ define('Template/Parser/Templates', function (require, module, exports) {
                 var tpl = getParent(item.node);
                 var parent = tpl$item.get(tpl);
 
-                //�ռ����ڵ㡣
+                //收集根节点。
                 if (!parent) {
                     return true;
                 }
 
-                //˳�㴦��һ��������
+                //顺便处理一下其它。
                 item.parent = parent;
                 parent.items.push(item);
 
-                //�滻����ģ���ڸ�ģ���е����ݡ�
+                //替换掉子模板在父模板中的内容。
                 var sample = parent.sample;
                 var outerHTML = item.outerHTML;
                 var placeholder = item.placeholder;
@@ -11114,12 +11280,21 @@ define('Template/Sample', function (require, module, exports) {
     var $Object = require('Object');
 
 
-    var beginTag = '<script type="text/template">';
-    var endTag = '</script>';
+    var script = {
+        begin: '<script type="text/template">',
+        end: '</script>',
+    };
+
+    var comment = {
+        begin: '<!--',
+        end: '-->',
+    };
 
 
 
-    return {
+
+
+    return exports = {
 
         /**
         * 替换掉子模板在父模板中的内容。
@@ -11135,8 +11310,9 @@ define('Template/Sample', function (require, module, exports) {
             }
 
 
-            sample = sample.split(beginTag).join('');
-            sample = sample.split(endTag).join('');
+         
+            sample = exports.removeScript(sample);
+
             sample = sample.replace(outerHTML, placeholder); //这里不要用全部替换，否则可能会误及后面的。
 
             return sample;
@@ -11146,14 +11322,29 @@ define('Template/Sample', function (require, module, exports) {
         /**
         * 提取 `<!--` 和 `-->` 之间的内容作为 sample。
         */
-        between: function (sample) {
-            if (sample.includes('<!--') &&
-                sample.includes('-->')) {
+        betweenComment: function (sample) {
+            if (sample.includes(comment.begin) &&
+                sample.includes(comment.end)) {
 
-                sample = $String.between(sample, '<!--', '-->');
+                sample = $String.between(sample, comment.begin, comment.end);   //这里用提取。
             }
 
             return sample;
+        },
+
+        /** 
+        * 移除 html 中的 `<script type="text/template">` 和 `</script>` 标签。
+        * 如果不存在 script 包裹标签，则原样返回。
+        */
+        removeScript: function (html) {
+            if (html.includes(script.begin) &&
+                html.includes(script.end)) {
+
+                html = html.split(script.begin).join('');   //这里用删除。
+                html = html.split(script.end).join('');     
+            }
+
+            return html;
         },
 
 
@@ -11532,7 +11723,7 @@ define('Alert/Dialog', function (require, module, exports) {
     var showFrom = 13;          //记录一下是否由于按下回车键导致的显示。
 
 
-    //创建对话框
+    //创建对话框。
     function create() {
         var Dialog = require('Dialog');
         var config = Defaults.clone(module.parent.id);
@@ -11549,9 +11740,12 @@ define('Alert/Dialog', function (require, module, exports) {
         });
 
 
-        dialog.on('button', 'ok', function () {
-            var fn = dialog.data('fn');
-            fn && fn();
+
+        dialog.on('button', {
+            'ok': function () {
+                var fn = dialog.data('fn');
+                fn && fn();
+            },
         });
 
 
@@ -11567,10 +11761,10 @@ define('Alert/Dialog', function (require, module, exports) {
             'hide': function () {
                 visible = false;
 
-                var obj = list.shift();
+                var item = list.shift();
 
-                if (obj) {
-                    render(obj.text, obj.fn);
+                if (item) {
+                    render(item.text, item.fn);
                 }
 
                 activeElement = null;
@@ -11578,7 +11772,7 @@ define('Alert/Dialog', function (require, module, exports) {
             },
         });
 
-        //响应回车键
+        //响应回车键。
         $(document).on({
             'keydown': function (event) {
                 showFrom = event.keyCode;
@@ -12527,32 +12721,40 @@ define('Confirm', function (require, module, exports) {
     var activeElement = null;   //上次获得焦点的元素。
     var showFrom = 13;          //记录一下是否由于按下回车键导致的显示。
 
+    var defaults = null;
+    
 
     //创建对话框
     function create() {
         var Dialog = require('Dialog');
-        var config = Defaults.clone(module.id);
+
+        defaults = Defaults.clone(module.id);
+
+
 
         var dialog = new Dialog({
             'cssClass': module.id,
-            'volatile': config.volatile,
-            'mask': config.mask,
-            'autoClose': config.autoClose,
-            'height': config.height,
-            'z-index': config['z-index'],
-            'buttons': config.buttons,
-            'scrollable': config.scrollable,
+            'volatile': defaults.volatile,
+            'mask': defaults.mask,
+            'autoClose': defaults.autoClose,
+            'height': defaults.height,
+            'z-index': defaults['z-index'],
+            'buttons': defaults.buttons,
+            'scrollable': defaults.scrollable,
         });
+
 
 
 
         dialog.on('button', {
             'ok': function () {
                 var fn = dialog.data('ok');
+
                 fn && fn();
             },
             'cancel': function () {
                 var fn = dialog.data('cancel');
+
                 fn && fn();
             },
         });
@@ -12620,7 +12822,14 @@ define('Confirm', function (require, module, exports) {
 
 
 
-
+    /**
+    *   item = {
+    *       text: '',
+    *       ok: fn,
+    *       cancel: fn,
+    *       buttons: ['确定', '取消'],
+    *   };
+    */
     function render(item) {
         dialog = dialog || create();
 
@@ -12631,6 +12840,17 @@ define('Confirm', function (require, module, exports) {
         });
 
         dialog.show();
+
+
+        //重新设置按钮的文本。
+        var buttons = item.buttons || [];
+
+        defaults.buttons.forEach(function (item, index) {
+            var $btn = dialog.$.find(`button[data-index="${index}"]`);
+            var text = buttons[index] || item.text;
+
+            $btn.html(text);
+        });
 
     }
 
@@ -12643,19 +12863,19 @@ define('Confirm', function (require, module, exports) {
         /**
         * 显示一个 confirm 对话框。 
         * 支持多次调用，会将多次调用加进队列，在显示完上一次后进行下一次的显示。
-        * 已重载 show({ text, ok, cancel });   //传入一个配置对象。
-        * 已重载 show(text, ok, cancel);       //分开传入参数。
-        * 参数：
-        *   text: '',   //要显示的文本内容。
-        *   ok: fn,     //可选，点击 `确定` 按钮后要执行的回调函数。
-        *   cancel: fn, //可选，点击 `取消` 按钮后要执行的回调函数。
+        * 已重载 show(opt);   //传入一个配置对象。
+        * 已重载 show(text, ok);       //分开传入参数。
+        *   opt = {
+        *       text: '',        //要显示的消息内容。
+        *       ok: fn,         //可选，点击 `确定` 按钮后要执行的回调函数。
+        *       cancel: fn,     //可选，点击 `取消` 按钮后要执行的回调函数。
+        *       buttons: [],    //按钮数组。
+        *   };
         */
-        show: function (text, ok, cancel) {
-
+        show: function (text, ok) {
             var item = typeof text == 'object' ? text : {
                 'text': text,
                 'ok': ok,
-                'cancel': cancel,
             };
 
 
@@ -12686,7 +12906,9 @@ define('Confirm.defaults', /**@lends Confirm.defaults*/ {
     height: 140,
     autoClose: true,
     volatile: false,
+
     'z-index': 99999,
+
     buttons: [
         { text: '确定', cmd: 'ok', cssClass: 'OK', },
         { text: '取消', cmd: 'cancel', cssClass: 'Cancel' },
@@ -14321,6 +14543,7 @@ define('Loading/Sample/IOS', [
 
     global.KISP = KISP;                     //对外提供的命名空间 KISP。
     global.define = OuterModule.define;     //这个 define 是对外的，跟内部用的 define 不是同一个。
+    global.define.fill = OuterModule.fill;  //提供一个快捷方式。
 
 
 })(InnerModules.require);

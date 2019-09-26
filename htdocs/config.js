@@ -22,6 +22,14 @@
 
 
 
+    KISP.config({
+        'App': {
+            name: 'markdoc-20190924-kisp',
+        },
+    });
+
+
+
     /**weber.debug.begin*/
 
     KISP.data({
@@ -31,13 +39,6 @@
     });
 
     /**weber.debug.end*/
-
-
-    KISP.config({
-        'App': {
-            name: 'markdoc-20190320',
-        },
-    });
 
 })();
 

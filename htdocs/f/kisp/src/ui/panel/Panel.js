@@ -14,7 +14,9 @@ define('Panel', function (require, module, exports) {
     var Params = module.require('Params');
 
     var mapper = require('Mapper');         //这里要用有继承关系的 Mapper。 因为作为父类。
-    var id$panel = {};
+    var id$panel = {};                      //
+    var id$options = {};                    //
+
     var defaults = Defaults.clone(module.id);
 
 
@@ -27,7 +29,7 @@ define('Panel', function (require, module, exports) {
         config = Defaults.clone(module.id, config);
 
         var meta = Meta.create(config, {
-            'moudle': null,                 //如果非空，则是由 Panel.define() 创建的，此时 container='[data-panel="xx"]'。
+            'moudle': null,                 //如果非空，则是由 Panel.define() 创建的，此时 container='[data-panel="XXX"]'。
             'container': container,         //
             'tplContainer': container,      //
             '$emitter': new Emitter(),      //供外部用的事件管理器。
@@ -221,6 +223,17 @@ define('Panel', function (require, module, exports) {
         },
 
         /**
+        * 关闭。
+        * 触发事件: `close`。
+        */
+        close: function (...args) {
+            var meta = mapper.get(this);
+
+            //外面可能会用到事件返回值。
+            return meta.emitter.fire('close', args);
+        },
+
+        /**
         * 获取一个状态，该状态表示本组件是否为显示状态。
         */
         visible: function () {
@@ -247,7 +260,7 @@ define('Panel', function (require, module, exports) {
         },
 
         /**
-        * 批量绑定(委托)事件到 panel.$ 对象多个元素上。
+        * 批量绑定(委托)事件到 panel.$ 对象的多个元素上。
         * 该方法可以批量绑定一个或多个不同的(委托)事件到多个元素上。
         * 该方法是以事件为组长、选择器为组员进行绑定的。
         * 已重载 $on(name$selector$fn);            //绑定多个(委托)事件到多个元素上。
@@ -256,7 +269,7 @@ define('Panel', function (require, module, exports) {
         * 已重载 $on(name, selector$fn);           //绑定单个(委托)事件到多个元素上。
         * 已重载 $on(name, fn);                    //绑定单个事件到当前元素上。
 
-        * 已重载 $on(name, sample, selector$fn);   //绑定单个(委托)事件到多个元素上，这些元素的选择器有共同的填充模板。
+        * 已重载 $on(name, sample, selector$fn);   //绑定单个(委托)事件到多个元素上，这些元素的选择器有共同的填充模板。 此时 sample 中的 `{value}` 会给 selector$fn 中的 selector 填充。
         * 已重载 $on(name, selector, fn);          //绑定单个(委托)事件到单个元素上。
         *   
         *   name: '',           //事件名。 如 `click`。
@@ -275,6 +288,16 @@ define('Panel', function (require, module, exports) {
         *           '#id-0': fn,
         *           '#id-1': fn,
         *       },
+        *   });
+        * 例如，绑定选择器有共同模板的多个元素：
+        *   $on('click', '[data-cmd="{value}"]', {
+        *       'print': fn,
+        *       'top': fn,
+        *   });
+        *   等价于：
+        *   $on('click', {
+        *       '[data-cmd="print"]': fn,
+        *       '[data-cmd="top"]': fn,
         *   });
         */
         $on: function (name, sample, selector$fn) {
@@ -534,12 +557,16 @@ define('Panel', function (require, module, exports) {
                 'defaults': defaults,
             };
 
-            OuterModule.define(id, function ($require, $module, $exports) {
-                var container = Container.get(id, options.defaults);  //如 `[data-panel="/Users/Main"]`。
-                var panel = new options.constructor(container);
-                var meta = mapper.get(panel);
 
-                meta.module = panel.module = $module;    //指示此 panel 由 Panel.define() 创建的。
+            OuterModule.define(id, function ($require, $module, $exports) {
+                id = $module.id;    //此 id 才是完整的 id。 外面的那个可能是个模板 id。
+
+                var container = Container.get(id, options.defaults);    //如 `[data-panel="/Users/Main"]`。
+                var panel = new options.constructor(container);         //如 new Panel(`[data-panel="/Users/Main"]`)。
+                var meta = mapper.get(panel);                           //获取 panel 对应的元数据。
+
+                //指示此 panel 由 Panel.define() 创建的。
+                meta.module = panel.module = $module;    
 
                 //注意，参数中的 factory 并不是真正的工厂函数，本函数体才是。
                 //因此，参数中的 factory 的返回值 $exports 只是一个部分的导出对象。 

@@ -10,8 +10,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 * KISP JavaScript Library
 * name: pc 
 * version: 8.2.0
-* build time: 2019-03-21 15:02:22
-* concat md5: 147C638ABB4C6EDD7ADF8EBA914E1036
+* build time: 2019-09-24 10:09:47
+* concat md5: D2080A4AF82F28DEB471F2951F9B36CD
 * source files: 123(121)
 *    partial/begin.js
 *    base/Module.js
@@ -355,7 +355,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 * 即 factory(require, module, exports){ } 中的第一个参数 `require`。
                 */
                 'require': function require(id) {
-                    return meta.this.require(id, false);
+                    return meta.this.require(id);
                 },
 
                 /**
@@ -3164,6 +3164,41 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         var $Object = require('Object');
 
+        //把指定的 url 中的查询字符串替换成目标查询字符串。 
+        //同时会保留原有的 hash 串。
+        function replace(url, qs) {
+            qs = qs || '';
+
+            if ((typeof qs === 'undefined' ? 'undefined' : _typeof(qs)) == 'object') {
+                qs = exports.stringify(qs);
+            }
+
+            if (qs) {
+                qs = '?' + qs;
+            }
+
+            var hasQuery = url.includes('?');
+            var hasHash = url.includes('#');
+            var parts = [];
+
+            if (hasQuery && hasHash) {
+                parts = url.split(/\?|#/g);
+                return parts[0] + qs + '#' + parts[2];
+            }
+
+            if (hasQuery) {
+                parts = url.split('?');
+                return parts[0] + qs;
+            }
+
+            if (hasHash) {
+                parts = url.split('#');
+                return parts[0] + qs + '#' + parts[1];
+            }
+
+            return url + qs;
+        }
+
         return exports = /**@lends Query */{
 
             /**
@@ -3412,6 +3447,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
 
             /**
+            * 删除指定的 url 的查询字符串。
+            * 已重载 remove(url);          //删除全部查询字符串。
+            * 已重载 remove(url, key);     //删除指定键的查询字符串。
+            * 已重载 remove(window);       //删除指定 window 窗口的全部查询字符串，会导致页面刷新。
+            * 已重载 remove(window, key);  //删除指定 window 窗口的指定键查询字符串，会导致页面刷新。
+            * 已重载 remove(location);     //删除指定 location 窗口的全部查询字符串，会导致页面刷新。
+            * 已重载 remove(location, key);//删除指定 location 窗口的指定键查询字符串，会导致页面刷新。
+            */
+            remove: function remove(url, key) {
+                var location = null;
+
+                if ((typeof url === 'undefined' ? 'undefined' : _typeof(url)) == 'object') {
+                    if ('href' in url) {
+                        location = url; //location
+                    } else {
+                        location = url.location; //window
+                    }
+
+                    url = location.href;
+                }
+
+                var qs = '';
+
+                if (key) {
+                    qs = exports.get(url);
+                    delete qs[key];
+                }
+
+                url = replace(url, qs);
+
+                //设置整个 location.href 会刷新
+                if (location) {
+                    location.href = url;
+                }
+
+                return url;
+            },
+
+            /**
             * 给指定的 url 添加一个随机查询字符串。
             * 注意，该方法会保留之前的查询字符串，并且添加一个键名为随机字符串而值为空字符串的查询字符串。
             * @param {string} url 组装前的 url。
@@ -3446,7 +3520,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 Query.set('http://test.com?a=1&b=2#hash', {a: 3, d: 4});  
             */
             set: function set(url, key, value) {
-
                 var location = null;
 
                 if ((typeof url === 'undefined' ? 'undefined' : _typeof(url)) == 'object') {
@@ -3455,42 +3528,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     } else {
                         location = url.location; //window
                     }
+
                     url = location.href;
                 }
 
+                var qs = '';
                 var type = typeof key === 'undefined' ? 'undefined' : _typeof(key);
                 var isValueType = /^(string|number|boolean)$/.test(type);
-
-                var qs = '';
 
                 //set(url, qs);
                 if (arguments.length == 2 && isValueType) {
                     qs = encodeURIComponent(key);
                 } else {
-                    var obj = type == 'object' ? key : $Object.make(key, value);
-                    qs = exports.stringify(obj);
+                    qs = type == 'object' ? key : $Object.make(key, value);
                 }
 
-                var hasQuery = url.indexOf('?') > -1;
-                var hasHash = url.indexOf('#') > -1;
-                var a;
-
-                if (hasQuery && hasHash) {
-                    a = url.split(/\?|#/g);
-                    return a[0] + '?' + qs + '#' + a[2];
-                }
-
-                if (hasQuery) {
-                    a = url.split('?');
-                    return a[0] + '?' + qs;
-                }
-
-                if (hasHash) {
-                    a = url.split('#');
-                    return a[0] + '?' + qs + '#' + a[1];
-                }
-
-                url = url + '?' + qs;
+                url = replace(url, qs);
 
                 //设置整个 location.href 会刷新
                 if (location) {
@@ -4263,7 +4316,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                   * 内容不包括本字段动态生成的值部分。
                   * 与生成的头部注释中的 md5 值是一致的。
                   */
-                md5: '147C638ABB4C6EDD7ADF8EBA914E1036',
+                md5: 'D2080A4AF82F28DEB471F2951F9B36CD',
 
                 /**
                 * babel 版本号。 (由 packer 自动插入)
@@ -5238,6 +5291,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     * @name OuterModule
     */
     define('OuterModule', function (require, module, exports) {
+        var $String = require('String');
+        var $Object = require('Object');
         var Defaults = require('Defaults');
         var Emitter = require('Emitter');
 
@@ -5248,6 +5303,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         //对外给业务层使用的模块管理器。
         var mm = new ModuleManager(defaults);
 
+        //针对模板模块。
+        var id$factory = {};
+
         return (/**@lends Module*/{
                 /**
                 * 默认配置。
@@ -5255,13 +5313,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 'defaults': defaults,
 
                 /**
-                * 定义指定名称的模块。
+                * 定义一个指定名称的静态模块。
+                * 或者定义一个动态模块，模块的 id 是一个模板字符串。
                 * 该方法对外给业务层使用的。
                 * @function
-                * @param {string} id 模块的名称。
+                * @param {string} id 模块的名称。 可以是一个模板。
                 * @param {Object|function} factory 模块的导出函数或对象。
                 */
-                'define': mm.define.bind(mm),
+                'define': function define(id, factory) {
+
+                    // id 为一个模板字符串，如 `{prefix}/Address`。
+                    var isTPL = id.includes('{') && id.includes('}');
+
+                    if (isTPL) {
+                        id$factory[id] = factory; //定义一个模板模块，则先缓存起来。
+                    } else {
+                        mm.define(id, factory);
+                    }
+                },
 
                 /**
                 * 加载指定的模块。
@@ -5272,7 +5341,33 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 * @param {string} id 模块的名称。
                 * @return 返回指定的模块。 
                 */
-                'require': mm.require.bind(mm)
+                'require': mm.require.bind(mm),
+
+                /**
+                * 使用模板模块动态定义一个模块。
+                * 即填充一个模板模块，以生成（定义）一个真正的模块。
+                *   sid: '',    //模板模板的 id，如 `{prefix}/Address`
+                *   data: {},   //要填充的数据，如 { prefix: 'Demo/User', }
+                */
+                'fill': function fill(sid, data) {
+
+                    //需要扫描所有模板，同时填充它的子模块。
+                    $Object.each(id$factory, function (id, factory) {
+
+                        //所有以 sid 为开头的模板模块都要填充，
+                        //如 sid 为 `{prefix}/Address`，id 为 `{prefix}/Address/API`
+                        if (!id.startsWith(sid)) {
+                            return;
+                        }
+
+                        //填充成完整的模块 id。
+                        id = $String.format(id, data);
+
+                        console.log('\u52A8\u6001\u5B9A\u4E49\u6A21\u5757: ' + id);
+
+                        mm.define(id, factory);
+                    });
+                }
 
             }
         );
@@ -5673,6 +5768,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 meta.fireEvent = false;
                 meta.hash$info = {};
                 Hash.set('');
+                meta.fireEvent = true;
             },
 
             /**
@@ -6415,7 +6511,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             }
 
             //导出对象。
-            return type$exports[type] = {
+            return exports = type$exports[type] = {
 
                 /**
                 * 设置一对键值。
@@ -6452,6 +6548,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     all = {};
                     save();
                 }
+
+                ///***/
+                //getOnce: function (key) {
+                //    var value = exports.get(key);
+                //    exports.remove(key);
+
+                //    return value;
+                //},
 
             };
         };
@@ -8024,7 +8128,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         /**
         * 点击时需要用到的事件名。
         */
-        eventName: 'click'
+        eventName: 'click',
+
+        style: {
+            /**
+            * PC 端的用 fixed 定位。
+            */
+            position: 'fixed'
+        }
 
     });
 
@@ -8514,7 +8625,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var Params = module.require('Params');
 
         var mapper = require('Mapper'); //这里要用有继承关系的 Mapper。 因为作为父类。
-        var id$panel = {};
+        var id$panel = {}; //
+        var id$options = {}; //
+
         var defaults = Defaults.clone(module.id);
 
         /**
@@ -8525,7 +8638,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             config = Defaults.clone(module.id, config);
 
             var meta = Meta.create(config, {
-                'moudle': null, //如果非空，则是由 Panel.define() 创建的，此时 container='[data-panel="xx"]'。
+                'moudle': null, //如果非空，则是由 Panel.define() 创建的，此时 container='[data-panel="XXX"]'。
                 'container': container, //
                 'tplContainer': container, //
                 '$emitter': new Emitter(), //供外部用的事件管理器。
@@ -8726,6 +8839,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
 
             /**
+            * 关闭。
+            * 触发事件: `close`。
+            */
+            close: function close() {
+                var meta = mapper.get(this);
+
+                //外面可能会用到事件返回值。
+
+                for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
+                    args[_key11] = arguments[_key11];
+                }
+
+                return meta.emitter.fire('close', args);
+            },
+
+            /**
             * 获取一个状态，该状态表示本组件是否为显示状态。
             */
             visible: function visible() {
@@ -8754,14 +8883,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             },
 
             /**
-            * 批量绑定(委托)事件到 panel.$ 对象多个元素上。
+            * 批量绑定(委托)事件到 panel.$ 对象的多个元素上。
             * 该方法可以批量绑定一个或多个不同的(委托)事件到多个元素上。
             * 该方法是以事件为组长、选择器为组员进行绑定的。
             * 已重载 $on(name$selector$fn);            //绑定多个(委托)事件到多个元素上。
             * 已重载 $on(name$fn);                     //绑定多个事件到当前元素上。
               * 已重载 $on(name, selector$fn);           //绑定单个(委托)事件到多个元素上。
             * 已重载 $on(name, fn);                    //绑定单个事件到当前元素上。
-              * 已重载 $on(name, sample, selector$fn);   //绑定单个(委托)事件到多个元素上，这些元素的选择器有共同的填充模板。
+              * 已重载 $on(name, sample, selector$fn);   //绑定单个(委托)事件到多个元素上，这些元素的选择器有共同的填充模板。 此时 sample 中的 `{value}` 会给 selector$fn 中的 selector 填充。
             * 已重载 $on(name, selector, fn);          //绑定单个(委托)事件到单个元素上。
             *   
             *   name: '',           //事件名。 如 `click`。
@@ -8780,6 +8909,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             *           '#id-0': fn,
             *           '#id-1': fn,
             *       },
+            *   });
+            * 例如，绑定选择器有共同模板的多个元素：
+            *   $on('click', '[data-cmd="{value}"]', {
+            *       'print': fn,
+            *       'top': fn,
+            *   });
+            *   等价于：
+            *   $on('click', {
+            *       '[data-cmd="print"]': fn,
+            *       '[data-cmd="top"]': fn,
             *   });
             */
             $on: function $on(name, sample, selector$fn) {
@@ -8926,8 +9065,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
                 names.forEach(function (name) {
                     M.on(name, function () {
-                        for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
-                            args[_key11] = arguments[_key11];
+                        for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
+                            args[_key12] = arguments[_key12];
                         }
 
                         meta.this.fire(name, args);
@@ -9034,11 +9173,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
 
                 OuterModule.define(id, function ($require, $module, $exports) {
-                    var container = Container.get(id, options.defaults); //如 `[data-panel="/Users/Main"]`。
-                    var panel = new options.constructor(container);
-                    var meta = mapper.get(panel);
+                    id = $module.id; //此 id 才是完整的 id。 外面的那个可能是个模板 id。
 
-                    meta.module = panel.module = $module; //指示此 panel 由 Panel.define() 创建的。
+                    var container = Container.get(id, options.defaults); //如 `[data-panel="/Users/Main"]`。
+                    var panel = new options.constructor(container); //如 new Panel(`[data-panel="/Users/Main"]`)。
+                    var meta = mapper.get(panel); //获取 panel 对应的元数据。
+
+                    //指示此 panel 由 Panel.define() 创建的。
+                    meta.module = panel.module = $module;
 
                     //注意，参数中的 factory 并不是真正的工厂函数，本函数体才是。
                     //因此，参数中的 factory 的返回值 $exports 只是一个部分的导出对象。 
@@ -9146,10 +9288,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 var isTPL = node.nodeName.toLowerCase() == 'template'; //判断是否为 <template> 模板节点。
-                var html = node.innerHTML;
+                var html = Sample.removeScript(node.innerHTML); //要先移除可能给 `script` 标签包含的内容
                 var info = Parser.parse(html);
 
-                meta.sample = Sample.between(html);
+                meta.sample = Sample.betweenComment(html);
                 meta.name = isTPL ? node.getAttribute('name') : '';
                 meta.placeholder = isTPL ? node.getAttribute('placeholder') : '';
                 meta.innerHTML = html;
@@ -9268,8 +9410,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             * 获取指定名称(或由多个名称组成的路径)节点所对应的下级 sample 模板。
             */
             sample: function sample() {
-                for (var _len12 = arguments.length, names = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
-                    names[_key12] = arguments[_key12];
+                for (var _len13 = arguments.length, names = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
+                    names[_key13] = arguments[_key13];
                 }
 
                 var tpl = this.template.apply(this, names);
@@ -9280,6 +9422,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
 
                 return meta.sample;
+            },
+
+            /**
+            * 获取内部指定的属性。
+            */
+            get: function get(key) {
+                var meta = mapper.get(this);
+                console.warn(module.id + ' \u7C7B\u7684\u5B9E\u4F8B get \u65B9\u6CD5\u5DF2\u8FC7\u65F6\uFF0C\u8BF7\u4E0D\u8981\u4F7F\u7528\u3002');
+
+                switch (key) {
+                    case 'name':
+                    case 'sample':
+                        return meta[key];
+                }
             },
 
             /**
@@ -9313,8 +9469,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             * @return {string} 返回填充后的 html 字符串。
             */
             fill: function fill(data) {
-                for (var _len13 = arguments.length, params = Array(_len13 > 1 ? _len13 - 1 : 0), _key13 = 1; _key13 < _len13; _key13++) {
-                    params[_key13 - 1] = arguments[_key13];
+                for (var _len14 = arguments.length, params = Array(_len14 > 1 ? _len14 - 1 : 0), _key14 = 1; _key14 < _len14; _key14++) {
+                    params[_key14 - 1] = arguments[_key14];
                 }
 
                 //重载 fill(name0, name1, ..., nameN, data, param0, ..., paramN);
@@ -9579,15 +9735,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             a.prototype.constructor = a;
         };
 
-        util.selfClosingTags = {
-            img: 1,
-            br: 1,
-            hr: 1,
-            meta: 1,
-            link: 1,
-            base: 1,
-            input: 1
-        };
+        //by micty��
+        //������˸���ġ�
+        util.selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'frame', 'hr', 'img', 'input', 'keygen', 'link', 'meta', 'object', 'param', 'source'];
 
         util.getElementsByTagName = function (el, tag) {
             var els = [],
@@ -9848,7 +9998,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     commitTextNode();
                     tags.push(tag);
                     tag.parentNode.childNodes.push(tag);
-                    if (token[4] && token[4].indexOf('/') > -1 || util.selfClosingTags.hasOwnProperty(tag.nodeName)) {
+
+                    //by micty��
+                    if (token[4] && token[4].indexOf('/') > -1 || util.selfClosingTags.includes(tag.nodeName)) {
                         tag.documentPosition.closeTag = tag.documentPosition.openTag;
                         tag.isSelfClosingTag = true;
                         tag.innerHTML = '';
@@ -9964,19 +10116,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     * 
     */
     define('Template/Parser', function (require, module, exports) {
+        var $String = require('String');
         var HTMLParser = require('HTMLParser');
         var Templates = module.require('Templates');
-
-        var beginTag = '<script type="text/template">';
-        var endTag = '</script>';
 
         return {
 
             parse: function parse(html) {
-                html = html.split(beginTag).join('');
-                html = html.split(endTag).join('');
 
                 var dom = HTMLParser.parse(html);
+
                 var tpls = Templates.get(dom);
 
                 return { dom: dom, tpls: tpls };
@@ -9992,7 +10141,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var $Object = require('Object');
 
         /**
-        * ��ȡָ�� template �ڵ�ĸ��� template �ڵ�(��
+        * 获取指定 template 节点的父亲 template 节点(。
         */
         function getParent(tpl) {
             tpl = tpl.parentNode;
@@ -10012,8 +10161,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         return {
 
             /**
-            * �����е� template �ڵ���Ϣ��ȡ������
-            * ����һ���ɶ��� template �ڵ��Ӧ��������Ϣ������ɵ����顣
+            * 把所有的 template 节点信息提取出来。
+            * 返回一个由顶层 template 节点对应的描述信息对象组成的数组。
             */
             get: function get(dom) {
                 var tpls = dom.getElementsByTagName('template');
@@ -10033,7 +10182,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                         'sample': innerHTML,
                         'parent': null,
                         'attributes': attributes,
-                        'items': [] //ֱ���¼��б�
+                        'items': [] //直接下级列表。
                     };
 
                     tpl$item.set(tpl, item);
@@ -10045,16 +10194,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     var tpl = getParent(item.node);
                     var parent = tpl$item.get(tpl);
 
-                    //�ռ����ڵ㡣
+                    //收集根节点。
                     if (!parent) {
                         return true;
                     }
 
-                    //˳�㴦��һ��������
+                    //顺便处理一下其它。
                     item.parent = parent;
                     parent.items.push(item);
 
-                    //�滻����ģ���ڸ�ģ���е����ݡ�
+                    //替换掉子模板在父模板中的内容。
                     var sample = parent.sample;
                     var outerHTML = item.outerHTML;
                     var placeholder = item.placeholder;
@@ -10079,10 +10228,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var $String = require('String');
         var $Object = require('Object');
 
-        var beginTag = '<script type="text/template">';
-        var endTag = '</script>';
+        var script = {
+            begin: '<script type="text/template">',
+            end: '</script>'
+        };
 
-        return {
+        var comment = {
+            begin: '<!--',
+            end: '-->'
+        };
+
+        return exports = {
 
             /**
             * 替换掉子模板在父模板中的内容。
@@ -10097,8 +10253,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     placeholder = '{' + placeholder + '}';
                 }
 
-                sample = sample.split(beginTag).join('');
-                sample = sample.split(endTag).join('');
+                sample = exports.removeScript(sample);
+
                 sample = sample.replace(outerHTML, placeholder); //这里不要用全部替换，否则可能会误及后面的。
 
                 return sample;
@@ -10107,13 +10263,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             /**
             * 提取 `<!--` 和 `-->` 之间的内容作为 sample。
             */
-            between: function between(sample) {
-                if (sample.includes('<!--') && sample.includes('-->')) {
+            betweenComment: function betweenComment(sample) {
+                if (sample.includes(comment.begin) && sample.includes(comment.end)) {
 
-                    sample = $String.between(sample, '<!--', '-->');
+                    sample = $String.between(sample, comment.begin, comment.end); //这里用提取。
                 }
 
                 return sample;
+            },
+
+            /** 
+            * 移除 html 中的 `<script type="text/template">` 和 `</script>` 标签。
+            * 如果不存在 script 包裹标签，则原样返回。
+            */
+            removeScript: function removeScript(html) {
+                if (html.includes(script.begin) && html.includes(script.end)) {
+
+                    html = html.split(script.begin).join(''); //这里用删除。
+                    html = html.split(script.end).join('');
+                }
+
+                return html;
             }
 
         };
@@ -10432,7 +10602,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var showFrom = 13; //记录一下是否由于按下回车键导致的显示。
 
 
-        //创建对话框
+        //创建对话框。
         function create() {
             var Dialog = require('Dialog');
             var config = Defaults.clone(module.parent.id);
@@ -10448,9 +10618,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 'scrollable': config.scrollable
             });
 
-            dialog.on('button', 'ok', function () {
-                var fn = dialog.data('fn');
-                fn && fn();
+            dialog.on('button', {
+                'ok': function ok() {
+                    var fn = dialog.data('fn');
+                    fn && fn();
+                }
             });
 
             dialog.on({
@@ -10465,10 +10637,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 'hide': function hide() {
                     visible = false;
 
-                    var obj = list.shift();
+                    var item = list.shift();
 
-                    if (obj) {
-                        render(obj.text, obj.fn);
+                    if (item) {
+                        render(item.text, item.fn);
                     }
 
                     activeElement = null;
@@ -10476,7 +10648,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 }
             });
 
-            //响应回车键
+            //响应回车键。
             $(document).on({
                 'keydown': function keydown(event) {
                     showFrom = event.keyCode;
@@ -11286,30 +11458,34 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         var activeElement = null; //上次获得焦点的元素。
         var showFrom = 13; //记录一下是否由于按下回车键导致的显示。
 
+        var defaults = null;
 
         //创建对话框
         function create() {
             var Dialog = require('Dialog');
-            var config = Defaults.clone(module.id);
+
+            defaults = Defaults.clone(module.id);
 
             var dialog = new Dialog({
                 'cssClass': module.id,
-                'volatile': config.volatile,
-                'mask': config.mask,
-                'autoClose': config.autoClose,
-                'height': config.height,
-                'z-index': config['z-index'],
-                'buttons': config.buttons,
-                'scrollable': config.scrollable
+                'volatile': defaults.volatile,
+                'mask': defaults.mask,
+                'autoClose': defaults.autoClose,
+                'height': defaults.height,
+                'z-index': defaults['z-index'],
+                'buttons': defaults.buttons,
+                'scrollable': defaults.scrollable
             });
 
             dialog.on('button', {
                 'ok': function ok() {
                     var fn = dialog.data('ok');
+
                     fn && fn();
                 },
                 'cancel': function cancel() {
                     var fn = dialog.data('cancel');
+
                     fn && fn();
                 }
             });
@@ -11369,6 +11545,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             return dialog;
         }
 
+        /**
+        *   item = {
+        *       text: '',
+        *       ok: fn,
+        *       cancel: fn,
+        *       buttons: ['确定', '取消'],
+        *   };
+        */
         function render(item) {
             dialog = dialog || create();
 
@@ -11379,25 +11563,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
 
             dialog.show();
+
+            //重新设置按钮的文本。
+            var buttons = item.buttons || [];
+
+            defaults.buttons.forEach(function (item, index) {
+                var $btn = dialog.$.find('button[data-index="' + index + '"]');
+                var text = buttons[index] || item.text;
+
+                $btn.html(text);
+            });
         }
 
         return {
             /**
             * 显示一个 confirm 对话框。 
             * 支持多次调用，会将多次调用加进队列，在显示完上一次后进行下一次的显示。
-            * 已重载 show({ text, ok, cancel });   //传入一个配置对象。
-            * 已重载 show(text, ok, cancel);       //分开传入参数。
-            * 参数：
-            *   text: '',   //要显示的文本内容。
-            *   ok: fn,     //可选，点击 `确定` 按钮后要执行的回调函数。
-            *   cancel: fn, //可选，点击 `取消` 按钮后要执行的回调函数。
+            * 已重载 show(opt);   //传入一个配置对象。
+            * 已重载 show(text, ok);       //分开传入参数。
+            *   opt = {
+            *       text: '',        //要显示的消息内容。
+            *       ok: fn,         //可选，点击 `确定` 按钮后要执行的回调函数。
+            *       cancel: fn,     //可选，点击 `取消` 按钮后要执行的回调函数。
+            *       buttons: [],    //按钮数组。
+            *   };
             */
-            show: function show(text, ok, cancel) {
-
+            show: function show(text, ok) {
                 var item = (typeof text === 'undefined' ? 'undefined' : _typeof(text)) == 'object' ? text : {
                     'text': text,
-                    'ok': ok,
-                    'cancel': cancel
+                    'ok': ok
                 };
 
                 //首次显示，或之前显示的已经给隐藏了，立即显示出来。
@@ -11425,7 +11619,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         height: 140,
         autoClose: true,
         volatile: false,
+
         'z-index': 99999,
+
         buttons: [{ text: '确定', cmd: 'ok', cssClass: 'OK' }, { text: '取消', cmd: 'cancel', cssClass: 'Cancel' }]
 
     });
@@ -12898,6 +13094,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         global.KISP = KISP; //对外提供的命名空间 KISP。
         global.define = OuterModule.define; //这个 define 是对外的，跟内部用的 define 不是同一个。
+        global.define.fill = OuterModule.fill; //提供一个快捷方式。
 
     })(InnerModules.require);
 })(window, // 在浏览器环境中。

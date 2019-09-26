@@ -11,14 +11,17 @@ define('MarkDoc.defaults', {
         foldable: true,                 //允许折叠。
     },
 
+
     /**
     * 代码区域。
     */
     code: {
-        format: true,   //是否自动格式化（针对 JSON）。
-        language: true, //是否显示语言类型标签。
-        numbers: true,  //是否显示行号。
-        foldable: true, //是否允许通过点击语言类型标签来折叠和展开代码区。 须在 language 为 true 才生效。
+        format: true,       //是否自动格式化（针对 JSON）。
+        type: true,         //是否显示语言类型标签。
+        numbers: true,      //是否显示行号。
+        foldable: true,     //是否允许通过点击语言类型标签来折叠和展开代码区。 须在 language 为 true 才生效。
+        copy: true,         //是否显示 `复制` 按钮。
+        line: true,         //是否高亮显示当前选中的行。
     },
 
 
