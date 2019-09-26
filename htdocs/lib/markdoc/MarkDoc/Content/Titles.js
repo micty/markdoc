@@ -41,19 +41,34 @@ define('MarkDoc/Content/Titles', function (require, module, exports) {
         * 
         */
         fill: function (meta, data) {
+            var id = $String.random();  //生成一个随机 id。
+            var level = data.level;
+            var html = data.text;       //这里其实是一个 innerHTML。
+            var text = html;
+
+            //尝试取出真正的 innerText。
+            try {
+                text = $(`<p>${html}</p>`).text(); // html 可能不是一个有效的 html 内容。
+            }
+            catch (ex) {
+                text = html;
+            }
+
             var item = {
-                'id': $String.random(),     //生成一个随机 id。
-                'level': data.level,
-                'text': data.text,
+                'id': `h${level}-${id}`, //如 `h3-B6C0E2B69744`
+                'level': level,
+                'html': html,           //
+                'text': text || html,   //取出 innerText 可能为空，此时表明它不包含 html 内容。
                 'raw': data.raw,
             };
 
-            var html = meta.tpl.fill('title', item);
+
+            var html2 = meta.tpl.fill('title', item);
 
             //收集提纲信息。
             meta.outlines.push(item);
 
-            return html;
+            return html2;
         },
 
         /**
