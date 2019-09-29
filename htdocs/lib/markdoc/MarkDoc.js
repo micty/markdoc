@@ -187,7 +187,7 @@ define('MarkDoc', function (require, module, exports) {
             }
 
             //闪两次
-            var timeout = 200;
+            var timeout = 180;
             var $el = $(el);
 
             $el.addClass('on');

@@ -144,9 +144,17 @@
 
 
     h1, h2, h3, h4, h5, h6 {
+        @time: 0.2s;
+
+        background: none;
+        transition: background @time ease-in-out;
+
         &.on {
             background: #ffe7c8;
+            transition: background @time ease-in-out;
         }
+
+
 
         &.title {
             cursor: pointer;
@@ -234,7 +242,7 @@
                 height: 20px;
 
                 &.on {
-                    background: #ffe69a  !important;
+                    background: #ffe69a !important;
 
                     &:hover {
                         background: #ffd760 !important;

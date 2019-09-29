@@ -12,8 +12,21 @@ define('Outline/Events', function (require, module, exports) {
             meta.$.on('click', 'li[data-index]', function (event) {
                 var index = +this.getAttribute('data-index');
                 var item = meta.list[index];
+                var children = item.children || [];
+                var $li = $(this);
+
+                //针对目录节点，如果是再次点击，则相当于点击了旁边的展开/收起按钮。
+                if ($li.hasClass('on') && children.length > 0) {
+                    $li.find('>i[data-index]').click();
+                    return;
+                }
+
 
                 meta.emitter.fire('item', [item, index]);
+                meta.$.find('li[data-index]').removeClass('on');
+
+                $li.addClass('on');
+               
             });
 
 

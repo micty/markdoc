@@ -1,9 +1,11 @@
 
-2019-09-26 15:11:59
+2019-09-29 13:59:20
 删除目录 ../build/dist/
+
+2019-09-29 13:59:21
 复制目录 ../htdocs/ → ../build/dist/
 
-2019-09-26 15:12:04
+2019-09-29 13:59:39
 ------------------------------------------------------------------------------
 排除 6 个目录:
     ../build/dist/packages/
@@ -13,11 +15,11 @@
     ../build/dist/f/kisp/src/
     ../build/dist/f/polyfill/
 
-2019-09-26 15:12:05
+2019-09-29 13:59:40
 ------------------------------------------------------------------------------
 排除 3559 个文件:
 
-2019-09-26 15:12:06
+2019-09-29 13:59:41
     ../build/dist/f/fontawesome-free-5.0.13/advanced-options/metadata/categories.yml
     ../build/dist/f/fontawesome-free-5.0.13/advanced-options/metadata/icons.json
     ../build/dist/f/fontawesome-free-5.0.13/advanced-options/metadata/icons.yml
@@ -3600,11 +3602,11 @@
 混入 ../build/dist/modules/iframe/panel.html
 开始压缩 js 内容 462 KB ...
 
-2019-09-26 15:12:07
-成功压缩 js 内容 462 KB  压缩率 0.00%  耗时 1354 ms
+2019-09-29 13:59:43
+成功压缩 js 内容 462 KB  压缩率 0.00%  耗时 1449 ms
 写入 ../build/dist/f/highlight/highlight.pack.js
 开始压缩 js 内容 1 KB ...
-成功压缩 js 内容 1 KB  压缩率 0.00%  耗时 6 ms
+成功压缩 js 内容 1 KB  压缩率 0.00%  耗时 8 ms
 写入 ../build/dist/config.js
 编译 ../build/dist/style/less/index.less
 编译 ../build/dist/lib/markdoc/panel.less
@@ -3620,12 +3622,10 @@
 编译 ../build/dist/modules/outline/panel.less
 编译 ../build/dist/modules/sidebar/panel.less
 编译 ../build/dist/modules/tools/panel.less
-写入 ../build/dist/style/css/C860CDB9F24F778E217C666170A282FA.css
+写入 ../build/dist/style/css/D8BFAE19F21AB8EC65C8958AB9972CD0.css
 混入 ../build/dist/lib/markdoc/panel.html
 混入 ../build/dist/lib/outline/panel.html
 合并 59 个文件:
-
-2019-09-26 15:12:08
     ../build/dist/partial/begin.js
     ../build/dist/lib/markdoc/MarkDoc/Content/Code/Highlight.js
     ../build/dist/lib/markdoc/MarkDoc/Content/Code/JSON.js
@@ -3685,13 +3685,15 @@
     ../build/dist/modules/Title.js
     ../build/dist/index.js
     ../build/dist/partial/end.js
-开始压缩 js 内容 118 KB ...
-成功压缩 js 内容 35 KB  压缩率 70.34%  耗时 690 ms
-写入 ../build/dist/6CAF6BB8E354117EBC769B8FB5B0B99F.js
+开始压缩 js 内容 119 KB ...
+
+2019-09-29 13:59:44
+成功压缩 js 内容 35 KB  压缩率 70.59%  耗时 646 ms
+写入 ../build/dist/53448AD7C5DFD8837547E66BC2104DED.js
 写入 ../build/dist/index.html
 << 完成构建 ../build/dist/index.master.html
 
-2019-09-26 15:12:09
+2019-09-29 13:59:45
 ------------------------------------------------------------------------------
 清理 3 个目录:
     ../build/dist/lib/
@@ -3834,5 +3836,5 @@
     ../build/dist/modules/
     ../build/dist/style/less/
 =================================全部构建完成=================================
-耗时 11034 ms
+耗时 25522 ms
 ...ooooOOOOoooo...
