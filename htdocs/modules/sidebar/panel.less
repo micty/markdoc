@@ -59,6 +59,19 @@
         padding-top: 13px;
         overflow-x: hidden;
         overflow-y: scroll;
+        //没有组名的时候。
+        .no-title {
+            .title {
+                display: none;
+            }
+
+            ul {
+
+                .item {
+                    padding-left: 0px;
+                }
+            }
+        }
 
         .title {
             height: 20px;
@@ -147,7 +160,7 @@
                     }
                 }
 
-                
+
 
                 &.on {
                     color: #6bb3dd;
@@ -158,24 +171,22 @@
         }
 
         .icon {
-                    margin-right: 5px;
-                }
+            margin-right: 5px;
+        }
 
         &::-webkit-scrollbar {
             width: 2px;
         }
-        /*&:hover::-webkit-scrollbar-track {
-            border-radius: 0px;
-            background:#fff;
-        }*/
+      
         &::-webkit-scrollbar-thumb {
             border-radius: 5px;
             /*background: #fff;*/
+            background-color: rgba(240, 240, 240, 0.8);
             transition: all 1s linear;
         }
 
         &:hover::-webkit-scrollbar-thumb {
-            background: rgba(240, 240, 240, 0.8);
+            background-color: #c8d2dc;
         }
     }
 }

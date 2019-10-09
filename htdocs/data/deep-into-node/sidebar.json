@@ -1,0 +1,165 @@
+{
+    "file": "./readme.md",
+    "logo": "",
+    "fixed": true,
+    "groups": [
+        {
+            "name": "Node简介",
+            "items": [
+                {
+                    "name": "架构一览",
+                    "file": "./chapter1/chapter1-0.md"
+                },
+                {
+                    "name": "为啥是libuv",
+                    "file": "./chapter1/chapter1-1.md"
+                },
+                {
+                    "name": "V8 概念",
+                    "file": "./chapter2/chapter2-0.md"
+                },
+                {
+                    "name": "C++和JS 交互",
+                    "file": "./chapter2/chapter2-1.md"
+                }
+            ]
+        },
+        {
+            "name": "从「hello world」讲起",
+            "file": "./chapter1/chapter1-2.md"
+        },
+        {
+            "name": "模块加载",
+            "file": "./chapter2/chapter2-2.md"
+        },
+        {
+            "name": "Global对象",
+            "file": "./chapter12/chapter12-1.md"
+        },
+        {
+            "name": "事件循环",
+            "file": "./chapter5/chapter5-1.md"
+        },
+        {
+            "name": "Timer 解读",
+            "file": "./chapter3/chapter3-1.md"
+        },
+        {
+            "name": "Yield 魔法",
+            "file": "./chapter3/chapter3-2.md"
+        },
+        {
+            "name": "Buffer",
+            "file": "./chapter6/chapter6-1.md"
+        },
+        {
+            "name": "Event",
+            "file": "./chapter7/chapter7-1.md"
+        },
+        {
+            "name": "Domain",
+            "file": "./chapter13/chapter13-2.md"
+        },
+        {
+            "name": "Stream 流",
+            "file": "./chapter8/chapter8-1.md"
+        },
+        {
+            "name": "Net 网络",
+            "items": [
+                {
+                    "name": "Socket",
+                    "file": "./chapter9/chapter9-1.md"
+                },
+                {
+                    "name": "构建应用",
+                    "file": "./chapter9/chapter9-2.md"
+                },
+                {
+                    "name": "加密",
+                    "file": "./chapter9/chapter9-3.md"
+                }
+            ]
+        },
+        {
+            "name": "HTTP",
+            "items": [
+                {
+                    "name": "HTTP Server",
+                    "file": "./chapter10/chapter10-1.md"
+                },
+                {
+                    "name": "HTTP Client",
+                    "file": "./chapter10/chapter10-2.md"
+                }
+            ]
+        },
+        {
+            "name": "FS 文件系统",
+            "items": [
+                {
+                    "name": "文件系统",
+                    "file": "./chapter11/chapter11-2.md"
+                },
+                {
+                    "name": "文件抽象",
+                    "file": "./chapter11/chapter11-1.md"
+                },
+                {
+                    "name": "IO 那些事儿",
+                    "file": "./chapter11/chapter11-3.md"
+                },
+                {
+                    "name": "libuv的选型",
+                    "file": "./chapter11/chapter11-4.md"
+                },
+                {
+                    "name": "文件 IO",
+                    "file": "./chapter11/chapter11-5.md"
+                },
+                {
+                    "name": "Fs 精粹",
+                    "file": "./chapter11/chapter11-6.md"
+                }
+            ]
+        },
+        {
+            "name": "进程",
+            "items": [
+                {
+                    "name": "子进程",
+                    "file": "./chapter13/chapter13-1.md"
+                },
+                {
+                    "name": "Cluster",
+                    "file": "./chapter4/chapter4-1.md"
+                }
+            ]
+        },
+        {
+            "name": "Node.js 的坑",
+            "file": "./chapter14/chapter14-5.md"
+        },
+        {
+            "name": "其他",
+            "items": [
+                {
+                    "name": "Node.js & Android",
+                    "file": "./chapter14/chapter14-1.md"
+                },
+                {
+                    "name": "Node.js & Docker",
+                    "file": "./chapter14/chapter14-2.md"
+                },
+                {
+                    "name": "Node.js 调优",
+                    "file": "./chapter14/chapter14-3.md"
+                }
+            ]
+        },
+        {
+            "name": "附录",
+            "file": "./chapter14/chapter14-0.md"
+        }
+    ]
+}

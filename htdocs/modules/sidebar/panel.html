@@ -17,8 +17,8 @@
             <i data-id="icon-{id}" class="icon {icon}"></i>
         </template>
         <template name="group" placeholder="groups">
-            <li>
-                <div class="title" data-no="{no}" data-type="group" style="{title-display}">
+            <li class="{has-title}">
+                <div class="title" data-no="{no}" data-type="group">
                     {icon}{name}<i data-id="arrow-{no}" class="arrow fa fa-angle-double-{up-down}"></i>
                 </div>
                 <ul data-id="group-{no}" style="{items-display}">

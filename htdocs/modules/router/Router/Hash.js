@@ -16,7 +16,6 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
 
         //第一个参数 true 表示一进入页面只要有 hash 就立即触发
         Hash.onchange(window, true, function (hash, old) {
-
             panel.fire('change');
 
             //针对后退时，退到无 hash 的状态
@@ -166,6 +165,22 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
                 if (!file) {
                     return;
                 }
+
+                //file 字段的，可能含有以 `,` 连接起来的多个值，需要拆开来处理。 
+                if (key == 'file') {
+                    var files = file.split(',').map(function (file) {
+                        //文件在基准目录里，删掉基准目录前缀，并且以 '/' 开头。
+                        if (file.startsWith(baseDir)) {
+                            file = file.slice(baseDir.length - 1);
+                        }
+
+                        return file;
+                    });
+
+                    hash[key] = files.join(',');
+                    return;
+                }
+
 
                 //文件在基准目录里，删掉基准目录前缀，并且以 '/' 开头。
                 if (file.startsWith(baseDir)) {

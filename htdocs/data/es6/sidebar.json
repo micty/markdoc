@@ -129,6 +129,29 @@
                     "file": "reference"
                 }
             ]
+        },
+        {
+            "name": "AAAAA",
+ 
+            "items": [
+                {
+                    "name": "ECMAScript 6简介",
+                    "file": "intro",
+                    "icon": "fa fa-tv"
+                },
+                {
+                    "name": "let和const命令",
+                    "file": "let",
+                    "icon": "fas fa-file"
+                }
+
+            ]
+        },
+        {
+            "name": "let和const命令",
+            "file": "./docs/let.md",
+            "icon": "fas fa-file"
+
         }
     ]
 }

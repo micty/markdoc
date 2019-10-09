@@ -45,7 +45,7 @@ define('/Sidebar/Groups/Template', function (require, module, exports) {
                             'no': no,
                             'icon': icon.trim(),
                             'name': group.name,
-                            'title-display': group.name ? '' : 'display: none;',
+                            'has-title': group.name ? '' : 'no-title',
                             'items-display': group.fold ? 'display: none;' : '',
                             'up-down': group.fold ? 'down' : 'up',
                             'items': html,
