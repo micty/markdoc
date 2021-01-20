@@ -1,0 +1,19 @@
+{
+  "name": "markdoc",
+  "version": "1.0.0",
+  "description": "MarkDoc 文档展示平台。",
+  "scripts": {
+    "start": "webpart watch -p"
+  },
+  "keywords": [],
+  "author": "micty",
+  "email": "mictydeng@qq.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/micty/markdoc.git"
+  },
+  "devDependencies": {
+    "@webpart/proxy": "^1.0.0"
+  }
+}

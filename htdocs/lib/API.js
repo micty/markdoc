@@ -3,20 +3,20 @@
 * 
 */
 define('API', function (require, module, exports) {
-    var KISP = require('KISP');
-    var Emitter = KISP.require('Emitter');
-    var $ = require('$');
-    var JSON = KISP.require('JSON');
-    var Url = require('Url');
+    const $ = require('$');
+    const KISP = require('KISP');
+    const Emitter = KISP.require('Emitter');
+    const JSON = KISP.require('JSON');
+    const Url = require('Url');
 
 
-    var mapper = new Map();
-    var $emitter = new Emitter();   //针对静态的。
-    var url$data = {};
-    var defaults = KISP.data(module.id);
-    var baseDir = KISP.data('config').base;
+    let mapper = new Map();
+    let $emitter = new Emitter();   //针对静态的。
+    let url$data = {};
+    let defaults = module.data;
+    let baseDir = defaults.base;
 
-    var images = [
+    let images = [
         'png',
         'jpg',
         'jpeg',
@@ -30,14 +30,14 @@ define('API', function (require, module, exports) {
     * 构造器。
     */
     function API(url) {
-        var ext = Url.extname(url);
-        var dir = Url.dir(url);
-        var isOrigin = url.startsWith('@');
-        var isImage = images.includes(ext);
+        let ext = Url.extname(url);
+        let dir = Url.dir(url);
+        let isOrigin = url.startsWith('@');
+        let isImage = images.includes(ext);
         
         //如果是图片，则当成一个含有该图片的 md 来处理。
         if (isImage) {
-            var img = url;
+            let img = url;
 
             if (img.startsWith(baseDir)) {
                 img = img.slice(baseDir.length);
@@ -59,7 +59,7 @@ define('API', function (require, module, exports) {
         }
 
 
-        var meta = {
+        let meta = {
             'url': url,
             'dir': dir,
             'ext': ext,
@@ -80,12 +80,12 @@ define('API', function (require, module, exports) {
         * 获取。
         */
         get: function () {
-            var meta = mapper.get(this);
-            var url = meta.url;
-            var emitter = meta.emitter;
-            var ext = meta.ext;
-            var isOrigin = meta.isOrigin;
-            var data = url$data[url];
+            let meta = mapper.get(this);
+            let url = meta.url;
+            let emitter = meta.emitter;
+            let ext = meta.ext;
+            let isOrigin = meta.isOrigin;
+            let data = url$data[url];
 
             //优先从内存中读取。
             if (data) {
@@ -139,7 +139,7 @@ define('API', function (require, module, exports) {
         * 绑定事件。
         */
         on: function (name, fn) {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.emitter.on(...arguments);
         },
     };

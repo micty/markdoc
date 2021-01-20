@@ -3,16 +3,15 @@
 * 
 */
 define('/Router/Config', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var Emitter = KISP.require('Emitter');
-    var API = require('API');
-    var Url = require('Url');
+    const KISP = require('KISP');
+    const Emitter = KISP.require('Emitter');
+    const API = require('API');
+    const Url = require('Url');
 
-    var Header = module.require('Header');
-    var Footer = module.require('Footer');
+    const Header = module.require('Header');
+    const Footer = module.require('Footer');
 
-    var emitter = new Emitter();
+    let emitter = new Emitter();
 
 
     return {
@@ -20,7 +19,7 @@ define('/Router/Config', function (require, module, exports) {
 
         'get': function (url) {
 
-            var api = new API(url);
+            let api = new API(url);
 
             api.on({
                 'request': function () {
@@ -28,14 +27,14 @@ define('/Router/Config', function (require, module, exports) {
                 },
 
                 'success': function (data, options) {
-                    var url = options.url;
-                    var json = JSON.stringify(data);
+                    let url = options.url;
+                    let json = JSON.stringify(data);
 
                     json = JSON.parse(json) || {};
 
 
                     [ 'file', 'sidebar', ].forEach(function (key) {
-                        var file = json[key];
+                        let file = json[key];
                         if (!file) {
                             return;
                         }

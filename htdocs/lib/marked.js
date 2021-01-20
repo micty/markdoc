@@ -1,5 +1,5 @@
 
 define('marked', function () {
-    var marked = window.marked;
+    const marked = window.marked;
     return marked;
 });

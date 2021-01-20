@@ -3,13 +3,11 @@
 * 
 */
 KISP.panel('/Header', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var Groups = module.require('Groups');
-    var Logo = module.require('Logo');
-    var Search = module.require('Search');
+    const Groups = module.require('Groups');
+    const Logo = module.require('Logo');
+    const Search = module.require('Search');
 
-    var current = null;
+    let current = null;
 
 
 
@@ -105,7 +103,7 @@ KISP.panel('/Header', function (require, module, panel) {
                 return;
             }
 
-            var fixed = current.fixed !== false;    //配置是否明确禁用 fixed
+            let fixed = current.fixed !== false;    //配置是否明确禁用 fixed
             if (fixed) {
                 panel.$.addClass('fixed');
                 panel.$.removeClass('slide-up');

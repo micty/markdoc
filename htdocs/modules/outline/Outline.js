@@ -3,12 +3,9 @@
 * 提纲，即内容目录。
 */
 KISP.panel('/Outline', function (require, module, panel) {
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
-    var Outline = require('Outline');
+    const Outline = require('Outline');
 
-    var outline = null;
-    var visible = false;
+    let outline = null;
 
 
 

@@ -1,23 +1,10 @@
 
-/.svn
+/node_modules
+/output
 
-/bak
-
-/bin/node_modules
-/bin/console.log
-/bin/package-lock.json
-
-
-/build
-
-
-
-/htdocs/data-house
-/htdocs/data-kisp
-/htdocs/data-resume
-/htdocs/data/weber
-/htdocs/data/house
+/htdocs/babel
 /htdocs/packages
 /htdocs/style/css
 /htdocs/index.html
 
+package-lock.json

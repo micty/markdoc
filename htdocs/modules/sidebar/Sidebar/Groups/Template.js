@@ -1,20 +1,15 @@
 ﻿
 define('/Sidebar/Groups/Template', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
-
-
 
     return {
         get: function () {
-            var tplIcon = null;
+            let tplIcon = null;
 
             return {
                 '': function (data) {
                     tplIcon = this.template('icon');
                  
-                    var html = this.fill('group', data.groups);
+                    let html = this.fill('group', data.groups);
 
                     return {
                         'groups': html,
@@ -22,13 +17,13 @@ define('/Sidebar/Groups/Template', function (require, module, exports) {
                 },
 
                 'icon': function (item, no, index) {
-                    var icon = item.icon;
+                    let icon = item.icon;
 
                     if (!icon) {
                         return '';
                     }
 
-                    var id = typeof index == 'number' ? `${no}-${index}` : `${no}`;
+                    let id = typeof index == 'number' ? `${no}-${index}` : `${no}`;
 
                     return {
                         'icon': icon,
@@ -38,8 +33,8 @@ define('/Sidebar/Groups/Template', function (require, module, exports) {
 
                 'group': {
                     '': function (group, no) {
-                        var html = this.fill('item', group.items, no);
-                        var icon = tplIcon.fill(group, no);
+                        let html = this.fill('item', group.items, no);
+                        let icon = tplIcon.fill(group, no);
 
                         return {
                             'no': no,
@@ -54,7 +49,7 @@ define('/Sidebar/Groups/Template', function (require, module, exports) {
 
                     'item': {
                         '': function (item, index, no) {
-                            var icon = tplIcon.fill(item, no, index);
+                            let icon = tplIcon.fill(item, no, index);
 
                             return {
                                 'index': index,

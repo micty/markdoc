@@ -1,17 +1,16 @@
 ﻿
 KISP.panel('/Main', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
+    const $ = require('$');
 
-    var NotFound = module.require('NotFound');
-    var Loading = module.require('Loading');
-    var Header = module.require('Header');
-    var Content = module.require('Content');
-    var Style = module.require('Style');
-    var Url = module.require('Url');
+    const NotFound = module.require('NotFound');
+    const Loading = module.require('Loading');
+    const Header = module.require('Header');
+    const Content = module.require('Content');
+    const Style = module.require('Style');
+    const Url = module.require('Url');
 
 
-    var meta = {
+    let meta = {
         'urlInfo': null,
         'sidebar': false,   //记录 sidebar 是否可见。
         'outline': false,   //记录 outline 是否可见。
@@ -51,9 +50,9 @@ KISP.panel('/Main', function (require, module, panel) {
             },
 
             'render': function (data) {
-                var isCode = meta.urlInfo.isCode;
-                var title = data.title;
-                var outline = meta.config.outline;  //是否自动显示提纲 true|false。
+                let isCode = meta.urlInfo.isCode;
+                let title = data.title;
+                let outline = meta.config.outline;  //是否自动显示提纲 true|false。
 
                 if (isCode) {
                     title = meta.urlInfo.name + ' 源代码';
@@ -96,7 +95,7 @@ KISP.panel('/Main', function (require, module, panel) {
         meta.sidebar = options.sidebar;
         meta.urlInfo = Url.parse(options.url);
 
-        var isCode = meta.urlInfo.isCode;
+        let isCode = meta.urlInfo.isCode;
 
 
         //切换普通模式和代码模式。

@@ -3,13 +3,9 @@
 * 右侧固定的工具栏。
 */
 KISP.panel('/Tools', function (require, module, panel) {
+    let list = [];
 
-    var $ = require('$');
-    var KISP = require('KISP');
-
-    var list = [];
-
-    var font = {
+    let font = {
         list: [14, 16, 18, 20],
         index: 1,
     };
@@ -30,8 +26,8 @@ KISP.panel('/Tools', function (require, module, panel) {
             },
 
             'font': function () {
-                var list = font.list;
-                var index = font.index + 1;
+                let list = font.list;
+                let index = font.index + 1;
 
                 if (index >= list.length) {
                     index = 0;

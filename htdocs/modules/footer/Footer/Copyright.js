@@ -1,12 +1,6 @@
 ﻿
 KISP.panel('/Footer/Copyright', function (require, module, panel) {
 
-    var $ = require('$');
-    var KISP = require('KISP');
-
-
-
-
     panel.on('init', function () {
 
        

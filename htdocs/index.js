@@ -1,23 +1,23 @@
 ﻿
 KISP.launch(function (require, module) {
-    var $ = KISP.require('$');
-    var Router = module.require('Router');
-    var Sidebar = module.require('Sidebar');
-    var Header = module.require('Header');
-    var Main = module.require('Main');
-    var Footer = module.require('Footer');
-    var Scroller = module.require('Scroller');
-    var Title = module.require('Title');
-    var Outline = module.require('Outline');
-    var Tools = module.require('Tools');
-    var Iframe = module.require('Iframe');
+    const $ = require('$');
+    const Router = module.require('Router');
+    const Sidebar = module.require('Sidebar');
+    const Header = module.require('Header');
+    const Main = module.require('Main');
+    const Footer = module.require('Footer');
+    const Scroller = module.require('Scroller');
+    const Title = module.require('Title');
+    const Outline = module.require('Outline');
+    const Tools = module.require('Tools');
+    const Iframe = module.require('Iframe');
 
-    var $body = $(document.body);
+    let $body = $(document.body);
 
 
     //对应于加载到的 config.json 的对象。
     //用于在简明模式和正常模式中切换。
-    var config = null; 
+    let config = null;
 
     //头部。
     Header.on({
@@ -209,7 +209,7 @@ KISP.launch(function (require, module) {
             Main.render({ 'url': url, 'sidebar': false, });
         },
         '404': function (url) {
-            Main.notfound(url, {'sidebar': false, });
+            Main.notfound(url, { 'sidebar': false, });
             Outline.hide();
             Title.render(404);
         },

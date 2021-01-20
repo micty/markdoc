@@ -3,12 +3,10 @@
 * 针对代码模式的头部工具栏。
 */
 KISP.panel('/Main/Header', function (require, module, panel) {
+    const KISP = require('KISP');
+    const $String = KISP.require('String');
 
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
-
-    var list = [
+    let list = [
         { cmd: 'numbers', text: '行号', checked: true, },
         { cmd: 'comment', text: '注释', checked: true, },
         //{ cmd: 'empty', text: '空行', checked: true, },
@@ -22,11 +20,11 @@ KISP.panel('/Main/Header', function (require, module, panel) {
     panel.on('init', function () {
 
         panel.$.on('click', '[data-index]', function () {
-            var chk = this;
-            var index = +chk.getAttribute('data-index');
-            var item = list[index];
-            var cmd = item.cmd;
-            var checked = chk.checked;
+            let chk = this;
+            let index = +chk.getAttribute('data-index');
+            let item = list[index];
+            let cmd = item.cmd;
+            let checked = chk.checked;
 
             //在源代码比较多时，选中的动画会比较卡。
             //先让动画完成，再执行其它业务可避免此问题。
@@ -43,13 +41,13 @@ KISP.panel('/Main/Header', function (require, module, panel) {
 
         panel.template({
             '': function (data) {
-                var html = this.fill('html', data);
+                let html = this.fill('html', data);
                 return html;
             },
 
             'html': {
                 '': function (data) {
-                    var items = this.fill('item', data.list);
+                    let items = this.fill('item', data.list);
 
                     return {
                         'url': data.url,

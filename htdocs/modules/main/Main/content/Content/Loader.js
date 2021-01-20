@@ -2,16 +2,12 @@
 /**
 */
 define('/Main/Content/Loader', function (require, module, exports) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
-    var API = require('API');
-    var Url = require('Url');
-
-    var Tasks = KISP.require('Tasks');
+    const KISP = require('KISP');
+    const API = require('API');
+    const Tasker = KISP.require('Tasker');
 
 
-    var texts = [
+    let texts = [
         'md',
         'txt',
         'markdown',
@@ -21,27 +17,27 @@ define('/Main/Content/Loader', function (require, module, exports) {
     return {
 
         load: function (url, fn) {
-            var urls = url.split(',');
-            var tasks = new Tasks(urls);
-            var values = [];
+            let urls = url.split(',');
+            let tasks = new Tasker(urls);
+            let values = [];
 
-            var info = null;
+            let info = null;
 
 
             tasks.on('each', function (url, index, done) {
 
-                var api = new API(url);
+                let api = new API(url);
 
                 api.on('success', function (content, options) {
                     //以首个为准。
                     if (index == 0) {
-                        var ext = options.ext;
+                        let ext = options.ext;
 
                         //根据后缀名判断需要作为纯文本进行显示的后缀名。
-                        var isPlain = !ext || texts.includes(ext);
+                        let isPlain = !ext || texts.includes(ext);
 
                         //如果不明确指定为源代码模式，则通过后缀名进行判断。
-                        var isOrigin = options.isOrigin || !isPlain; 
+                        let isOrigin = options.isOrigin || !isPlain; 
 
                         //debugger
 

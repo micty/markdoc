@@ -3,9 +3,7 @@
 * 
 */
 define('/Router/File', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var base = '';
+    let base = '';
 
 
 
@@ -21,10 +19,10 @@ define('/Router/File', function (require, module, exports) {
         * 处理 url 中含有 `@` 或 `,` 的情况。
         */
         normalize: function (url) {
-            var files = url.split(',');
+            let files = url.split(',');
 
             files = files.map(function (file) {
-                var isOrigin = file.startsWith('@');
+                let isOrigin = file.startsWith('@');
 
                 if (isOrigin) {
                     file = file.slice(1);

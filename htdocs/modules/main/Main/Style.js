@@ -1,8 +1,7 @@
 ﻿
 define('/Main/Style', function (require, module, exports) {
 
-    var $ = require('$');
-    var panel = null;
+    let panel = null;
 
 
 
@@ -20,22 +19,22 @@ define('/Main/Style', function (require, module, exports) {
         */
         setPadding: function (options) {
 
-            var sidebar = options.sidebar;
-            var outline = options.outline;
+            let sidebar = options.sidebar;
+            let outline = options.outline;
             
             //sidebar 不可见。
             if (!sidebar) {
-                var p = outline ? '380px' : '';
+                let p = outline ? '380px' : '';
                 panel.$.css('padding-right', p);
                 return;
             }
 
 
 
-            var w = document.documentElement.clientWidth;
-            var min = 60 ;
-            var max = 260 + min + 1024; //260 是左边 sidebar 的宽度。
-            var p = w - max;
+            let w = document.documentElement.clientWidth;
+            let min = 60 ;
+            let max = 260 + min + 1024; //260 是左边 sidebar 的宽度。
+            let p = w - max;
 
             console.log(w, p);
 
@@ -71,8 +70,8 @@ define('/Main/Style', function (require, module, exports) {
             }
 
             //普通模式下，如果配置中指定了 width，则设置。
-            var minWidth = options['min-width'];
-            var maxWidth = options['max-width'];
+            let minWidth = options['min-width'];
+            let maxWidth = options['max-width'];
 
             if (typeof minWidth == 'number') {
                 panel.$.css('min-width', minWidth + 'px');

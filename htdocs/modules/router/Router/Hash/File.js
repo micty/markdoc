@@ -3,10 +3,8 @@
 * 
 */
 define('/Router/Hash/File', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
     
-    var home = 'index.md'; //默认是 index.md
+    let home = 'index.md'; //默认是 index.md
 
 
 
@@ -17,12 +15,12 @@ define('/Router/Hash/File', function (require, module, exports) {
         * 
         */
         normalize: function (hash, old) {
-            var file = hash.file || '';
-            var dir = hash.dir || '';
+            let file = hash.file || '';
+            let dir = hash.dir || '';
 
-            //var fileChanged = file && file != old.file;
-            //var dirChanged = dir && dir != old.dir;
-            //var chaned = fileChanged || dirChanged;
+            //let fileChanged = file && file != old.file;
+            //let dirChanged = dir && dir != old.dir;
+            //let chaned = fileChanged || dirChanged;
 
             //if (!chaned) {
             //    return;
@@ -34,7 +32,7 @@ define('/Router/Hash/File', function (require, module, exports) {
             }
 
             //把基目录和文件名组合起来。
-            var files = file.split(',').map(function (file) {
+            let files = file.split(',').map(function (file) {
                 if (!file) {
                     return dir + home; 
                 }
@@ -43,7 +41,7 @@ define('/Router/Hash/File', function (require, module, exports) {
                     file = file + home;
                 }
 
-                var index = file.lastIndexOf('.');
+                let index = file.lastIndexOf('.');
 
                 if (index < 0) { //不含有后缀名
                     file += '.md';

@@ -3,19 +3,12 @@
 * 
 */
 KISP.panel('/Header/Search', function (require, module, panel) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
-
-
     panel.set('show', false);
 
 
     panel.on('init', function () {
-
-        var txt = panel.$.find('input').get(0);
-        var submiting = false;
-
+        let txt = panel.$.find('input').get(0);
+        let submiting = false;
 
         panel.$.on('focusin', txt, function () {
             panel.fire('focus');

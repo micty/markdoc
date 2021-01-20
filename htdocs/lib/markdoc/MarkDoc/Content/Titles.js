@@ -3,10 +3,9 @@
 * 标题相关的。
 */
 define('MarkDoc/Content/Titles', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
-    var JSON = KISP.require('JSON');
+    const $ = require('$');
+    const KISP = require('KISP');
+    const $String = KISP.require('String');
 
 
     return {
@@ -14,9 +13,9 @@ define('MarkDoc/Content/Titles', function (require, module, exports) {
         * 
         */
         init: function (meta) {
-            var panel = meta.panel;
-            var titles = meta.titles;
-            var selector = titles.selector;
+            let panel = meta.panel;
+            let titles = meta.titles;
+            let selector = titles.selector;
 
 
             if (titles.foldable) {
@@ -41,10 +40,10 @@ define('MarkDoc/Content/Titles', function (require, module, exports) {
         * 
         */
         fill: function (meta, data) {
-            var id = $String.random();  //生成一个随机 id。
-            var level = data.level;
-            var html = data.text;       //这里其实是一个 innerHTML。
-            var text = html;
+            let id = $String.random();  //生成一个随机 id。
+            let level = data.level;
+            let html = data.text;       //这里其实是一个 innerHTML。
+            let text = html;
 
             //尝试取出真正的 innerText。
             try {
@@ -54,7 +53,7 @@ define('MarkDoc/Content/Titles', function (require, module, exports) {
                 text = html;
             }
 
-            var item = {
+            let item = {
                 'id': `h${level}-${id}`, //如 `h3-B6C0E2B69744`
                 'level': level,
                 'html': html,           //
@@ -63,7 +62,7 @@ define('MarkDoc/Content/Titles', function (require, module, exports) {
             };
 
 
-            var html2 = meta.tpl.fill('title', item);
+            let html2 = meta.tpl.fill('title', item);
 
             //收集提纲信息。
             meta.outlines.push(item);
@@ -75,12 +74,12 @@ define('MarkDoc/Content/Titles', function (require, module, exports) {
         * 
         */
         render: function (meta) {
-            var panel = meta.panel;
-            var selector = meta.titles.selector;
+            let panel = meta.panel;
+            let selector = meta.titles.selector;
 
             panel.$.find(selector).each(function () {
-                var $this = $(this);
-                var list = $this.nextUntil(selector);
+                let $this = $(this);
+                let list = $this.nextUntil(selector);
                
                 $this.toggleClass('title', list.length > 0);
 

@@ -3,37 +3,36 @@
 * 
 */
 define('/Sidebar/API', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var Emitter = KISP.require('Emitter');
-    var API = require('API');
-    var Url = require('Url');
+    const KISP = require('KISP');
+    const Emitter = KISP.require('Emitter');
+    const API = require('API');
+    const Url = require('Url');
 
-    var emitter = new Emitter();
+    let emitter = new Emitter();
 
 
     return {
         'get': function (url) {
-            var api = new API(url);
+            let api = new API(url);
 
             api.on({
                 'success': function (json, options) {
-                    var url = options.url;
+                    let url = options.url;
 
                     ['logo', 'file', ].forEach(function (key) {
-                        var file = json[key];
+                        let file = json[key];
                         if (file) {
                             json[key] = Url.relative(url, file);
                         }
                     });
 
 
-                    var groups = json.groups || [];
+                    let groups = json.groups || [];
 
                     groups.forEach(function (group, index) {
-                        var items = group.items || [];
-                        var base = group.base || '';
-                        var ext = group.ext || '';
+                        let items = group.items || [];
+                        let base = group.base || '';
+                        let ext = group.ext || '';
 
                         //如果没有二级列表，则把当前的 group 当成是二级列表的一个 item。
                         if (items.length == 0) {
@@ -54,7 +53,7 @@ define('/Sidebar/API', function (require, module, exports) {
 
                         //处理二级列表的文件路径。
                         items.forEach(function (item) {
-                            var file = item.file;
+                            let file = item.file;
                             if (!file) {
                                 return;
                             }

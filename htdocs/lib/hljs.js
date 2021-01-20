@@ -1,5 +1,5 @@
 
 define('hljs', function () {
-    var hljs = window.hljs;
+    const hljs = window.hljs;
     return hljs;
 });

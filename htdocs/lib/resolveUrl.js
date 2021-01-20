@@ -1,5 +1,5 @@
 
 define('resolveUrl', function () {
-    var resolveUrl = window.resolveUrl;
+    const resolveUrl = window.resolveUrl;
     return resolveUrl;
 });

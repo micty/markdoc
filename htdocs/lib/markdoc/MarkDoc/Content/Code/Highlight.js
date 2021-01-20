@@ -2,11 +2,10 @@
 /**
 */
 define('MarkDoc/Content/Code/Highlight', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
+    const KISP = require('KISP');
+    const $String = KISP.require('String');
 
-    var hljs = window.hljs;
+    const hljs = require('hljs');
 
 
     return {
@@ -22,7 +21,7 @@ define('MarkDoc/Content/Code/Highlight', function (require, module, exports) {
             code = $String.replaceAll(code, '&gt;', '>');
 
             try {
-                var info = hljs.highlight(type, code);
+                let info = hljs.highlight(type, code);
                 return info.value;
             }
             catch (ex) {

@@ -3,15 +3,12 @@
 * 侧边菜单栏。
 */
 KISP.panel('/Sidebar', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
-
-    var API = module.require('API');
-    var Groups = module.require('Groups');
-    var Logo = module.require('Logo');
+    const API = module.require('API');
+    const Groups = module.require('Groups');
+    const Logo = module.require('Logo');
 
 
-    var meta = {
+    let meta = {
         data: null,
         item: null,
         logo: '',       //备用 logo。
@@ -27,8 +24,8 @@ KISP.panel('/Sidebar', function (require, module, panel) {
 
         API.on({
             'success': function (data) {
-                var fixed = data.fixed !== false;   //配置是否明确禁用 fixed。 默认是启用 fixed 的。   
-                var logo = data.logo || meta.logo;  //logo 图标。
+                let fixed = data.fixed !== false;   //配置是否明确禁用 fixed。 默认是启用 fixed 的。   
+                let logo = data.logo || meta.logo;  //logo 图标。
 
                 meta.data = data;
 
@@ -53,13 +50,13 @@ KISP.panel('/Sidebar', function (require, module, panel) {
             'render': function () {
                 meta.ready = true;
 
-                var item = meta.item;
+                let item = meta.item;
                 if (item) {
                     Groups.active(item);
                     return;
                 }
 
-                var url = meta.data.file;
+                let url = meta.data.file;
                 if (url) {
                     panel.fire('active', [url]);
                     return;
@@ -109,8 +106,8 @@ KISP.panel('/Sidebar', function (require, module, panel) {
             panel.show();
 
             if (!item) {
-                var data = meta.data;
-                var url = data.file;
+                let data = meta.data;
+                let url = data.file;
                 if (!url) {
                     return;
                 }
@@ -138,7 +135,7 @@ KISP.panel('/Sidebar', function (require, module, panel) {
                 return;
             }
 
-            var url = typeof data == 'object' ? data.logo : data;
+            let url = typeof data == 'object' ? data.logo : data;
 
             meta.logo = url;
         },

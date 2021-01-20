@@ -3,10 +3,7 @@
 * 
 */
 KISP.panel('/Sidebar/Logo', function (require, module, panel) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
-    var Url = require('Url');
+    const Url = require('Url');
 
 
     panel.on('init', function () {
@@ -18,9 +15,9 @@ KISP.panel('/Sidebar/Logo', function (require, module, panel) {
     panel.on('render', function (data) {
         if (data) {
             
-            var ext = Url.extname(data);
+            let ext = Url.extname(data);
 
-            var logo = ext == 'png' || ext == 'jpg' ?
+            let logo = ext == 'png' || ext == 'jpg' ?
                 '<img src="' + data + '" />' :
                 '<span>' + data + '</span>'
 

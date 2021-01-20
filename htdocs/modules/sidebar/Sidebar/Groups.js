@@ -1,13 +1,10 @@
 ﻿
 KISP.panel('/Sidebar/Groups', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
-    var Template = module.require('Template');
+    const Template = module.require('Template');
 
 
-    var list = [];
-    var mutex = false;
+    let list = [];
+    let mutex = false;
 
     //展开或折叠指定的组。
     //根据 mutex 字段控制是否使用互斥效果。
@@ -16,13 +13,13 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
             no = +no.getAttribute('data-no');
         }
 
-        var up = 'fa-angle-double-up';
-        var down = 'fa-angle-double-down';
+        let up = 'fa-angle-double-up';
+        let down = 'fa-angle-double-down';
        
 
         //没有指定 needOpen，则自动判断。
         if (needOpen === undefined) {
-            var $arrow = panel.$.find(`[data-id="arrow-${no}"]`);
+            let $arrow = panel.$.find(`[data-id="arrow-${no}"]`);
             needOpen = $arrow.hasClass(down);
         }
 
@@ -49,13 +46,13 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
         //内部方法。
         function setStatus(no, open) {
-            var group = list[no];
-            var $icon = panel.$.find(`[data-id="icon-${no}"]`);
-            var $arrow = panel.$.find(`[data-id="arrow-${no}"]`);
-            var $group = panel.$.find(`[data-id="group-${no}"]`);
+            let group = list[no];
+            let $icon = panel.$.find(`[data-id="icon-${no}"]`);
+            let $arrow = panel.$.find(`[data-id="arrow-${no}"]`);
+            let $group = panel.$.find(`[data-id="group-${no}"]`);
 
-            var icon = group.icon;
-            var icon2 = group.icon2;
+            let icon = group.icon;
+            let icon2 = group.icon2;
 
 
             if (open) {
@@ -87,7 +84,7 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
 
     panel.on('init', function () {
-        var process = Template.get();
+        let process = Template.get();
 
         panel.template(process);
 
@@ -101,16 +98,16 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
 
         panel.$on('mouseup', {
             '[data-type="item"]': function (event) {
-                var li = this;
-                var index = +li.getAttribute('data-index');
-                var no = +li.getAttribute('data-no');
-                var id = no + '/' + index;
-                var which = event.which;
+                let li = this;
+                let index = +li.getAttribute('data-index');
+                let no = +li.getAttribute('data-no');
+                let id = no + '/' + index;
+                let which = event.which;
 
                 //按下鼠标左键或中键。
                 if (which == 1 || which == 2) {
                     //同时按下ctrl键或按下了鼠标中键，则打开新页面。
-                    var openNew = event.ctrlKey || which == 2;
+                    let openNew = event.ctrlKey || which == 2;
 
                     panel.fire('item', [id, openNew]);
 
@@ -154,26 +151,26 @@ KISP.panel('/Sidebar/Groups', function (require, module, panel) {
             }
 
 
-            var args = id.split('/');
-            var no = +args[0];
-            var index = +args[1];
+            let args = id.split('/');
+            let no = +args[0];
+            let index = +args[1];
 
-            var group = list[no];
+            let group = list[no];
             if (!group) {
                 module.exports.active(false);
                 panel.fire('404', 'group', [no]);
                 return;
             }
 
-            var item = group.items[index];
+            let item = group.items[index];
             if (!item) {
                 module.exports.active(false);
                 panel.fire('404', 'item', [no, index]);
                 return;
             }
 
-            var selector = `li[data-no="${no}"][data-index="${index}"]`;
-            var li = panel.$.find(selector);
+            let selector = `li[data-no="${no}"][data-index="${index}"]`;
+            let li = panel.$.find(selector);
 
             panel.$.find('li.on').removeClass('on');
 

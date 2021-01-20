@@ -3,9 +3,7 @@
 * 
 */
 define('/Router/Config/Header', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var Url = require('Url');
+    const Url = require('Url');
 
 
     return {
@@ -16,7 +14,7 @@ define('/Router/Config/Header', function (require, module, exports) {
 
 
             [ 'logo', ].forEach(function (key) {
-                var file = header[key];
+                let file = header[key];
 
                 if (file) {
                     header[key] = Url.relative(url, file);
@@ -24,24 +22,24 @@ define('/Router/Config/Header', function (require, module, exports) {
             });
 
 
-            var menus = header.menus = header.menus || [];
+            let menus = header.menus = header.menus || [];
 
             menus.forEach(function (group) {
-                var file = group.file;
+                let file = group.file;
 
                 if (file) {
                     group.file = Url.relative(url, file);
                 }
 
 
-                var items = group.items;
+                let items = group.items;
 
                 if (items) {
-                    var base = group.base || '';
-                    var ext = group.ext || '';
+                    let base = group.base || '';
+                    let ext = group.ext || '';
 
                     items.forEach(function (item) {
-                        var file = item.file;
+                        let file = item.file;
 
                         if (file) {
                             file = base + file + ext;

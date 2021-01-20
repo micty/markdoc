@@ -3,19 +3,13 @@
 * 
 */
 KISP.panel('/Iframe', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
-
-
-
-
-
+    const $ = require('$');
 
     panel.on('init', function () {
 
 
         $(window).on('resize', function () {
-            var height = window.innerHeight - 21
+            let height = window.innerHeight - 21
 
             panel.$.find('iframe').css({
                 'height': height,
@@ -25,7 +19,7 @@ KISP.panel('/Iframe', function (require, module, panel) {
 
 
     panel.on('render', function (opt) {
-        var height = window.innerHeight - 21;
+        let height = window.innerHeight - 21;
 
         panel.fill({
             'url': opt.url,

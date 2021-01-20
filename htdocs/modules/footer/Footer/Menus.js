@@ -1,18 +1,13 @@
 ﻿
 KISP.panel('/Footer/Menus', function (require, module, panel) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
-
-
-    var list = [];
+    let list = [];
 
     panel.on('init', function () {
 
         panel.$.on('click', 'li[data-index]', function () {
-            var li = this;
-            var index = +li.getAttribute('data-index');
-            var item = list[index];
+            let li = this;
+            let index = +li.getAttribute('data-index');
+            let item = list[index];
 
             panel.fire('file', [item.file]);
 

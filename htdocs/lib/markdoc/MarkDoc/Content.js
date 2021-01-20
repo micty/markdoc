@@ -3,16 +3,14 @@
 * 
 */
 define('MarkDoc/Content', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var marked = require('marked');
+    const marked = require('marked');
 
-    var Code = module.require('Code');
-    var Href = module.require('Href');
-    var Image = module.require('Image');
-    var Titles = module.require('Titles');
+    const Code = module.require('Code');
+    const Href = module.require('Href');
+    const Image = module.require('Image');
+    const Titles = module.require('Titles');
 
-    var renderer = new marked.Renderer();
+    let renderer = new marked.Renderer();
    
 
 
@@ -36,10 +34,10 @@ define('MarkDoc/Content', function (require, module, exports) {
         * 渲染生成 html 内容，并设置必要的样式。
         */
         render: function (meta, opt) {
-            var language = opt.language;
-            var content = opt.content;
-            var process = meta.process;
-            var panel = meta.panel;
+            let language = opt.language;
+            let content = opt.content;
+            let process = meta.process;
+            let panel = meta.panel;
 
             meta.outlines = [];
 
@@ -55,7 +53,7 @@ define('MarkDoc/Content', function (require, module, exports) {
             //生成标题（提纲）。
             renderer.heading = function (text, level, raw, slugger) {
 
-                var html = Titles.fill(meta, {
+                let html = Titles.fill(meta, {
                     'level': level,
                     'text': text,
                     'raw': raw,
@@ -68,7 +66,7 @@ define('MarkDoc/Content', function (require, module, exports) {
             //生成代码区。
             renderer.code = function (content, language) {
 
-                var html = Code.fill({
+                let html = Code.fill({
                     'tpl': meta.tpl,
                     'content': content,
                     'language': language,

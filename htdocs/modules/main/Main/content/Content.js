@@ -1,11 +1,9 @@
 ﻿
 KISP.panel('/Main/Content', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var MarkDoc = require('MarkDoc');
-    var Loader = module.require('Loader');
+    const MarkDoc = require('MarkDoc');
+    const Loader = module.require('Loader');
 
-    var markdoc = null;
+    let markdoc = null;
    
 
     panel.on('init', function () {
@@ -19,9 +17,9 @@ KISP.panel('/Main/Content', function (require, module, panel) {
 
         
         markdoc.on('render', function (data) {
-            var outlines = data.outlines;
-            var first = outlines[0];
-            var title = first ? first.text : '';
+            let outlines = data.outlines;
+            let first = outlines[0];
+            let title = first ? first.text : '';
 
             panel.fire('render', [{
                 'title': title,
@@ -48,11 +46,11 @@ KISP.panel('/Main/Content', function (require, module, panel) {
     panel.on('render', function (options) {
         //如果 100ms 内能完成请求，则不显示 loading。
         //否则就显示 loading 至少 800ms，以避免内容太快回来而闪一下。
-        var loading = false;
-        var fadeIn = options.fadeIn;
+        let loading = false;
+        let fadeIn = options.fadeIn;
 
         //100ms 后开始显示 loading。
-        var tid = setTimeout(function () {
+        let tid = setTimeout(function () {
             loading = true;
             panel.fire('loading');
         }, 100);

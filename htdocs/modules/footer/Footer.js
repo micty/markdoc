@@ -1,12 +1,8 @@
 ﻿
 KISP.panel('/Footer', function (require, module, panel) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
-
-    var Copyright = module.require('Copyright');
-    var Logos = module.require('Logos');
-    var Menus = module.require('Menus');
+    const Copyright = module.require('Copyright');
+    const Logos = module.require('Logos');
+    const Menus = module.require('Menus');
 
 
     panel.set('show', false); //禁用 render 后的自动显示。

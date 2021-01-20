@@ -3,15 +3,14 @@
 * url 地址栏的 hash 工具模块。
 */
 KISP.panel('/Router/Hash', function (require, module, panel) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var Hash = KISP.require('Hash');
-    var Parser = module.require('Parser');
-    var File = module.require('File');
+    const KISP = require('KISP');
+    const Hash = KISP.require('Hash');
+    const Parser = module.require('Parser');
+    const File = module.require('File');
 
 
     panel.on('init', function () {
-        var fired = false;
+        let fired = false;
 
 
         //第一个参数 true 表示一进入页面只要有 hash 就立即触发
@@ -37,7 +36,7 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
             }
 
            
-            var file = File.normalize(hash, old);
+            let file = File.normalize(hash, old);
 
             //显示单个文件。
             if (file) {
@@ -46,8 +45,8 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
             }
 
 
-            var sidebar = hash.sidebar;
-            var item = hash.item;
+            let sidebar = hash.sidebar;
+            let item = hash.item;
 
 
             //把第 0 组的组号省略了，补回来。
@@ -102,7 +101,7 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
 
 
         //针对首次进入时，无 hash 的状态
-        var hash = Hash.get(window, ''); //获取字符串形式
+        let hash = Hash.get(window, ''); //获取字符串形式
 
         if (!hash) {
             panel.fire('none');
@@ -114,7 +113,7 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
     return {
 
         'add': function (key, value, openNew) {
-            var hash = Parser.parse(location.hash);
+            let hash = Parser.parse(location.hash);
 
             //重载 set({ ... })，批量设置的情况
             if (typeof key == 'object') {
@@ -127,7 +126,7 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
             hash = Parser.stringify(hash);
 
             if (openNew) {
-                var url = location.origin + location.pathname + '#' + hash;
+                let url = location.origin + location.pathname + '#' + hash;
                 window.open(url);
             }
             else {
@@ -137,7 +136,7 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
         },
 
         'set': function (key, value) {
-            var hash = {};
+            let hash = {};
 
             //set(hash) 字符串形式。
             if (arguments.length == 1) {
@@ -161,14 +160,14 @@ KISP.panel('/Router/Hash', function (require, module, panel) {
 
 
             ['sidebar', 'file', 'dir'].forEach(function (key) {
-                var file = hash[key];
+                let file = hash[key];
                 if (!file) {
                     return;
                 }
 
                 //file 字段的，可能含有以 `,` 连接起来的多个值，需要拆开来处理。 
                 if (key == 'file') {
-                    var files = file.split(',').map(function (file) {
+                    let files = file.split(',').map(function (file) {
                         //文件在基准目录里，删掉基准目录前缀，并且以 '/' 开头。
                         if (file.startsWith(baseDir)) {
                             file = file.slice(baseDir.length - 1);

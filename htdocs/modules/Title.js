@@ -1,11 +1,6 @@
 ﻿
 KISP.panel('/Title', function (require, module, panel) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
-
-    
-    var defaults = '';
+    let defaults = '';
 
     panel.on('render', function (data) {
 
@@ -16,7 +11,8 @@ KISP.panel('/Title', function (require, module, panel) {
 
         defaults = defaults || data;
 
-        var title = data || defaults;
+        let title = data || defaults;
+
         if (title) {
             title += ' - MarkDoc';
         }

@@ -3,15 +3,14 @@
 * 
 */
 define('Outline/Meta', function (require, module, exports) {
-    var $ = require('$');
-    var $String = KISP.require('String');
+    const $String = KISP.require('String');
 
 
     return {
 
         create: function (config, others) {
            
-            var meta = {
+            let meta = {
                 'id': $String.random(),         //实例 id。
                 'container': config.container,
                 'this': null,                   //方便内部引用自身的实例。

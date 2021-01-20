@@ -3,31 +3,30 @@
 * 路由器模板。
 */
 KISP.panel('/Router', function (require, module, panel) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var Query = KISP.require('Query');
-    var Url = require('Url');
-    var API = require('API');
+    const KISP = require('KISP');
+    const Query = KISP.require('Query');
+    const Url = require('Url');
+    const API = require('API');
 
-    var Config = module.require('Config');
-    var Hash = module.require('Hash');
-    var File = module.require('File');
+    const Config = module.require('Config');
+    const Hash = module.require('Hash');
+    const File = module.require('File');
 
 
-    var config = null;  //config.json 文件解析出来的对象。
-    var defaults = KISP.data('config');
+    let config = null;  //config.json 文件解析出来的对象。
+    let defaults = module.data;
 
 
     panel.on('init', function () {
 
         function fireDefault(item) {
-            var url = config.file;
+            let url = config.file;
 
             if (!url) {
                 return;
             }
 
-            var ext = Url.extname(url);
+            let ext = Url.extname(url);
 
             if (ext == 'json') {
                 panel.fire('sidebar', [url, item]);
@@ -99,8 +98,8 @@ KISP.panel('/Router', function (require, module, panel) {
     * 
     */
     panel.on('render', function () {
-        var qs = Query.get(window) || {};
-        var url = defaults.url = qs.config || defaults.url;
+        let qs = Query.get(window) || {};
+        let url = defaults.url = qs.config || defaults.url;
 
         //记录 `config.json` 文件所在的目录，以它作为根目录。 
         //路径中以 `/` 开头的路径都是相对于根目录的，如 `/a/b/c.md`，则完整路径为 `data/a/b/c.md`。
@@ -122,7 +121,7 @@ KISP.panel('/Router', function (require, module, panel) {
     return {
 
         auto: function (file) {
-            var isOrigin = file.startsWith('@');
+            let isOrigin = file.startsWith('@');
             if (isOrigin) {
                 file = file.slice(1);
             }
@@ -137,7 +136,7 @@ KISP.panel('/Router', function (require, module, panel) {
                 return
             }
 
-            var ext = Url.extname(file);
+            let ext = Url.extname(file);
             if (ext == 'json') {
                 Hash.set('sidebar', file);
                 return;

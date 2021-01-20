@@ -2,9 +2,6 @@
 /**
 */
 define('MarkDoc/Content/Code/Lines', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
 
     return exports = {
 
@@ -12,22 +9,22 @@ define('MarkDoc/Content/Code/Lines', function (require, module, exports) {
         *  
         */
         parse: function (content) {
-            var lines = content.split(/\r\n|\n|\r/);
-            var height = exports.getHeight(lines);
+            let lines = content.split(/\r\n|\n|\r/);
+            let height = exports.getHeight(lines);
 
 
             //最后一个空行要去掉。
             //因为它在 `<pre></pre>` 中无法展示出来。
-            var lastLine = lines[lines.length - 1];
+            let lastLine = lines[lines.length - 1];
          
             //if (!lastLine) {
             //    lines = lines.slice(0, -1);
             //}
 
 
-            var total = lines.length;
-            var length = total.toString().length; //最大的行号的数字串的长度
-            var width = length * 10 + 15;
+            let total = lines.length;
+            let length = total.toString().length; //最大的行号的数字串的长度
+            let width = length * 10 + 15;
 
 
             return {

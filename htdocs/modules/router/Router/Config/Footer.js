@@ -3,9 +3,7 @@
 * 
 */
 define('/Router/Config/Footer', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var Url = require('Url');
+    const Url = require('Url');
 
 
     return {
@@ -15,11 +13,11 @@ define('/Router/Config/Footer', function (require, module, exports) {
             }
 
 
-            var menus = footer.menus = footer.menus || [];
-            var logos = footer.logos = footer.logos || [];
+            let menus = footer.menus = footer.menus || [];
+            let logos = footer.logos = footer.logos || [];
 
             [...menus, ...logos].forEach(function (item) {
-                var file = item.file;
+                let file = item.file;
 
                 if (file) {
                     item.file = Url.relative(url, file);

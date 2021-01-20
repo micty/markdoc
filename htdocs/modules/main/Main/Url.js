@@ -1,15 +1,14 @@
 ﻿
 define('/Main/Url', function (require, module, exports) {
 
-    var $ = require('$');
 
-    var texts = [
+    let texts = [
         'md',
         'txt',
         'markdown',
     ];
 
-    var images = [
+    let images = [
        'png',
        'jpg',
        'jpeg',
@@ -21,12 +20,12 @@ define('/Main/Url', function (require, module, exports) {
     return {
         'parse': function (url) {
 
-            var isOrigin = url.startsWith('@');
+            let isOrigin = url.startsWith('@');
             if (isOrigin) {
                 url = url.slice(1);
             }
 
-            var index = url.lastIndexOf('.');
+            let index = url.lastIndexOf('.');
 
             if (index < 0) {
                 return {
@@ -38,10 +37,10 @@ define('/Main/Url', function (require, module, exports) {
             }
 
 
-            var ext = url.slice(index + 1).toLowerCase();
-            var name = url.split('/').slice(-1)[0]; //取最后一部分的短名称
+            let ext = url.slice(index + 1).toLowerCase();
+            let name = url.split('/').slice(-1)[0]; //取最后一部分的短名称
 
-            var isMarkdown = texts.includes(ext) || images.includes(ext); //
+            let isMarkdown = texts.includes(ext) || images.includes(ext); //
 
             return {
                 'url': url,

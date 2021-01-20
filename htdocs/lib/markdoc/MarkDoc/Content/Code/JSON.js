@@ -2,9 +2,8 @@
 /**
 */
 define('MarkDoc/Content/Code/JSON', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var JSON = KISP.require('JSON');
+    const KISP = require('KISP');
+    const JSON = KISP.require('JSON');
 
 
     return exports = {
@@ -13,7 +12,7 @@ define('MarkDoc/Content/Code/JSON', function (require, module, exports) {
         *  
         */
         format: function (content) {
-            var json = JSON.parse(content);
+            let json = JSON.parse(content);
 
             if (json) {
                 content = JSON.stringify(json, null, 4);

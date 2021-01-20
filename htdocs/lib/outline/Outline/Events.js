@@ -1,19 +1,17 @@
 ﻿
 
 define('Outline/Events', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var $String = KISP.require('String');
+    const $ = require('$');
 
 
     return {
         bind: function (meta) {
 
             meta.$.on('click', 'li[data-index]', function (event) {
-                var index = +this.getAttribute('data-index');
-                var item = meta.list[index];
-                var children = item.children || [];
-                var $li = $(this);
+                let index = +this.getAttribute('data-index');
+                let item = meta.list[index];
+                let children = item.children || [];
+                let $li = $(this);
 
                 //针对目录节点，如果是再次点击，则相当于点击了旁边的展开/收起按钮。
                 if ($li.hasClass('on') && children.length > 0) {
@@ -34,10 +32,10 @@ define('Outline/Events', function (require, module, exports) {
 
             //点击展开/收起的图标。
             meta.$.on('click', 'i[data-index]', function (event) {
-                var list = meta.list;
-                var index = +this.getAttribute('data-index');
-                var item = list[index];
-                var children = item.children || [];
+                let list = meta.list;
+                let index = +this.getAttribute('data-index');
+                let item = list[index];
+                let children = item.children || [];
 
                 //没有下级节点。
                 if (children.length == 0) {
@@ -45,11 +43,11 @@ define('Outline/Events', function (require, module, exports) {
                 }
 
 
-                var $icon = $(this);
-                var needOpen = $icon.hasClass('closed');
-                var beginIndex = index + 1;
+                let $icon = $(this);
+                let needOpen = $icon.hasClass('closed');
+                let beginIndex = index + 1;
 
-                var endIndex = list.slice(beginIndex).findIndex(function (oItem, index) {
+                let endIndex = list.slice(beginIndex).findIndex(function (oItem, index) {
                     return oItem.level <= item.level;
                 });
 
@@ -72,9 +70,9 @@ define('Outline/Events', function (require, module, exports) {
                     index = index + beginIndex;
 
                   
-                    var $li = meta.$.find(`li[data-index="${index}"]`);
-                    var key = 'closed-count';
-                    var count = $li.data(key) || 0; //记录关闭的计数，为 0 时，才能打开。
+                    let $li = meta.$.find(`li[data-index="${index}"]`);
+                    let key = 'closed-count';
+                    let count = $li.data(key) || 0; //记录关闭的计数，为 0 时，才能打开。
 
 
                     if (needOpen) { //要打开。

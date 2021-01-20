@@ -21,18 +21,17 @@
     setInterval,
 
     KISP,
-    define, //注意这里
+    KISP.require('AppModule').define,
 
     Array, 
     Boolean,
     Date,
     Error,
     Function,
-    JSON,
     Math,
     Number,
     Object,
     RegExp,
-    String/*,
-    undefined */
+    String
+    /*, undefined */
 );

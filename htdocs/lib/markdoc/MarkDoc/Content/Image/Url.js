@@ -2,11 +2,8 @@
 /**
 */
 define('MarkDoc/Content/Image/Url', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var Query = KISP.require('Query');
-    var Hash = KISP.require('Hash');
-    var Url = require('Url');
+    const KISP = require('KISP');
+    const Url = require('Url');
 
 
 
@@ -19,7 +16,7 @@ define('MarkDoc/Content/Image/Url', function (require, module, exports) {
         *   baseUrl,    //
         */
         pad: function (src, baseUrl) {
-            var ok = !src ||
+            let ok = !src ||
                 src.startsWith('http://') ||
                 src.startsWith('https://');
 

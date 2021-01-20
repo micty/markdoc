@@ -1,23 +1,21 @@
 ﻿
 KISP.panel('/Header/Groups', function (require, module, panel) {
-
-    var $ = require('$');
-    var KISP = require('KISP');
+    const $ = require('$');
 
 
-    var list = [];
+    let list = [];
 
 
     panel.on('init', function () {
 
-        var tplIcon = null;
+        let tplIcon = null;
 
 
         panel.template({
             '': function (data) {
                 tplIcon = this.template('icon');
 
-                var html = this.fill('group', data.groups);
+                let html = this.fill('group', data.groups);
 
                 return {
                     'groups': html,
@@ -25,7 +23,7 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
             },
 
             'icon': function (item) {
-                var icon = item.icon;
+                let icon = item.icon;
                 if (!icon) {
                     return '';
                 }
@@ -37,9 +35,9 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
             'group': {
                 '': function (group, no) {
-                    var items = group.items || [];
-                    var html = this.fill('item', items, no);
-                    var icon = tplIcon.fill(group);
+                    let items = group.items || [];
+                    let html = this.fill('item', items, no);
+                    let icon = tplIcon.fill(group);
 
                     return {
                         'no': no,            //组号
@@ -53,7 +51,7 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
                 'item': {
                     '': function (item, index, no) {
-                        var icon = tplIcon.fill(item);
+                        let icon = tplIcon.fill(item);
 
                         return {
                             'index': index,
@@ -71,11 +69,11 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
 
         panel.$.on('click', '[data-type="item"]', function (event) {
-            var li = this;
-            var index = +li.getAttribute('data-index');
-            var no = +li.getAttribute('data-no');
-            var group = list[no];
-            var item = group.items[index];
+            let li = this;
+            let index = +li.getAttribute('data-index');
+            let no = +li.getAttribute('data-no');
+            let group = list[no];
+            let item = group.items[index];
 
             panel.fire('item', [item]);
 
@@ -90,19 +88,19 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
 
         panel.$bind('[data-type="group"]', {
             'click': function (event) {
-                var li = this;
-                var no = +li.getAttribute('data-no');
-                var group = list[no];
+                let li = this;
+                let no = +li.getAttribute('data-no');
+                let group = list[no];
                 panel.fire('group', [group]);
             },
 
             'mouseover': function (event) {
-                var li = this;
+                let li = this;
                 $(li).addClass('on');
             },
 
             'mouseleave': function (event) {
-                var li = this;
+                let li = this;
                 $(li).removeClass('on');
             },
         });
@@ -124,14 +122,14 @@ KISP.panel('/Header/Groups', function (require, module, panel) {
     return {
 
         'active': function (id) {
-            var args = id.split('.');
-            var no = args[0];
-            var index = args[1];
+            let args = id.split('.');
+            let no = args[0];
+            let index = args[1];
 
-            var group = list[no];
-            var item = group.items[index];
+            let group = list[no];
+            let item = group.items[index];
 
-            var selector = $.String.format('li[data-index="{0}"][data-no="{1}"]', index, no);
+            let selector = $.String.format('li[data-index="{0}"][data-no="{1}"]', index, no);
             panel.$.find('li.on').removeClass('on');
             panel.$.find(selector).addClass('on');
 

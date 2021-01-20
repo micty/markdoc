@@ -1,11 +1,9 @@
 
 
-define('Outline/Template', function (require, module, exports) {
-    var $ = require('$');
-    var KISP = require('KISP');
-    var Emitter = KISP.require('Emitter');
-    var Template = KISP.require('Template');
-    var $String = KISP.require('String');
+define('Outline/Template', function (require) {
+    const KISP = require('KISP');
+    const Template = KISP.require('Template');
+    const $String = KISP.require('String');
 
 
 
@@ -13,13 +11,13 @@ define('Outline/Template', function (require, module, exports) {
     return {
         create: function () {
            
-            var tpl = new Template('#tpl-Outline');
+            let tpl = new Template('#tpl-Outline');
 
 
             tpl.process({
                 '': function (data) {
-                    var list = data.list;
-                    var items = this.fill('item', list);
+                    let list = data.list;
+                    let items = this.fill('item', list);
 
                     return {
                         'items': items,
@@ -28,9 +26,9 @@ define('Outline/Template', function (require, module, exports) {
 
                 'item': {
                     '': function (item, index) {
-                        var level = item.level;
-                        var tabs = level - 1;
-                        var children = item.children || [];
+                        let level = item.level;
+                        let tabs = level - 1;
+                        let children = item.children || [];
 
 
                         //创建一个指定长度的数组。
@@ -52,7 +50,7 @@ define('Outline/Template', function (require, module, exports) {
                         };
                     },
 
-                    'tab': function (item, index) {
+                    'tab': function () {
                         return {};
                     },
                 },

@@ -1,14 +1,13 @@
 ﻿
 KISP.panel('/Scroller', function (require, module, panel) {
-    var $ = require('$');
-    var KISP = require('KISP');
+    const $ = require('$');
 
-    var isUping = false;
-    var isDowning = false;
-    var isCode = false;
-    var max = 67;
+    let isUping = false;
+    let isDowning = false;
+    let isCode = false;
+    let max = 67;
 
-    var recent = {
+    let recent = {
         x: 0,
         y: 0,        //上次滚动后的 scrollTop 值。
     };
@@ -18,17 +17,17 @@ KISP.panel('/Scroller', function (require, module, panel) {
 
     panel.on('init', function () {
 
-        var leaved = false;
+        let leaved = false;
 
         $(window).on('scroll', function (event) {
-            //var x = document.body.scrollLeft;
-            //var y = document.body.scrollTop; //突然失效了，未找到原因。 改用下面的 window.scrollY。
+            //let x = document.body.scrollLeft;
+            //let y = document.body.scrollTop; //突然失效了，未找到原因。 改用下面的 window.scrollY。
 
-            var x = window.scrollX;
-            var y = window.scrollY;
+            let x = window.scrollX;
+            let y = window.scrollY;
 
-            var dx = x - recent.x;
-            var dy = y - recent.y;
+            let dx = x - recent.x;
+            let dy = y - recent.y;
 
             recent.x = x;
 

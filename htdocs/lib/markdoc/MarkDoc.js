@@ -3,16 +3,16 @@
 * markdoc 内容渲染器。
 */
 define('MarkDoc', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var $Object = KISP.require('Object');
-    var Emitter = KISP.require('Emitter');
-    var Meta = module.require('Meta');
-    var Content = module.require('Content');
+    const $ = require('$');
+    const KISP = require('KISP');
+    const $Object = KISP.require('Object');
+    const Emitter = KISP.require('Emitter');
+    const Meta = module.require('Meta');
+    const Content = module.require('Content');
 
 
-    var mapper = new Map();
-    var defaults = require(`${module.id}.defaults`);
+    let mapper = new Map();
+    let defaults = require(`${module.id}.defaults`);
 
 
 
@@ -23,16 +23,16 @@ define('MarkDoc', function (require, module, exports) {
     *    };
     */
     function MarkDoc(config) {
-        config = $Object.extendDeeply({}, defaults, config);
+        config = $Object.deepAssign({}, defaults, config);
 
-        var emitter = new Emitter(this);
+        let emitter = new Emitter(this);
 
-        var meta = Meta.create(config, {
+        let meta = Meta.create(config, {
             'this': this,
             'emitter': emitter,
         });
 
-        var panel = meta.panel;
+        let panel = meta.panel;
 
 
         mapper.set(this, meta);
@@ -122,7 +122,7 @@ define('MarkDoc', function (require, module, exports) {
         *   };
         */
         render: function (opt) {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
 
             //提供一个机会可以在 render 时重新传配置。
             Object.assign(meta.code, opt.code);
@@ -147,7 +147,7 @@ define('MarkDoc', function (require, module, exports) {
         * 显示本组件。
         */
         show: function () {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.panel.show();
         },
 
@@ -155,7 +155,7 @@ define('MarkDoc', function (require, module, exports) {
         * 隐藏本组件。
         */
         hide: function () {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.panel.hide();
         },
 
@@ -163,7 +163,7 @@ define('MarkDoc', function (require, module, exports) {
         * 绑定事件。
         */
         on: function () {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.emitter.on(...arguments);
         },
 
@@ -171,8 +171,8 @@ define('MarkDoc', function (require, module, exports) {
         * 滚动到指定索引值的提纲。
         */
         toOutline: function (index) {
-            var meta = mapper.get(this);
-            var el = meta.panel.$.find(meta.titles.selector).get(index);
+            let meta = mapper.get(this);
+            let el = meta.panel.$.find(meta.titles.selector).get(index);
 
             if (!el) {
                 return;
@@ -187,8 +187,8 @@ define('MarkDoc', function (require, module, exports) {
             }
 
             //闪两次
-            var timeout = 180;
-            var $el = $(el);
+            let timeout = 180;
+            let $el = $(el);
 
             $el.addClass('on');
 

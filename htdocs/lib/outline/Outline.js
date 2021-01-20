@@ -3,19 +3,17 @@
 * 提纲列表。
 */
 define('Outline', function (require, module, exports) {
-    var KISP = require('KISP');
-    var $ = require('$');
-    var $Array = KISP.require('Array');
-    var $String = KISP.require('String');
-    var Emitter = KISP.require('Emitter');
+    const KISP = require('KISP');
+    const $ = require('$');
+    const Emitter = KISP.require('Emitter');
 
-    var Meta = module.require('Meta');
-    var Events = module.require('Events');
-    var Template = module.require('Template');
+    const Meta = module.require('Meta');
+    const Events = module.require('Events');
+    const Template = module.require('Template');
 
   
 
-    var mapper = new Map();
+    let mapper = new Map();
 
 
 
@@ -28,10 +26,10 @@ define('Outline', function (require, module, exports) {
     *    };
     */
     function Outline(config) {
-        var emitter = new Emitter(this);
-        var tpl = Template.create();
+        let emitter = new Emitter(this);
+        let tpl = Template.create();
 
-        var meta = Meta.create(config, {
+        let meta = Meta.create(config, {
             'this': this,
             'emitter': emitter,
             'tpl': tpl,
@@ -75,7 +73,7 @@ define('Outline', function (require, module, exports) {
         */
         render: function (list) {
             
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
 
             meta.$ = $(meta.container);
             list = list || meta.list;
@@ -96,7 +94,7 @@ define('Outline', function (require, module, exports) {
             list.forEach(function (item, index) {
                 item.parent = null; //先统一假设父节点为空。
 
-                var level = item.level;
+                let level = item.level;
 
                 if (level == 1) { //最顶级的，即 h1，不存在父节点。
                     return;
@@ -105,8 +103,8 @@ define('Outline', function (require, module, exports) {
 
                 //再往回沿路搜索比当前节点的级别低的节点。
                 //往回过程中，第一个级别低的节点即为父节点。
-                for (var i = index - 1; i >= 0; i--) {
-                    var parent = list[i];
+                for (let i = index - 1; i >= 0; i--) {
+                    let parent = list[i];
 
                     if (level > parent.level) {
                         item.parent = parent;
@@ -122,8 +120,8 @@ define('Outline', function (require, module, exports) {
 
 
 
-            var meta = mapper.get(this);
-            var html = meta.tpl.fill({ 'list': list, });
+            let meta = mapper.get(this);
+            let html = meta.tpl.fill({ 'list': list, });
 
             meta.list = list;
             meta.$ && meta.$.html(html);
@@ -135,7 +133,7 @@ define('Outline', function (require, module, exports) {
         * 显示本组件。
         */
         show: function () {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.$.show(...arguments);
             meta.emitter.fire('show');
         },
@@ -144,7 +142,7 @@ define('Outline', function (require, module, exports) {
         * 隐藏本组件。
         */
         hide: function () {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.$.hide(...arguments);
             meta.emitter.fire('hide');
         },
@@ -154,7 +152,7 @@ define('Outline', function (require, module, exports) {
         * 绑定事件。
         */
         on: function () {
-            var meta = mapper.get(this);
+            let meta = mapper.get(this);
             meta.emitter.on(...arguments);
         },
 
