@@ -2,7 +2,7 @@
 /**
 * 右侧固定的工具栏。
 */
-KISP.panel('/Tools', function (require, module, panel) {
+define.panel('/Tools', function (require, module, panel) {
     let list = [];
 
     let font = {

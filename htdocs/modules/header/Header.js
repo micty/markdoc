@@ -2,7 +2,7 @@
 /**
 * 
 */
-KISP.panel('/Header', function (require, module, panel) {
+define.panel('/Header', function (require, module, panel) {
     const Groups = module.require('Groups');
     const Logo = module.require('Logo');
     const Search = module.require('Search');

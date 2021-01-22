@@ -2,8 +2,7 @@
 /**
 */
 define('MarkDoc/Content/Code/Highlight', function (require, module, exports) {
-    const KISP = require('KISP');
-    const $String = KISP.require('String');
+    const $String = require('@definejs/string');
 
     const hljs = require('hljs');
 

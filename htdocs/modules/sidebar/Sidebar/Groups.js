@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Sidebar/Groups', function (require, module, panel) {
+define.panel('/Sidebar/Groups', function (require, module, panel) {
     const Template = module.require('Template');
 
 

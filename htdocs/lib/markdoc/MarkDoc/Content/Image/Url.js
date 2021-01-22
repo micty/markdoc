@@ -2,7 +2,7 @@
 /**
 */
 define('MarkDoc/Content/Image/Url', function (require, module, exports) {
-    const KISP = require('KISP');
+  
     const Url = require('Url');
 
 
@@ -28,7 +28,7 @@ define('MarkDoc/Content/Image/Url', function (require, module, exports) {
 
             //绝对路径开头。
             if (src.startsWith('/')) {
-                baseUrl = KISP.data('config').base; //取配置文件里的基路径。 是以 `/` 结尾的。
+                baseUrl = module.data.base; //取配置文件里的基路径。 是以 `/` 结尾的。
                 src = src.slice(1);
             }
 

@@ -2,9 +2,8 @@
 /**
 * url 地址栏的 hash 工具模块。
 */
-KISP.panel('/Router/Hash', function (require, module, panel) {
-    const KISP = require('KISP');
-    const Hash = KISP.require('Hash');
+define.panel('/Router/Hash', function (require, module, panel) {
+    const Hash = require('@definejs/hash');
     const Parser = module.require('Parser');
     const File = module.require('File');
 

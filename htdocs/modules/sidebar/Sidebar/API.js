@@ -3,8 +3,8 @@
 * 
 */
 define('/Sidebar/API', function (require, module, exports) {
-    const KISP = require('KISP');
-    const Emitter = KISP.require('Emitter');
+    const Emitter = require('@definejs/emitter');
+    
     const API = require('API');
     const Url = require('Url');
 

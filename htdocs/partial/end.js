@@ -20,8 +20,8 @@
     setTimeout,
     setInterval,
 
-    KISP,
-    KISP.require('AppModule').define,
+    definejs,
+    definejs.require('AppModule').define,
 
     Array, 
     Boolean,

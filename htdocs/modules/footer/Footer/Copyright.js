@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Footer/Copyright', function (require, module, panel) {
+define.panel('/Footer/Copyright', function (require, module, panel) {
 
     panel.on('init', function () {
 

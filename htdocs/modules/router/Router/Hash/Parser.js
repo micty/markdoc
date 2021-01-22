@@ -2,9 +2,8 @@
 /**
 * url 地址栏的 hash 工具模块
 */
-KISP.panel('/Router/Hash/Parser', function (require, module, panel) {
-    const KISP = require('KISP');
-    const Query = KISP.require('Query');
+define.panel('/Router/Hash/Parser', function (require, module, panel) {
+    const Query = require('@definejs/query');
     const Url = require('Url');
 
     let seperater = ':';

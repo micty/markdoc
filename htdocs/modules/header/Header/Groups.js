@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Header/Groups', function (require, module, panel) {
+define.panel('/Header/Groups', function (require, module, panel) {
     const $ = require('$');
 
 

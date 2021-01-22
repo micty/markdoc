@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Footer', function (require, module, panel) {
+define.panel('/Footer', function (require, module, panel) {
     const Copyright = module.require('Copyright');
     const Logos = module.require('Logos');
     const Menus = module.require('Menus');

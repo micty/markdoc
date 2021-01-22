@@ -2,7 +2,7 @@
 /**
 * 
 */
-KISP.panel('/Iframe', function (require, module, panel) {
+define.panel('/Iframe', function (require, module, panel) {
     const $ = require('$');
 
     panel.on('init', function () {

@@ -4,9 +4,8 @@
 */
 define('API', function (require, module, exports) {
     const $ = require('$');
-    const KISP = require('KISP');
-    const Emitter = KISP.require('Emitter');
-    const JSON = KISP.require('JSON');
+    const Emitter = require('@definejs/emitter');
+    const JSON = require('@definejs/json');
     const Url = require('Url');
 
 

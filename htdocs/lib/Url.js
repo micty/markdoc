@@ -4,8 +4,7 @@
 * 
 */
 define('Url', function (require, module, exports) {
-    const KISP = require('KISP');
-    const Url = KISP.require('Url');
+    const Url = require('@definejs/url');
     const resolveUrl = require('resolveUrl');
 
     let root = Url.root();

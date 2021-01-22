@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Scroller', function (require, module, panel) {
+define.panel('/Scroller', function (require, module, panel) {
     const $ = require('$');
 
     let isUping = false;

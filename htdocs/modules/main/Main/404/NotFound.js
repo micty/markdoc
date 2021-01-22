@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Main/NotFound', function (require, module, panel) {
+define.panel('/Main/NotFound', function (require, module, panel) {
 
     panel.on('init', function () {
 

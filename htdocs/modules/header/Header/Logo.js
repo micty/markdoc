@@ -2,7 +2,7 @@
 /**
 * 
 */
-KISP.panel('/Header/Logo', function (require, module, panel) {
+define.panel('/Header/Logo', function (require, module, panel) {
 
 
     panel.on('init', function () {

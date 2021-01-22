@@ -1,9 +1,8 @@
 
 
 define('Outline/Template', function (require) {
-    const KISP = require('KISP');
-    const Template = KISP.require('Template');
-    const $String = KISP.require('String');
+    const Template = require('@definejs/template');
+    const $String = require('@definejs/string');
 
 
 

@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Main/Content', function (require, module, panel) {
+define.panel('/Main/Content', function (require, module, panel) {
     const MarkDoc = require('MarkDoc');
     const Loader = module.require('Loader');
 

@@ -2,9 +2,8 @@
 /**
 */
 define('MarkDoc/Content/Href/Url', function (require, module, exports) {
-    const KISP = require('KISP');
-    const Query = KISP.require('Query');
-    const Hash = KISP.require('Hash');
+    const Query = require('@definejs/query');
+    const Hash = require('@definejs/hash');
     const Url = require('Url');
     
     let base = module.data.base;    //如 `data/`

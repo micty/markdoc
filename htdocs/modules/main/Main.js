@@ -1,7 +1,6 @@
 ﻿
-KISP.panel('/Main', function (require, module, panel) {
+define.panel('/Main', function (require, module, panel) {
     const $ = require('$');
-
     const NotFound = module.require('NotFound');
     const Loading = module.require('Loading');
     const Header = module.require('Header');

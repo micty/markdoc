@@ -4,9 +4,8 @@
 */
 define('MarkDoc', function (require, module, exports) {
     const $ = require('$');
-    const KISP = require('KISP');
-    const $Object = KISP.require('Object');
-    const Emitter = KISP.require('Emitter');
+    const $Object = require('@definejs/object');
+    const Emitter = require('@definejs/emitter');
     const Meta = module.require('Meta');
     const Content = module.require('Content');
 

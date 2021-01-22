@@ -4,7 +4,6 @@
 */
 define('MarkDoc/Content/Code', function (require, module, exports) {
     const $ = require('$');
-    const KISP = require('KISP');
     const JSON = module.require('JSON');
     const Lines = module.require('Lines');
     const Highlight = module.require('Highlight');
@@ -32,7 +31,7 @@ define('MarkDoc/Content/Code', function (require, module, exports) {
             let tpl = meta.tpl;
             let code = meta.code;   //代码区的配置。
 
-            let toast = KISP.create('Toast', {
+            let toast = definejs.create('Toast', {
                 duration: 1000,
                 mask: 0,
                 style: {

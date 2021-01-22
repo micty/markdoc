@@ -1,13 +1,24 @@
 ﻿
 
-; (function (KISP) {
+; (function (definejs) {
 
- 
+    var AppModule = definejs.require('AppModule');
+    var define = window.define = AppModule.define;
+
+    Object.assign(define, {
+        'panel': definejs.panel,
+        'view': definejs.view,
+        'module': definejs.define,
+        'data': definejs.data,
+        'route': definejs.route,
+        'proxy': definejs.proxy,
+    });
 
     //多个模块要公用的配置。
-    KISP.data([
+    define.data([
         'API',
         'MarkDoc/Content/Href/Url',
+        'MarkDoc/Content/Image/Url',
         '/Router',
     ], {
         //要使用的全局配置文件。
@@ -24,7 +35,7 @@
 
 
     //业务端模块的默认配置。
-    KISP.data({
+    define.data({
 
         'API': {
             cache: false,
@@ -39,8 +50,8 @@
   
 
 
-    // KISP 内部模块所需要的默认配置
-    KISP.config({
+    // definejs 内部模块所需要的默认配置
+    definejs.config({
         'API': {
             // proxy: true,
 
@@ -93,34 +104,9 @@
         
     });
 
-    
 
 
 
-    /**weber.debug.begin*/
-    //------------------------------------------------------------------------
-    //开发过程中用到的配置，正式发布后可去掉。 
-    //web-master 自动化工具会自动删掉的。
-
-
-
-    //----------------------------------------------------------------------------------------
-    /**weber.debug.end*/
-
-    var AppModule = KISP.require('AppModule');
-    var define = window.define = AppModule.define;
-    var App = KISP.require('App');
-
-    Object.assign(define, {
-        'panel': KISP.panel,
-        'view': KISP.view,
-        'module': AppModule.define,
-        'data': AppModule.data,
-        'route': App.route,
-    });
-
-
-
-})(window.KISP);
+})(window.definejs);
 
 

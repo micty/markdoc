@@ -3,7 +3,7 @@
 * 
 */
 define('MarkDoc/Content', function (require, module, exports) {
-    const marked = require('marked');
+    const marked = module.require('marked');
 
     const Code = module.require('Code');
     const Href = module.require('Href');

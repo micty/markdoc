@@ -4,8 +4,7 @@
 */
 define('MarkDoc/Content/Titles', function (require, module, exports) {
     const $ = require('$');
-    const KISP = require('KISP');
-    const $String = KISP.require('String');
+    const $String = require('@definejs/string');
 
 
     return {

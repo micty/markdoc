@@ -3,8 +3,7 @@
 * 
 */
 define('/Router/Config', function (require, module, exports) {
-    const KISP = require('KISP');
-    const Emitter = KISP.require('Emitter');
+    const Emitter = require('@definejs/emitter');
     const API = require('API');
     const Url = require('Url');
 
@@ -50,7 +49,7 @@ define('/Router/Config', function (require, module, exports) {
                 },
 
                 'error': function () {
-                    KISP.alert(`加载 ${url} 失败，请稍候刷新重试。`);
+                    definejs.alert(`加载 ${url} 失败，请稍候刷新重试。`);
                 },
             });
 

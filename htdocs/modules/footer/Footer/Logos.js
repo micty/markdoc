@@ -1,5 +1,5 @@
 ﻿
-KISP.panel('/Footer/Logos', function (require, module, panel) {
+define.panel('/Footer/Logos', function (require, module, panel) {
     let list = [];
 
     panel.on('init', function () {

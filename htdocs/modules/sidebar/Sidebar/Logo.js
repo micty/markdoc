@@ -2,7 +2,7 @@
 /**
 * 
 */
-KISP.panel('/Sidebar/Logo', function (require, module, panel) {
+define.panel('/Sidebar/Logo', function (require, module, panel) {
     const Url = require('Url');
 
 

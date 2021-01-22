@@ -2,7 +2,7 @@
 /**
 * 
 */
-KISP.panel('/Header/Search', function (require, module, panel) {
+define.panel('/Header/Search', function (require, module, panel) {
     panel.set('show', false);
 
 

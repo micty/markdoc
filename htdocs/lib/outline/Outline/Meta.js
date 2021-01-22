@@ -3,7 +3,7 @@
 * 
 */
 define('Outline/Meta', function (require, module, exports) {
-    const $String = KISP.require('String');
+    const $String = require('@definejs/string');
 
 
     return {

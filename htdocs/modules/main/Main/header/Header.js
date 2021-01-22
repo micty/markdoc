@@ -2,10 +2,10 @@
 /**
 * 针对代码模式的头部工具栏。
 */
-KISP.panel('/Main/Header', function (require, module, panel) {
-    const KISP = require('KISP');
-    const $String = KISP.require('String');
+define.panel('/Main/Header', function (require, module, panel) {
+    const $String = require('@definejs/string');
 
+    
     let list = [
         { cmd: 'numbers', text: '行号', checked: true, },
         { cmd: 'comment', text: '注释', checked: true, },

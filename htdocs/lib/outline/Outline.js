@@ -3,9 +3,8 @@
 * 提纲列表。
 */
 define('Outline', function (require, module, exports) {
-    const KISP = require('KISP');
     const $ = require('$');
-    const Emitter = KISP.require('Emitter');
+    const Emitter = require('@definejs/emitter');
 
     const Meta = module.require('Meta');
     const Events = module.require('Events');

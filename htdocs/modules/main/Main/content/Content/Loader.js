@@ -2,9 +2,8 @@
 /**
 */
 define('/Main/Content/Loader', function (require, module, exports) {
-    const KISP = require('KISP');
+    const Tasker = require('@definejs/tasker');
     const API = require('API');
-    const Tasker = KISP.require('Tasker');
 
 
     let texts = [

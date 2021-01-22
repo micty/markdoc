@@ -3,9 +3,9 @@
 * 
 */
 define('MarkDoc/Meta', function (require, module, exports) {
-    const $String = KISP.require('String');
-    const Template = KISP.require('Template');
-    const Panel = KISP.require('Panel');
+    const $String = require('@definejs/string');
+    const Template = require('@definejs/template');
+    const Panel = require('@definejs/panel');
 
 
 

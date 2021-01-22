@@ -2,9 +2,8 @@
 /**
 * 路由器模板。
 */
-KISP.panel('/Router', function (require, module, panel) {
-    const KISP = require('KISP');
-    const Query = KISP.require('Query');
+define.panel('/Router', function (require, module, panel) {
+    const Query = require('@definejs/query');
     const Url = require('Url');
     const API = require('API');
 

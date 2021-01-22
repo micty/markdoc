@@ -12,7 +12,7 @@
     setTimeout,
     setInterval,
 
-    KISP,
+    definejs,
     define, //注意这里
 
     Array, 

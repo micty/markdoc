@@ -2,7 +2,7 @@
 /**
 * 提纲，即内容目录。
 */
-KISP.panel('/Outline', function (require, module, panel) {
+define.panel('/Outline', function (require, module, panel) {
     const Outline = require('Outline');
 
     let outline = null;

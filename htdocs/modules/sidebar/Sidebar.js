@@ -2,7 +2,7 @@
 /**
 * 侧边菜单栏。
 */
-KISP.panel('/Sidebar', function (require, module, panel) {
+define.panel('/Sidebar', function (require, module, panel) {
     const API = module.require('API');
     const Groups = module.require('Groups');
     const Logo = module.require('Logo');
