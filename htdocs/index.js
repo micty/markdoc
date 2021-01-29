@@ -9,6 +9,8 @@ definejs.launch(function (require, module, exports) {
     //启动路由解析。
     module.render('Router');
 
+    
+
 });
 
 

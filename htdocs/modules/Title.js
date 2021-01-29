@@ -2,6 +2,7 @@
 define.panel('/Title', function (require, module, panel) {
     let defaults = '';
 
+    
     panel.on('render', function (data) {
 
         if (data == 404) {

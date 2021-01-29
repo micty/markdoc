@@ -13,11 +13,17 @@ module.exports = {
         watch: function (master) {
             master.on('init', function (website) { 
                 console.log('------watch.init-----');
+
+                website.on('change', function () {
+                    console.log('change'.bgCyan);
+                });
             });
 
             master.on('done', function () {
                 console.log('watch.done!'.green);
             });
+
+           
         },
 
         build: function (master) {

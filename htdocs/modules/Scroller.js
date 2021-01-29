@@ -2,6 +2,7 @@
 define.panel('/Scroller', function (require, module, panel) {
     const $ = require('$');
 
+    
     let isUping = false;
     let isDowning = false;
     let isCode = false;
